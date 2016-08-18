@@ -15,6 +15,18 @@ $app->get('/', function () use ($app) {
     return $app->version();
 });
 
-$app->get('asdf', function () use ($app) {
-    return 'Hello Wrolds';
-});
+$app->get('product', [
+    'as' => 'product', 'uses' => 'ProductController@read'
+]);
+
+$app->get('product/create', [
+    'as' => 'product', 'uses' => 'ProductController@create'
+]);
+
+$app->get('product/update', [
+    'as' => 'product', 'uses' => 'ProductController@update'
+]);
+
+$app->get('product/destroy', [
+    'as' => 'product', 'uses' => 'ProductController@destroy'
+]);
