@@ -1,0 +1,30 @@
+{
+  "name": "ng15Starter",
+  "version": "1.0.0",
+  "author": "Tobias Pickel",
+  "scripts": {
+    "start": "gulp",
+    "build": "gulp build",
+    "test": "karma start --singleRun false"
+  },
+  "devDependencies": {
+    "eslint": "^2.4.0",
+    "event-stream": "^3.3.2",
+    "gulp": "*",
+    "gulp-concat": "*",
+    "gulp-less": "*",
+    "gulp-less-sourcemap": "^1.4.3",
+    "gulp-minify-css": "*",
+    "gulp-minify-html": "^1.0.6",
+    "gulp-ng-html2js": "^0.2.2",
+    "gulp-order": "*",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-uglify": "^1.5.4",
+    "gulp-typescript": "*",
+    "typescript": "*",
+    "karma-firefox-launcher": "^1.0.0",
+    "karma-ie-launcher": "^1.0.0",
+    "protractor": "^3.3.0",
+    "protractor-jasmine2-html-reporter": "0.0.6"
+  }
+}
