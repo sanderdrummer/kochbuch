@@ -18,6 +18,10 @@ class Product extends Model
      */
     protected $fillable = [
         'name',
-        'email',
     ];
+
+    public function productItems()
+    {
+        return $this->hasMany('App\Models\ProductItem');
+    }
 }

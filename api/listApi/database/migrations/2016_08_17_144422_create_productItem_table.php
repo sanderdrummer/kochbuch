@@ -16,9 +16,9 @@ class CreateProductItemTable extends Migration
             $table->increments('id');
             $table->string('amount');
             $table->boolean('inBasket');
-            $table->integer('product_id')->unsigned();
-            $table->integer('recipe_id')->unsigned();
-            $table->integer('list_id')->unsigned();
+            $table->integer('product_id')->unsigned()->nullable()->default(null);
+            $table->integer('recipe_id')->unsigned()->nullable()->default(null);
+            $table->integer('list_id')->unsigned()->nullable()->default(null);
 
             $table->foreign('product_id')->references('id')->on('products');
             $table->foreign('recipe_id')->references('id')->on('recipes');

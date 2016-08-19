@@ -12,7 +12,7 @@
 */
 
 $app->get('/', function () use ($app) {
-    return $app->version();
+    return 'Kuchen ist lecker';
 });
 
 $app->get('product', [
@@ -29,4 +29,40 @@ $app->get('product/update', [
 
 $app->get('product/destroy', [
     'as' => 'product', 'uses' => 'ProductController@destroy'
+]);
+
+
+
+// recipe routes
+$app->get('recipe', [
+    'as' => 'recipe', 'uses' => 'RecipeController@read'
+]);
+
+$app->get('recipe/create', [
+    'as' => 'recipe', 'uses' => 'RecipeController@create'
+]);
+
+$app->get('recipe/update', [
+    'as' => 'recipe', 'uses' => 'RecipeController@update'
+]);
+
+$app->get('recipe/destroy', [
+    'as' => 'recipe', 'uses' => 'RecipeController@destroy'
+]);
+
+// productItem Routes
+$app->get('item', [
+    'as' => 'item', 'uses' => 'ProductItemController@read'
+]);
+
+$app->get('item/create', [
+    'as' => 'item', 'uses' => 'ProductItemController@create'
+]);
+
+$app->get('item/update', [
+    'as' => 'item', 'uses' => 'ProductItemController@update'
+]);
+
+$app->get('item/destroy', [
+    'as' => 'item', 'uses' => 'ProductItemController@destroy'
 ]);

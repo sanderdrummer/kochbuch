@@ -18,6 +18,11 @@ class Recipe extends Model
      */
     protected $fillable = [
         'name',
-        'email',
+        'description',
     ];
+
+    public function products()
+    {
+        return $this->hasMany('App\Models\ProductItem');
+    }
 }
