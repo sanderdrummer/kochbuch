@@ -38,6 +38,10 @@ $app->get('recipe', [
     'as' => 'recipe', 'uses' => 'RecipeController@read'
 ]);
 
+$app->get('recipe/single', [
+    'as' => 'recipe', 'uses' => 'RecipeController@readSingle'
+]);
+
 $app->get('recipe/create', [
     'as' => 'recipe', 'uses' => 'RecipeController@create'
 ]);

@@ -1,0 +1,15 @@
+rezepte
+<div><a ui-sref="recipes.addRecipe">neues Rezept</a></div>
+<div class="flex">
+    <form class="grow wp100 m-l-1 m-r-1" ng-submit="">
+        <input type="text" class="wp100"  ng-model="ctrl.searchString">
+    </form>
+    <div class="card" ng-repeat="recipe in ctrl.recipes">
+        <a ui-sref="recipes.recipe({id: recipe.id})">
+            {{recipe.id}}
+            {{recipe.name}}
+        </a>
+    </div>
+</div>
+
+<div ui-view="recipe"></div>

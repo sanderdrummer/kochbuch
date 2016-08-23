@@ -1,0 +1,117 @@
+html {
+  font-family: @mainFont;
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+  color: @dark;
+
+}
+
+p {
+  line-height: @leading;
+  margin-top: @leading;
+  margin-bottom: 0;
+
+}
+
+ul, ol {
+  padding-left: 0px;
+  margin-top: @leading;
+  margin-bottom: @leading;
+
+  li {
+    list-style-type: none;
+    line-height: @leading;
+  }
+
+  ul, ol {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+blockquote {
+  line-height: @leading;
+  margin-top: @leading;
+  margin-bottom: @leading;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: @headingFont;
+  margin-top: @leading;
+  font-weight: 300;
+  margin-bottom: 0;
+  line-height: @leading;
+}
+
+h1 { font-size: 3 * @scale * 1rem; line-height: 3 * @leading; margin-top: 2 * @leading; }
+h2 { font-size: 2 * @scale * 1rem; line-height: 2 * @leading; margin-top: 2 * @leading; }
+h3 { font-size: 1 * @scale * 1rem; }
+h4 { font-size: @scale / 2 * 1rem; }
+h5 { font-size: @scale / 3 * 1rem; }
+h6 { font-size: @scale / 4 * 1rem; }
+
+
+
+.lead {
+  font-size: @scale * 1rem;
+  color: @light;
+  font-family: @leadingFont;
+}
+
+code {
+  vertical-align: bottom;
+}
+.hug {
+  margin-top: 0;
+}
+
+.textCenter{
+    text-align: center;
+}
+.textLeft{
+    text-align: left;
+}
+.textRight{
+    text-align: right;
+}
+
+.textJustify{
+    text-align: justify;
+}
+
+.bold{
+    font-weight: 700;
+}
+
+a {
+    cursor:pointer;
+    color: @highlight;
+    text-decoration: none;
+    &:hover{
+        color: @highlightHover;
+    }
+}
+
+.highlight{
+    color : @highlight;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+
+:root{
+  font-size: 14px;
+}
+@media only screen and (min-width: @tablet) {
+    :root{
+      font-size: 18px;
+    }
+}
+
+@media only screen and (min-width: @laptop) {
+  :root{
+    font-size: 24px;
+  }
+}

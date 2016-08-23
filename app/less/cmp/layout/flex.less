@@ -1,0 +1,43 @@
+.flexBox(){
+  display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+  display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+  display: -ms-flexbox;      /* TWEENER - IE 10 */
+  display: -webkit-flex;     /* NEW - Chrome */
+  display: flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
+}
+
+.flex {
+  .flexBox();
+  flex-wrap: wrap;
+  &.down{
+    flex-direction: column
+  }
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+.center{
+  justify-content: center;
+}
+.centerBoth{
+  justify-content: center;
+  align-items: center;
+}
+.grow{
+  flex-grow: 1;
+}
+
+.flex-right{
+  justify-content: flex-end;
+}
+
+.width {
+  width: 100%;
+  margin: 0 auto;
+  @media only screen and (min-width: @tablet) {
+    max-width: @tablet;
+  }
+}

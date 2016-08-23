@@ -1,0 +1,98 @@
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
+input[type="time"],
+input[type="submit"],
+select,
+button,
+label,
+textarea{
+    padding: @leading/2;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    border: solid 1px  @light;
+    background-color: @formBG;
+    height: 2 * @leading;
+  &:active,
+    &:focus{
+        background-image: none; 
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+        outline: none;
+        border: solid 1px  @highlight;
+    }
+    &:-moz-focus-inner{
+        border: 0;
+        padding: 0;
+    }
+  @media only screen and (min-width: 1px) {
+    & {
+      margin-top: @leading;
+    }
+  }
+
+  @media only screen and (min-width: @laptop) {
+    & {
+      margin-top: 0;
+    }
+  }
+}
+
+.formGroup {
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    select,input[type="date"],
+    input[type="time"],
+    input[type="submit"],
+    button,
+    textarea{
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+      margin-bottom: @leading/2;
+    }
+}
+
+label{
+    display: block;
+    border:none;
+    &:active,
+    &:focus{
+        border:none;
+    }
+}
+
+button{
+    -webkit-appearance: none;
+    -webkit-border-radius: @borderRadius;
+    -moz-border-radius: @borderRadius;
+    -ms-border-radius: @borderRadius;
+    -o-border-radius: @borderRadius;
+    border-radius: @borderRadius;
+    -webkit-background-clip: padding;
+    -moz-background-clip: padding;
+    background-clip: padding-box;
+    cursor: pointer;
+    color: @fontMainColor;
+    display: inline-block;
+    font-family:@font;
+    font-weight: @weight;
+    outline: 0;
+    overflow: visible;
+    text-shadow: none;
+    text-decoration: none;
+    vertical-align: top;
+    *padding-top: 2px;
+    *padding-bottom: 0;
+    background-color: @highlight;
+    border: solid 1px @highlight;
+    &:hover,&.active{
+        background-color: @highlightHover;
+        color:white;
+    }
+}
+

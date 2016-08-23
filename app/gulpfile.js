@@ -19,7 +19,7 @@ var tsConfig = {
 function less() {
     gulp.src('./less/main.less')
         .pipe(gulpLess())
-        .pipe(gulp.dest('./dist'));
+        .pipe(gulp.dest('../'));
 }
 gulp.task('less', less);
 
@@ -36,7 +36,7 @@ function lib() {
         .pipe(concat('lib.js'))
         .pipe(uglify())
         .pipe(sourcemaps.write('./'))
-        .pipe(gulp.dest('./dist'));
+        .pipe(gulp.dest('../'));
 }
 
 gulp.task('appJS', appJS);
@@ -47,7 +47,7 @@ function appJS() {
 
         // uncomment to test minify js
         .pipe(uglify())
-        .pipe(gulp.dest('./dist'));
+        .pipe(gulp.dest('../'));
 }
 gulp.task('appJS', appJS);
 
@@ -87,5 +87,5 @@ gulp.task('default', function() {
 gulp.task('build', function() {
     lib();
     appJS();
-    less(); 
+    less();
 });

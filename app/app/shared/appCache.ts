@@ -20,6 +20,6 @@ module WP {
         }
     }
 
-    angular.module('wpBlog')
+    angular.module('cook')
         .service('appCache', AppCache);
 }

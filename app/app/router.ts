@@ -1,27 +1,19 @@
 module WP {
-    angular.module('wpBlog')
+    angular.module('cook')
     .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 
-        $urlRouterProvider.otherwise("/home");
+        $urlRouterProvider.otherwise("/recipes");
 
         $stateProvider
-        .state('home', {
-            url: "/home",
-            template: "<home></home>"
+        .state('recipes', {
+            url: "/recipes",
+            template: "<recipes></recipes>"
         })
-        .state('posts', {
-            url: "/posts",
-            template: "<posts></posts>"
-        })
-        .state('category', {
-            url: "/posts/:category",
-            template: "<posts></posts>"
-        })
-        .state('category.post',{
-            url: "/:id",
+        .state('recipes.recipe',{
+            url: "/show/:id",
             views: {
-                posts:{
-                    template: "<post></post>"
+                recipe:{
+                    template: "<recipe></recipe>"
                 }
             },
             onEnter: function(){
@@ -31,13 +23,36 @@ module WP {
                 document.body.classList.remove('noScroll');
             }
         })
-        .state('post', {
-            url: "/post/:id",
-            template: "<post></post>"
+        .state('recipes.addRecipe',{
+            url: "/add",
+            views: {
+                recipe:{
+                    template: "<add-recipe></add-recipe>"
+                }
+            },
+            onEnter: function(){
+                document.body.classList.add('noScroll');
+            },
+            onExit: function(){
+                document.body.classList.remove('noScroll');
+            }
         })
-        .state('page', {
-            url: "/page/:id",
-            template: "<page></page>"
+        .state('recipes.addRecipe.products', {
+            url: "/products",
+            template: "<products></products>"
         })
+        .state('list', {
+            url: "/list",
+            template: "<list></list>"
+        })
+        .state('list.products', {
+            url: "/products",
+            template: "<products></products>"
+        })
+            .state('products', {
+                url: "/products",
+                template: "<products></products>"
+            })
+
     }]);
 }

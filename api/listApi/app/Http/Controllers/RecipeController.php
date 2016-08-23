@@ -1,44 +1,67 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\ProductItem;
 use App\Models\Recipe;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use DB;
 
-class RecipeController extends Controller
-{
+class RecipeController extends Controller {
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct () {
         //
     }
 
-    public function read() {
 
-        $products = DB::table('recipes')
-            ->select(array(
-                'recipes.name',
-                'recipes.description',
-                'products.name AS productName',
-                'productitems.amount',
-                'productitems.recipe_id AS idRecipe',
-                'productitems.product_id AS idProduct',
-                'productitems.id AS item_id',
-            ))
-            ->join('productitems', 'recipes.id', '=', 'productitems.recipe_id')
-            ->join('products', 'products.id', '=', 'productitems.product_id')
-            ->get();
 
-        return response()->json($products);
+    public function read () {
+
+        $recipes = Recipe::all();
+
+        return response()->json($recipes);
     }
 
-    public function create(Request $request) {
-        $success = true;
+
+
+    public function readSingle (Request $request) {
+
+        $recipe = false;
+
+        try {
+            if ($request->has('id')) {
+                $recipe = Recipe::find($request->input('id'));
+                $products = DB::table('productItems')
+                              ->select(array(
+                                  'products.name AS name',
+                                  'productitems.amount',
+                                  'productitems.product_id',
+                                  'productitems.recipe_id',
+                                  'productitems.id',
+                              ))
+                              ->join('products', 'products.id', '=', 'productitems.product_id')
+                              ->where('recipe_id', '=', $request->input('id'))
+                              ->get();
+                $recipe['products'] = $products;
+            }
+
+        } catch (Exception $e) {
+
+        }
+
+        return response()->json($recipe);
+    }
+
+
+
+    public function create (Request $request) {
+
         $recipe = new Recipe();
 
         try {
@@ -47,18 +70,21 @@ class RecipeController extends Controller
                 $recipe->save();
             }
         } catch (Exception $e) {
-            $success = false;
+            $recipe = false;
         }
 
-        return response()->json(['success' => $success]);
+        return response()->json($recipe);
     }
 
-    public function update(Request $request) {
+
+
+    public function update (Request $request) {
+
         $success = true;
 
         try {
             if ($request->has('id')) {
-                $recipe = Recipe::find( $request->input('id'));
+                $recipe = Recipe::find($request->input('id'));
                 if ($request->has('name')) {
                     $recipe->name = $request->input('name');
                 }
@@ -77,13 +103,13 @@ class RecipeController extends Controller
 
 
 
+    public function destroy (Request $request) {
 
-    public function destroy(Request $request) {
         $success = true;
 
         try {
             if ($request->has('id')) {
-                $success = Recipe::destroy( $request->input('id'));
+                $success = Recipe::destroy($request->input('id'));
             }
 
         } catch (Exception $e) {

@@ -1,5 +1,5 @@
 angular.module('CompiledTemplates', []);
-angular.module('wpBlog', [
+angular.module('cook', [
     'ui.router',
     'CompiledTemplates'
 ]);

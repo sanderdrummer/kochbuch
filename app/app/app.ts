@@ -1,6 +1,6 @@
 module WP {
 
-    angular.module('wpBlog')
+    angular.module('cook')
     .config([
         '$compileProvider',
         '$httpProvider',
@@ -14,8 +14,8 @@ module WP {
         }
     ])
     // .constant('apiUrl', 'http://tobip.kochab.uberspace.de/blameItOnBernie/wp-json/wp/v2/')
-    .constant('apiUrl', 'http://localhost:3000/wordpress/wp-json/wp/v2/')
-    .component('wpApp', {
+    .constant('apiUrl', 'http://localhost:3001/kochbuch/api/listApi/public/')
+    .component('app', {
         templateUrl: 'app.html'
     })
 }
