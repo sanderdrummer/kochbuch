@@ -1,3 +1,28 @@
-EIN REZEPT
-{{ctrl.recipe}}
-<add-recipe recipe="ctrl.recipe"></add-recipe>
+<div class="fixedContainer">
+    <div ng-if="!ctrl.edit">
+        <h3>{{ctrl.recipe.name}}</h3>
+
+        <div class="flex">
+            <div class="w300">
+                <div class="borderTop p-t-1" ng-repeat="product in ctrl.recipe.products">
+                    {{product.name}} | {{product.amount}}
+                </div>
+            </div>
+            <div class="grow">
+                <div class="p-1 doLineBreaks">
+                    {{ctrl.recipe.description}}
+                </div>
+            </div>
+        </div>
+
+        <div ng-click="ctrl.toggleEdit()" class="flex">
+            <a class="card">Bearbeiten</a>
+        </div>
+    </div>
+    <div ng-if="ctrl.edit">
+        <add-recipe recipe="ctrl.recipe"></add-recipe>
+        <div ng-click="ctrl.toggleEdit()" class="flex">
+            <a class="card">zurück</a>
+        </div>
+    </div>
+</div>

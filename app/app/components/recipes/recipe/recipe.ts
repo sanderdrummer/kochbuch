@@ -5,13 +5,17 @@ module WP {
     class Recipe implements ng.IComponentController{
 
         loading:boolean;
-        recipe
+        edit:boolean;
+        recipe;
+
 
         static $inject = [
             '$stateParams',
             'recipesService'];
         constructor(private $stateParams,
-                    private recipesService:RecipesService) {}
+                    private recipesService:RecipesService) {
+            this.edit = false;
+        }
 
         $onInit() {
             if (this.$stateParams.id) {
@@ -24,6 +28,10 @@ module WP {
                         this.loading = false;
                     });
             }
+        }
+
+        toggleEdit() {
+            this.edit = !this.edit;
         }
 
     }
