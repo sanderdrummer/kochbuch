@@ -10,6 +10,7 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 
 class ListModel extends Model
 {
+    public $table = "lists";
 
     /**
      * The attributes that are mass assignable.

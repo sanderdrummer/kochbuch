@@ -1,10 +1,13 @@
-<form ng-if="!ctrl.recipe.name" ng-submit="ctrl.addRecipe(name)">
-    <input required type="text" ng-model="name">
-</form>
+<div class="fixedContainer">
 
-<form class="formGroup" ng-if="ctrl.recipe.name" ng-submit="ctrl.update()">
-    <input required type="text" ng-model="ctrl.recipe.name">
+    <form ng-if="!ctrl.recipe.name" ng-submit="ctrl.addRecipe(name)">
+        <input required type="text" ng-model="name">
+    </form>
 
-    <textarea ng-model="ctrl.recipe.description"></textarea>
-    <button type="submit">update</button>
-</form>
+    <form class="formGroup" ng-if="ctrl.recipe.name" ng-submit="ctrl.update()">
+        <input required type="text" ng-model="ctrl.recipe.name">
+
+        <textarea ng-model="ctrl.recipe.description"></textarea>
+        <button type="submit">update</button>
+    </form>
+</div>

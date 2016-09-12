@@ -956,6 +956,7 @@ button.active {
   overflow: scroll;
   position: fixed;
   z-index: 1000;
+  padding: 1.5rem;
 }
 .noScroll {
   overflow: hidden;

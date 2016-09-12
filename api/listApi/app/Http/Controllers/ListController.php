@@ -1,54 +1,95 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Http\Request;
-use App\Models\Product;
 
-class ListController extends Controller
-{
+use Illuminate\Http\Request;
+use App\Models\ListModel;
+use DB;
+
+class ListController extends Controller {
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct () {
         //
     }
 
-    public function read() {
 
-        $products = Product::all();
 
-        return response()->json($products);
+    public function read () {
+
+        $lists = ListModel::all();
+
+        return response()->json($lists);
     }
 
-    public function create(Request $request) {
-        $success = true;
-        $product = new Product();
+
+
+    public function readSingle (Request $request) {
+
+        $list = false;
+
+        try {
+            if ($request->has('id')) {
+                $list = ListModel::find($request->input('id'));
+                $products = DB::table('productItems')
+                              ->select(array(
+                                  'products.name AS name',
+                                  'productitems.amount',
+                                  'productitems.product_id',
+                                  'productitems.recipe_id',
+                                  'productitems.id',
+                              ))
+                              ->join('products', 'products.id', '=', 'productitems.product_id')
+                              ->where('list_id', '=', $request->input('id'))
+                              ->get();
+                $list['products'] = $products;
+            }
+
+        } catch (Exception $e) {
+
+        }
+
+        return response()->json($list);
+    }
+
+
+
+    public function create (Request $request) {
+
+        $list = new ListModel();
 
         try {
             if ($request->has('name')) {
-                $product->name = $request->input('name');
-                $product->save();
+                $list->name = $request->input('name');
+                $list->save();
             }
         } catch (Exception $e) {
-            $success = false;
+            $list = false;
         }
 
-        return response()->json(['success' => $success]);
+        return response()->json($list);
     }
 
-    public function update(Request $request) {
+
+
+    public function update (Request $request) {
+
         $success = true;
 
         try {
             if ($request->has('id')) {
-                $product = Product::find( $request->input('id'));
+                $list = ListModel::find($request->input('id'));
                 if ($request->has('name')) {
-                    $product->name = $request->input('name');
-                    $product->save();
+                    $list->name = $request->input('name');
                 }
+                if ($request->has('description')) {
+                    $list->description = $request->input('description');
+                }
+                $list->save();
             }
 
         } catch (Exception $e) {
@@ -58,12 +99,15 @@ class ListController extends Controller
         return response()->json(['success' => $success]);
     }
 
-    public function destroy(Request $request) {
+
+
+    public function destroy (Request $request) {
+
         $success = true;
 
         try {
             if ($request->has('id')) {
-                $success = Product::destroy( $request->input('id'));
+                $success = ListModel::destroy($request->input('id'));
             }
 
         } catch (Exception $e) {

@@ -70,3 +70,24 @@ $app->get('item/update', [
 $app->get('item/destroy', [
     'as' => 'item', 'uses' => 'ProductItemController@destroy'
 ]);
+
+// list routes
+$app->get('list', [
+    'as' => 'list', 'uses' => 'ListController@read'
+]);
+
+$app->get('list/single', [
+    'as' => 'list', 'uses' => 'ListController@readSingle'
+]);
+
+$app->get('list/create', [
+    'as' => 'list', 'uses' => 'ListController@create'
+]);
+
+$app->get('list/update', [
+    'as' => 'list', 'uses' => 'ListController@update'
+]);
+
+$app->get('list/destroy', [
+    'as' => 'list', 'uses' => 'ListController@destroy'
+]);

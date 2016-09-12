@@ -3,10 +3,10 @@ module WP {
 
     class Recipes implements ng.IComponentController{
 
-        recipes;
+        state:RecipesState;
 
-        static $inject = ['recipesService'];
-        constructor(private recipesService) {}
+        static $inject = ['recipesService', 'recipesState'];
+        constructor(private recipesService, recipesState) {}
 
         $onInit(){
             this.getRecipes();
@@ -15,7 +15,7 @@ module WP {
         getRecipes() {
             this.recipesService.get()
                 .then((res)=>{
-                   this.recipes = res.data;
+                   this.state.recipes = res.data;
                 });
         }
     }
