@@ -56,6 +56,24 @@ class ListController extends Controller {
         return response()->json($list);
     }
 
+    public function clearList (Request $request) {
+
+        $success = true;
+
+        try {
+            if ($request->has('id')) {
+                $products = DB::table('productItems')
+                              ->where('list_id', '=', $request->input('id'))
+                              ->delete();
+            }
+
+        } catch (Exception $e) {
+            $success  = false;
+        }
+
+        return response()->json($success);
+    }
+
 
 
     public function create (Request $request) {

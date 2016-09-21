@@ -22,6 +22,9 @@ $app->get('product', [
 $app->get('product/create', [
     'as' => 'product', 'uses' => 'ProductController@create'
 ]);
+$app->get('product/add', [
+    'as' => 'product', 'uses' => 'ProductController@createAndAddToList'
+]);
 
 $app->get('product/update', [
     'as' => 'product', 'uses' => 'ProductController@update'
@@ -74,6 +77,9 @@ $app->get('item/destroy', [
 // list routes
 $app->get('list', [
     'as' => 'list', 'uses' => 'ListController@read'
+]);
+$app->get('list/clear', [
+    'as' => 'list', 'uses' => 'ListController@clearList'
 ]);
 
 $app->get('list/single', [
