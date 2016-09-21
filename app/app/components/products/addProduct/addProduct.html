@@ -1,8 +1,0 @@
-<form ng-submit="addProduct.create()">
-    <input type="text" ng-model="addProduct.product.name" name="name" required>
-    <input ng-if="addProduct.recipe || addProduct.list" type="text"
-           ng-model="addProduct.product.amount"
-           name="amount"
-    required>
-    <button>neues Produkt</button>
-</form>
