@@ -1,3 +1,10 @@
 <p>
   lists works!
 </p>
+<form (submit)="addList()">
+  <input name="newList" placeholder="neue List" [(ngModel)]="newList"/>
+</form>
+<div (click)="getDetails(list)" *ngFor="let list of lists">
+  {{list.name}}
+</div>
+<app-list [list]="selectedList"></app-list>

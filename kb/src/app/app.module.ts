@@ -1,26 +1,30 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {HttpModule} from '@angular/http';
 
-import { AppComponent } from './app.component';
-import { ListsComponent } from './lists/lists.component';
-import { ListComponent } from './lists/list/list.component';
-import { ProductsComponent } from './products/products.component';
+import {AppComponent} from './app.component';
+import {ListsComponent} from './lists/lists.component';
+import {ListComponent} from './lists/list/list.component';
+import {ProductsComponent} from './products/products.component';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/toPromise';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    ListsComponent,
-    ListComponent,
-    ProductsComponent
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    HttpModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        ListsComponent,
+        ListComponent,
+        ProductsComponent
+    ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        HttpModule
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
