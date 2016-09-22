@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ListService} from "../shared/list.service";
 import {List} from "../shared/list";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
     selector: 'app-lists',
@@ -11,8 +12,12 @@ export class ListsComponent implements OnInit {
 
     lists:List[];
     selectedList:List;
-    newList:string;
-    constructor(private api:ListService) {
+    addListForm:FormGroup;
+
+    constructor(private api:ListService, private fb:FormBuilder) {
+        this.addListForm = fb.group({
+            'listName' : ['', Validators.required]
+        });
     }
 
     ngOnInit() {
@@ -26,10 +31,10 @@ export class ListsComponent implements OnInit {
         });
     }
 
-    addList() {
-        this.api.addList(this.newList).toPromise().then((list:List) => {
+    addList(listName:string): void {
+        this.api.addList(listName).toPromise().then((list:List) => {
             this.lists.push(list);
-            this.newList = '';
+            this.addListForm.reset();
         });
     }
 
@@ -39,5 +44,4 @@ export class ListsComponent implements OnInit {
             this.selectedList = list;
         });
     }
-
 }

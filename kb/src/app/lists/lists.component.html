@@ -1,8 +1,8 @@
 <p>
   lists works!
 </p>
-<form (submit)="addList()">
-  <input name="newList" placeholder="neue List" [(ngModel)]="newList"/>
+<form [formGroup]="addListForm" (submit)="addList(addListForm.value.listName)">
+  <input [formControl]="addListForm.controls['listName']" placeholder="neue Liste"/>
 </form>
 <div (click)="getDetails(list)" *ngFor="let list of lists">
   {{list.name}}

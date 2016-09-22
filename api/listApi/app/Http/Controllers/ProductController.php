@@ -66,7 +66,7 @@ class ProductController extends Controller
             $success = false;
         }
 
-        return response()->json(['success' => $success]);
+        return response()->json(['success' => $success, 'product' => $product]);
     }
 
     public function update(Request $request) {
