@@ -7,9 +7,11 @@ export class ProductLink {
     recipe_id: number;
     amount: string;
     inBasket: boolean;
+    name:string;
 
     constructor(config) {
         this.id = config.id;
+        this.name = config.name;
         this.product_id = config.product_id || 0;
         this.recipe_id = config.recipe_id || 0;
         this.amount = config.amount || '1';

@@ -61,12 +61,14 @@ class ProductController extends Controller
                 $item->product_id = $product->id;
                 $item->list_id = $request->input('list_id');
                 $item->save();
+
+                $item['name'] = $product->name;
             }
         } catch (Exception $e) {
             $success = false;
         }
 
-        return response()->json(['success' => $success, 'product' => $product]);
+        return response()->json(['success' => $success, 'item' => $item, 'product' => $product]);
     }
 
     public function update(Request $request) {

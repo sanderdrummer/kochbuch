@@ -1,3 +1,14 @@
 <p>
-  products works!
+    products works!
 </p>
+
+<form [formGroup]="addProduct" (ngSubmit)="addProductToList()" >
+    <input type="text" placeholder="Produkt" [formControl]="addProduct.controls['search']">
+    <input type="text" placeholder="Anzahl" [formControl]="addProduct.controls['amount']">
+    <input type="text" hidden [formControl]="addProduct.controls['product']">
+    <button type="submit">dazu</button>
+</form>
+
+<div (click)="selectProduct(product.id)" *ngFor="let product of filtered">
+    {{product.name}} {{product | json}}
+</div>

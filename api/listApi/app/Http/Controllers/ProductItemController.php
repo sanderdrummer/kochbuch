@@ -55,13 +55,13 @@ class ProductItemController extends Controller {
                     $item->list_id = $request->input('list_id');
                     $item->save();
                 }
-
+                $item['name'] = Product::find($item->product_id)->name;
             }
         } catch (Exception $e) {
             $success = false;
         }
 
-        return response()->json(['success' => $success]);
+        return response()->json(['success' => $success, 'item' => $item]);
     }
 
 

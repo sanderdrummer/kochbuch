@@ -1,7 +1,9 @@
-<p>
-  list works!
-</p>
+<div *ngIf="list">
+    <p>
+        list works!
+    </p>
 
-{{list | json}}
+    {{list | json}}
 
-<app-products [list]="list"></app-products>
+    <app-products [list]="list"></app-products>
+</div>
