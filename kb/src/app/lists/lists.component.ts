@@ -18,6 +18,8 @@ export class ListsComponent implements OnInit {
         this.addListForm = fb.group({
             'listName' : ['', Validators.required]
         });
+
+        this.selectedList = new List({});
     }
 
     ngOnInit() {
@@ -38,9 +40,14 @@ export class ListsComponent implements OnInit {
         });
     }
 
+    removeList(list) {
+        this.api.removeList(list.id).toPromise().then((res) => {
+            this.lists.splice(this.lists.indexOf(list),0);
+        });
+    }
+
     getDetails(list:List) {
         this.api.getList(list.id).subscribe((list) => {
-            console.log(list);
             this.selectedList = list;
         });
     }

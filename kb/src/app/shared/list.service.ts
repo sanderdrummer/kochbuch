@@ -23,4 +23,8 @@ export class ListService {
   removeList(id) {
     return this.http.get(apiUrl + 'list/destroy?id=' + id).map((config) => config.json());
   }
+
+  clearList(id) {
+    return this.http.get(apiUrl + 'list/clear?id=' + id).map((config) => config.json());
+  }
 }

@@ -30,7 +30,7 @@ export class ProductsComponent implements OnInit {
     ngOnInit() {
         this.api.getProducts().toPromise().then((res) => {
             this.products = res;
-            this.filtered = res;
+            this.filterProducts('');
         });
     }
 
@@ -44,6 +44,7 @@ export class ProductsComponent implements OnInit {
     }
 
     filterProducts(query:string) {
+        var count:number = 0;
         this.filtered = this.products.filter((product:Product) => {
             if (product && product.name && query) {
                 return product.name.toLocaleLowerCase().indexOf(query.toLocaleLowerCase()) > -1;
@@ -51,6 +52,10 @@ export class ProductsComponent implements OnInit {
                 return true;
             }
         });
+        if (this.filtered.length > 25) {
+            this.filtered = this.filtered.slice(0,25);
+        }
+
     }
 
     addProductToList() {
@@ -62,7 +67,8 @@ export class ProductsComponent implements OnInit {
                     this.addItemAndReset(res.item);
                 }
                 if (res.product) {
-                    console.log(res.product);
+                    this.products.push(new Product(res.product));
+                    this.filterProducts(this.addProduct.value.search);
                 }
             });
         }

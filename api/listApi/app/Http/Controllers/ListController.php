@@ -35,7 +35,7 @@ class ListController extends Controller {
         try {
             if ($request->has('id')) {
                 $list = ListModel::find($request->input('id'));
-                $products = DB::table('productItems')
+                $products = DB::table('productitems')
                               ->select(array(
                                   'products.name AS name',
                                   'productitems.amount',
@@ -62,7 +62,7 @@ class ListController extends Controller {
 
         try {
             if ($request->has('id')) {
-                $products = DB::table('productItems')
+                $products = DB::table('productitems')
                               ->where('list_id', '=', $request->input('id'))
                               ->delete();
             }

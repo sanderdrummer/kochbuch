@@ -1,14 +1,16 @@
-<p>
-    products works!
-</p>
-
-<form [formGroup]="addProduct" (ngSubmit)="addProductToList()" >
-    <input type="text" placeholder="Produkt" [formControl]="addProduct.controls['search']">
-    <input type="text" placeholder="Anzahl" [formControl]="addProduct.controls['amount']">
+<form class="m-t-3 form-inline" [formGroup]="addProduct" (ngSubmit)="addProductToList()" >
+    <div class="form-group">
+        <input class="form-control" type="text" placeholder="Produkt" [formControl]="addProduct.controls['search']">
+    </div>
+    <div class="form-group">
+        <input class="form-control" type="text" placeholder="Anzahl" [formControl]="addProduct.controls['amount']">
+    </div>
+    <div class="form-group">
+        <button class="form-control" type="submit">dazu</button>
+    </div>
     <input type="text" hidden [formControl]="addProduct.controls['product']">
-    <button type="submit">dazu</button>
 </form>
 
-<div (click)="selectProduct(product.id)" *ngFor="let product of filtered">
-    {{product.name}} {{product | json}}
-</div>
+<ul  class="m-t-1 list-group">
+    <li (click)="selectProduct(product.id)" *ngFor="let product of filtered" class="list-group-item">{{product.name}}</li>
+</ul>

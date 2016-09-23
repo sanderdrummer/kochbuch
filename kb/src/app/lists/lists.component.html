@@ -1,10 +1,27 @@
-<p>
-  lists works!
-</p>
-<form [formGroup]="addListForm" (submit)="addList(addListForm.value.listName)">
-  <input [formControl]="addListForm.controls['listName']" placeholder="neue Liste"/>
-</form>
-<div (click)="getDetails(list)" *ngFor="let list of lists">
-  {{list.name}}
+<div class="m-t-2 container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-lg-2">
+            <form [formGroup]="addListForm" (submit)="addList(addListForm.value.listName)">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input class="form-control"
+                               [formControl]="addListForm.controls['listName']"
+                               placeholder="neue Liste"/>
+                        <span class="input-group-btn">
+                            <button class="btn" type="submit">anlegen</button>
+                        </span>
+                    </div>
+                </div>
+            </form>
+            <ul class="list-group">
+                <li (click)="getDetails(list)" *ngFor="let list of lists"
+                    class="list-group-item">
+                    {{list.name}}
+                </li>
+            </ul>
+        </div>
+        <div class="col-sm-9 col-lg-10">
+            <app-list [list]="selectedList"></app-list>
+        </div>
+    </div>
 </div>
-<app-list [list]="selectedList"></app-list>
