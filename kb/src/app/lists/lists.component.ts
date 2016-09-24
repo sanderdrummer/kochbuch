@@ -13,6 +13,9 @@ export class ListsComponent implements OnInit {
     lists:List[];
     selectedList:List;
     addListForm:FormGroup;
+    loading: boolean;
+    error: string;
+    visible: boolean;
 
     constructor(private api:ListService, private fb:FormBuilder) {
         this.addListForm = fb.group({
@@ -24,11 +27,14 @@ export class ListsComponent implements OnInit {
 
     ngOnInit() {
         this.loadList();
+        this.visible = true;
     }
 
     loadList() {
-        this.api.getLists().subscribe((lists) => {
-            console.log(lists);
+        this.loading = true;
+        this.api.getLists()
+            .finally(() => this.loading = false)
+            .subscribe((lists) => {
             this.lists = lists;
         });
     }
@@ -50,5 +56,9 @@ export class ListsComponent implements OnInit {
         this.api.getList(list.id).subscribe((list) => {
             this.selectedList = list;
         });
+    }
+
+    toggleView() {
+        this.visible = !this.visible;
     }
 }

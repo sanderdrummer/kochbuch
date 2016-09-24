@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit, Input, ElementRef} from '@angular/core';
 import {ProductService} from "../shared/product.service";
 import {Product} from "../shared/product";
 import {FormBuilder, FormGroup, Validators, FormControl} from "@angular/forms";
@@ -17,7 +17,7 @@ export class ProductsComponent implements OnInit {
     addProduct:FormGroup;
     search;
 
-    constructor(private api: ProductService, fb:FormBuilder) {
+    constructor(private elem:ElementRef, private api: ProductService, fb:FormBuilder) {
         this.addProduct = fb.group({
             search:[''],
             product: [''],
@@ -32,6 +32,13 @@ export class ProductsComponent implements OnInit {
             this.products = res;
             this.filterProducts('');
         });
+
+        this.focusSearch();
+
+    }
+
+    focusSearch(){
+        this.elem.nativeElement.querySelector('.search').focus();
     }
 
     filterAndSelectProduct(query:string) {
@@ -85,6 +92,7 @@ export class ProductsComponent implements OnInit {
     addItemAndReset(item) {
         this.list.products.push(new ProductLink(item));
         this.addProduct.reset();
+        this.focusSearch();
     }
 
 }

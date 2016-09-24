@@ -1,6 +1,6 @@
 <form class="m-t-3 form-inline" [formGroup]="addProduct" (ngSubmit)="addProductToList()" >
     <div class="form-group">
-        <input class="form-control" type="text" placeholder="Produkt" [formControl]="addProduct.controls['search']">
+        <input class="search form-control" type="text" placeholder="Produkt" [formControl]="addProduct.controls['search']">
     </div>
     <div class="form-group">
         <input class="form-control" type="text" placeholder="Anzahl" [formControl]="addProduct.controls['amount']">
