@@ -17,8 +17,8 @@ module.exports = webpackMerge(commonConfig, {
 
   output: {
     path: helpers.root('dist'),
-    filename: '[name].[hash].js',
-    chunkFilename: '[id].[hash].chunk.js'
+    filename: '[name].js',
+    chunkFilename: '[id].chunk.js'
   },
 
   plugins: [
@@ -28,7 +28,7 @@ module.exports = webpackMerge(commonConfig, {
     // new webpack.optimize.DedupePlugin(),
 
     new webpack.optimize.UglifyJsPlugin(),
-    new ExtractTextPlugin('[name].[hash].css'),
+    new ExtractTextPlugin('[name].css'),
     new webpack.DefinePlugin({
       'process.env': {
         'APP_ENV': JSON.stringify(ENV)

@@ -28,6 +28,14 @@ export class ListComponent implements OnInit {
         });
     }
 
+    removeItem(product:ProductLink,) {
+        this.api.removeItem(product.id).toPromise().then((res:any) => {
+            if (res.success) {
+                this.list.products.splice(this.list.products.indexOf(product),1);
+            }
+        });
+    }
+
     removeList(id:number){
         if (!this.list.products.length) {
             this.api.removeList(id).toPromise().then((res:any) => {

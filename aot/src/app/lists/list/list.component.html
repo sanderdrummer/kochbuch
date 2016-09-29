@@ -16,6 +16,7 @@
                 <div (click)="addToBasket(product)" *ngFor="let product of list.products">
                     <div class="list-group-item" *ngIf="product.inBasket" >
                         {{product.name}}
+                        <span (click)="removeItem(product)" class="tag tag-default tag-pill pull-xs-right"><i class="fa fa-trash"></i></span>
                     </div>
                 </div>
             </div>

@@ -112,7 +112,7 @@ class ProductItemController extends Controller {
 
         try {
             if ($request->has('id')) {
-                $success = Product::destroy($request->input('id'));
+                $success = ProductItem::destroy($request->input('id'));
             }
 
         } catch (Exception $e) {

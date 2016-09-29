@@ -1,6 +1,5 @@
 <div class="m-t-2 container-fluid">
     <div class="row">
-        <div class="col-xs-12"><button class="btn" (click)="toggleView()">+</button></div>
         <div *ngIf="loading" class="loader"></div>
         <div *ngIf="visible" class="col-sm-4">
             <form [formGroup]="addListForm" (submit)="addList(addListForm.value.listName)">
@@ -10,7 +9,7 @@
                                [formControl]="addListForm.controls['listName']"
                                placeholder="neue Liste"/>
                         <span class="input-group-btn">
-                            <button class="btn" type="submit">anlegen</button>
+                            <button class="btn" type="submit">&nbsp;<i class="fa fa-plus"></i></button>
                         </span>
                     </div>
                 </div>
@@ -22,7 +21,8 @@
                 </li>
             </ul>
         </div>
-        <div class="col-sm-8">
+        <div class="col-sm">
+            <div class="col-xs-12"><button class="btn" (click)="toggleView()"><i class="fa fa-list"></i></button></div>
             <div class="visible-sm m-t-3"></div>
             <app-list [list]="selectedList"></app-list>
         </div>
