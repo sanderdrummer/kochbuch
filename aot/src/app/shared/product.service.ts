@@ -28,7 +28,7 @@ export class ProductService {
 
     }
 
-    addNewProductToList(name:string, amount = '1', list_id:string) {
+    addNewProductToList(name:string, amount:string = '1', list_id:number) {
         const params: string = [
             `name=${name}`,
             `amount=${amount}`,
@@ -40,6 +40,6 @@ export class ProductService {
     }
 
     deleteProduct(id:number) {
-        return this.http.get(`${apiUrl}product/destroy?id=${id}`).map((configs) => configs.json());
+        return this.http.get(apiUrl + 'product/destroy?id=' + id).map((configs) => configs.json());
     }
 }

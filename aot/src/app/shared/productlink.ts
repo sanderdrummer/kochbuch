@@ -9,7 +9,7 @@ export class ProductLink {
     inBasket: boolean;
     name:string;
 
-    constructor(config:{}) {
+    constructor(config:any) {
         this.id = config.id;
         this.name = config.name;
         this.product_id = config.product_id || 0;

@@ -12,7 +12,7 @@ export class ListService {
     return this.http.get(apiUrl + 'list').map((configs) => configs.json());
   }
 
-  getList(id:string) {
+  getList(id:number) {
     return this.http.get(apiUrl + 'list/single?id=' + id).map((config) => new List(config.json()));
   }
 
@@ -20,11 +20,11 @@ export class ListService {
     return this.http.get(apiUrl + 'list/create?name=' + name).map((config) => config.json());
   }
 
-  removeList(id:string) {
+  removeList(id:number) {
     return this.http.get(apiUrl + 'list/destroy?id=' + id).map((config) => config.json());
   }
 
-  clearList(id:string) {
+  clearList(id:number) {
     return this.http.get(apiUrl + 'list/clear?id=' + id).map((config) => config.json());
   }
 }

@@ -1,0 +1,30 @@
+<div class="m-t-2 container-fluid">
+    <div class="row">
+        <div class="col-xs-12"><button class="btn" (click)="toggleView()">+</button></div>
+        <div *ngIf="loading" class="loader"></div>
+        <div *ngIf="visible" class="col-sm-4">
+            <form [formGroup]="addListForm" (submit)="addList(addListForm.value.listName)">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input class="form-control"
+                               [formControl]="addListForm.controls['listName']"
+                               placeholder="neue Liste"/>
+                        <span class="input-group-btn">
+                            <button class="btn" type="submit">anlegen</button>
+                        </span>
+                    </div>
+                </div>
+            </form>
+            <ul class="list-group">
+                <li (click)="getDetails(list)" *ngFor="let list of lists"
+                    class="list-group-item">
+                    {{list.name}}
+                </li>
+            </ul>
+        </div>
+        <div class="col-sm-8">
+            <div class="visible-sm m-t-3"></div>
+            <app-list [list]="selectedList"></app-list>
+        </div>
+    </div>
+</div>
