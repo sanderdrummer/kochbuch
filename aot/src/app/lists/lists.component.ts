@@ -53,7 +53,7 @@ export class ListsComponent implements OnInit {
     }
 
     getDetails(list:List) {
-        this.api.getList(list.id).subscribe((list) => {
+        this.api.getList(Number(list.id)).subscribe((list) => {
             this.selectedList = list;
         });
     }

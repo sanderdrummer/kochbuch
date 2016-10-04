@@ -10,7 +10,9 @@ import {ListService} from "../../shared/list.service";
 })
 export class ListComponent implements OnInit {
     @Input() list:List;
+    showProducts:boolean;
     constructor( private api:ListService) {
+        this.showProducts = false;
     }
 
     ngOnInit() {
@@ -48,5 +50,9 @@ export class ListComponent implements OnInit {
         } else {
 
         }
+    }
+
+    toggleProducts() {
+        this.showProducts = !this.showProducts;
     }
 }
