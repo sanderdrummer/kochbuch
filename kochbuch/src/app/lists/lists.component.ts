@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {Store} from '@ngrx/store';
+import {ListsActions} from './lists.actions';
 
 @Component({
   selector: 'kb-lists',
@@ -7,9 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private store:Store) { }
 
   ngOnInit() {
+    this.store.dispatch({type: ListsActions.INIT, payload:[]});
   }
 
 }
