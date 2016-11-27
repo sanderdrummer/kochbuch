@@ -1,8 +1,8 @@
 <div class="list-group">
-  <span *ngIf="listsState.loading" class="list-group-item list-group-item-info">
+  <span *ngIf="loading" class="list-group-item list-group-item-info">
     Listen werden geladen
   </span>
-  <a (click)="selectList(list)" *ngFor="let list of listsState.lists" class="list-group-item">
+  <a (click)="selectList(list)" *ngFor="let list of state.lists" class="list-group-item">
     <p class="list-group-item-text">{{list.name}}</p>
   </a>
 </div>

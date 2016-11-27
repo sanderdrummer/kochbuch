@@ -11,6 +11,22 @@ export class ListService{
   getListDetails(id){
     const params = new URLSearchParams();
     params.set('id',id);
-    return this.http.get(Config.URL + 'list/single', { search: params }).map(res => res.json());
+    return this.http.get(Config.URL + 'list/single?', { search: params }).map(res => res.json());
+  }
+
+  addList(name:string) {
+    return this.http.get(Config.URL + 'list/create?name=' + name).map((config) => config.json());
+  }
+
+  removeList(id:number) {
+    return this.http.get(Config.URL + 'list/destroy?id=' + id).map((config) => config.json());
+  }
+
+  clearList(id:number) {
+    return this.http.get(Config.URL + 'list/clear?id=' + id).map((config) => config.json());
+  }
+
+  removeItem(id:number) {
+    return this.http.get(Config.URL + 'item/destroy?id=' + id).map((config) => config.json());
   }
 }

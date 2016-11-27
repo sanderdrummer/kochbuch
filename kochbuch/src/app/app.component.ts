@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {State} from './shared/app.state.service';
 
 @Component({
   selector: 'kb-root',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.less']
 })
 export class AppComponent {
-  title = 'kb works!';
+  constructor(public state:State){}
 }

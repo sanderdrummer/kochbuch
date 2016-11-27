@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {Store} from '@ngrx/store';
-import {ListsActions} from './lists.actions';
-import {Observable} from 'rxjs';
 import {ListsModel} from './lists.model';
 import {Router} from '@angular/router';
+import {State} from '../shared/app.state.service';
+import {ListsService} from '../lists.service';
+import {ListModel} from '../list/list.model';
 
 @Component({
   selector: 'kb-lists',
@@ -11,21 +11,28 @@ import {Router} from '@angular/router';
   styleUrls: ['./lists.component.less']
 })
 export class ListsComponent implements OnInit {
+  loading:boolean;
   listsState:ListsModel;
-  constructor(private store:Store, private router:Router) {
-    this.store.dispatch({type: ListsActions.INIT, payload:[]});
+  constructor(public state:State, public listsService:ListsService, private router:Router) {
+  }
 
-    store.select('lists').subscribe(res => {
-      this.listsState = res;
-    });
+  ngOnInit(){
+    if (!this.state.lists.length) {
+      this.loading = true;
+      this.listsService.getLists().toPromise().then((res) => {
+        this.updateList(res);
+      });
+    }
+  }
+
+  updateList(lists:ListModel[]) {
+    this.state.lists = lists;
+    this.loading = false;
   }
 
   selectList(list) {
-    this.store.dispatch({type:ListsActions.SELECT, payload:list});
+    this.state.selectedList = list;
     this.router.navigate(['list', list.id]);
-  }
-
-  ngOnInit() {
   }
 
 }
