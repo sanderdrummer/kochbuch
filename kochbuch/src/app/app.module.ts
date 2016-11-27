@@ -8,13 +8,7 @@ import { ListComponent } from './list/list.component';
 import { ProductsComponent } from './products/products.component';
 import { ListsComponent } from './lists/lists.component';
 import {routing} from './app.routing';
-import {StoreDevtoolsModule} from '@ngrx/store-devtools';
-import {StoreModule} from '@ngrx/store';
-import {listsReducer} from './lists/lists.reducer';
-import {EffectsModule} from '@ngrx/effects';
-import {ListsEffects} from './lists/lists.effects';
 import {ListsService} from './lists.service';
-import {reducer} from './app.reducer';
 
 @NgModule({
   declarations: [
@@ -27,14 +21,7 @@ import {reducer} from './app.reducer';
     BrowserModule,
     FormsModule,
     HttpModule,
-    routing,
-    StoreModule.provideStore({
-      list:listsReducer
-    }),
-    StoreModule.provideStore(reducer),
-    StoreDevtoolsModule.instrumentOnlyWithExtension(),
-    EffectsModule.run(ListsEffects)
-
+    routing
   ],
   providers: [ListsService],
   bootstrap: [AppComponent]
