@@ -8,8 +8,8 @@ import {ListsComponent} from './lists/lists.component';
 
 export const appRoutes: Routes = [
   { path: '', component: ListsComponent },
-  { path: 'list:id', component: ListComponent },
-  { path: 'list:id/products', component: ProductsComponent },
+  { path: 'list/:id', component: ListComponent },
+  { path: 'list/:id/products', component: ProductsComponent },
 ];
 
 export const appRoutingProviders: any[] = [

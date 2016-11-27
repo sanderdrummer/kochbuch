@@ -1,6 +1,8 @@
 <div class="list-group">
-  <a href="#" class="list-group-item active">
-    <h4 class="list-group-item-heading">List group item heading</h4>
-    <p class="list-group-item-text">...</p>
+  <span *ngIf="listsState.loading" class="list-group-item list-group-item-info">
+    Listen werden geladen
+  </span>
+  <a (click)="selectList(list)" *ngFor="let list of listsState.lists" class="list-group-item">
+    <p class="list-group-item-text">{{list.name}}</p>
   </a>
 </div>

@@ -14,6 +14,7 @@ import {listsReducer} from './lists/lists.reducer';
 import {EffectsModule} from '@ngrx/effects';
 import {ListsEffects} from './lists/lists.effects';
 import {ListsService} from './lists.service';
+import {reducer} from './app.reducer';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import {ListsService} from './lists.service';
     StoreModule.provideStore({
       list:listsReducer
     }),
+    StoreModule.provideStore(reducer),
     StoreDevtoolsModule.instrumentOnlyWithExtension(),
     EffectsModule.run(ListsEffects)
 

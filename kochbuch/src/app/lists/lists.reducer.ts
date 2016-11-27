@@ -1,7 +1,8 @@
 import {ListsActions} from './lists.actions';
 import {Action} from '@ngrx/store';
+import {ListsModel} from './lists.model';
 
-const initialListState = {
+const initialListState:ListsModel = {
   lists:[],
   selectedList: {},
   loading: true,
@@ -14,9 +15,13 @@ export const listsReducer = (state = initialListState, action:Action) => {
     case ListsActions.INIT:
       return state;
     case ListsActions.SET:
-      return state.lists = action.payload;
+      //noinspection TypeScriptUnresolvedFunction
+      return Object.assign({}, state, {loading:false, lists:action.payload});
     case ListsActions.RESET:
       return state;
+    case ListsActions.SELECT:
+      //noinspection TypeScriptUnresolvedFunction
+      return Object.assign({}, state, {selectedList:action.payload});
     default:
       return state;
   }
