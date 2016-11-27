@@ -1,3 +1,5 @@
+<h2>Einkaufsliste</h2>
+
 <div class="list-group">
   <span *ngIf="loading" class="list-group-item list-group-item-info">
     Listen werden geladen
@@ -6,3 +8,16 @@
     <p class="list-group-item-text">{{list.name}}</p>
   </a>
 </div>
+
+<form [formGroup]="addListForm" (submit)="addList(addListForm.value.listName)">
+  <div class="form-group">
+    <div class="input-group">
+      <input class="form-control"
+             [formControl]="addListForm.controls['listName']"
+             placeholder="neue Liste"/>
+      <span class="input-group-btn">
+                            <button class="btn" type="submit">&nbsp;<i class="fa fa-plus"></i></button>
+                        </span>
+    </div>
+  </div>
+</form>

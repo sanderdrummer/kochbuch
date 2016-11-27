@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {State} from '../shared/app.state.service';
 import {ListsService} from '../lists.service';
 import {ListModel} from '../list/list.model';
+import {Validators} from '@angular/forms';
 
 @Component({
   selector: 'kb-lists',
@@ -13,7 +14,11 @@ import {ListModel} from '../list/list.model';
 export class ListsComponent implements OnInit {
   loading:boolean;
   listsState:ListsModel;
+  addListForm;
   constructor(public state:State, public listsService:ListsService, private router:Router) {
+    this.addListForm = fb.group({
+      'listName' : ['', Validators.required]
+    });
   }
 
   ngOnInit(){

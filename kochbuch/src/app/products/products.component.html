@@ -12,5 +12,9 @@
 </form>
 
 <ul  class="m-t-1 list-group">
+  <div *ngIf="loading" class="list-group-item list-group-item-info">
+    Produkte werden geladen
+  </div>
   <li (click)="selectProduct(product.id)" *ngFor="let product of filtered" class="list-group-item">{{product.name}}</li>
 </ul>
+<button (click)="backToList()" class="btn bottom-button"> zurück zur Liste {{state.selectedList.name}} </button>

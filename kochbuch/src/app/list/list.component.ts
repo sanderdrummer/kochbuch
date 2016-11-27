@@ -19,7 +19,7 @@ export class ListComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.state.alerts = [];
   }
 
 
@@ -27,8 +27,8 @@ export class ListComponent implements OnInit {
     product.inBasket = !product.inBasket;
   }
 
-  clearList(id:number) {
-    this.listService.clearList(id).toPromise().then((res:any) => {
+  clearList() {
+    this.listService.clearList(this.state.selectedList.id).toPromise().then((res:any) => {
       if (res) {
         this.state.selectedList.products = [];
       }
@@ -43,9 +43,9 @@ export class ListComponent implements OnInit {
     });
   }
 
-  removeList(id:number){
+  removeList(){
     if (!this.state.selectedList.products.length) {
-      this.listService.removeList(id).toPromise().then((res:any) => {
+      this.listService.removeList(this.state.selectedList.id).toPromise().then((res:any) => {
         if (res) {
           this.state.selectedList = null;
         }

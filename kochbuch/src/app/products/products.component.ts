@@ -2,6 +2,7 @@ import {Component, OnInit, ElementRef} from '@angular/core';
 import {FormGroup, FormBuilder} from '@angular/forms';
 import {ProductService} from './product.service';
 import {State} from '../shared/app.state.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'kb-products',
@@ -11,8 +12,9 @@ import {State} from '../shared/app.state.service';
 export class ProductsComponent implements OnInit {
   addProduct: FormGroup;
   filtered: any[];
+  loading:boolean;
 
-  constructor(public state: State, private elem: ElementRef, private api: ProductService, fb: FormBuilder) {
+  constructor(public router:Router, public state: State, private elem: ElementRef, private api: ProductService, fb: FormBuilder) {
     this.addProduct = fb.group({
       search: [''],
       product: [''],
@@ -24,9 +26,11 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit() {
     if (!this.state.products.length) {
+      this.loading = true;
       this.api.getProducts().toPromise().then((res) => {
         this.state.products = res;
         this.filterProducts('');
+        this.loading = false;
       });
     } else {
       this.filterProducts('');
@@ -71,6 +75,7 @@ export class ProductsComponent implements OnInit {
         this.state.selectedList.id).toPromise().then((res) => {
         if (res.item) {
           this.addItemAndReset(res.item);
+          this.state.alerts = [{className:'alert-success', message:`Produkt zuletzt ${this.addProduct.value.product} erfolgreich hinzugefügt`}];
         }
         if (res.product) {
           this.state.products.push(res.product);
@@ -81,9 +86,12 @@ export class ProductsComponent implements OnInit {
   }
 
   selectProduct(id: number, amount: string = '1') {
+    this.state.alerts = [{className:'alert-info', message:`füge Produkt hinzu`}];
+
     this.api.addProductToList(amount, id, this.state.selectedList.id).toPromise().then((res) => {
       if (res.item) {
         this.addItemAndReset(res.item);
+        this.state.alerts = [{className:'alert-success', message:`Produkt ${res.item.name} erfolgreich hinzugefügt`}];
       }
     });
   }
@@ -93,4 +101,9 @@ export class ProductsComponent implements OnInit {
     this.addProduct.reset();
     this.focusSearch();
   }
+
+  backToList(){
+    this.router.navigate(['list', this.state.selectedList.id]);
+  }
+
 }
