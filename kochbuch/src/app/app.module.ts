@@ -12,13 +12,15 @@ import {ListsService} from './lists.service';
 import {State} from './shared/app.state.service';
 import {ListService} from './list/list.service';
 import {ProductService} from './products/product.service';
+import { AlertComponent } from './shared/alert/alert.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ListComponent,
     ProductsComponent,
-    ListsComponent
+    ListsComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,

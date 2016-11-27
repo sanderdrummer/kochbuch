@@ -1,0 +1,3 @@
+<div *ngFor="let alert of state.alerts" class="alert {{alert.className}}" role="alert">
+  <p [innerHTML]="alert.message"></p>
+</div>

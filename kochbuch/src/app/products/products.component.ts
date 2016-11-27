@@ -28,6 +28,8 @@ export class ProductsComponent implements OnInit {
         this.state.products = res;
         this.filterProducts('');
       });
+    } else {
+      this.filterProducts('');
     }
     this.focusSearch();
   }
