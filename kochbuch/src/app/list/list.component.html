@@ -1,13 +1,14 @@
 
   <div class="row">
     <div class="col-xs-12">
+      <a (click)="toSelection()"> zurück zur Listenübersicht</a>
       <h3>{{state.selectedList.name}}</h3>
       <h4 class="m-t-3">noch in den Korb</h4>
       <div class="list-group">
         <div *ngIf="loading" class="list-group-item list-group-item-info">
           Produkte werden geladen
         </div>
-        <div (click)="addToBasket(product)" *ngFor="let product of state.selectedList.products">
+        <div (click)="addToBasket(product)" *ngFor="let product of state.selectedList.products; trackBy: product?.id">
           <div class="list-group-item" *ngIf="!product.inBasket" >
             {{product.name}}
             <span class="tag tag-default tag-pill pull-xs-right">{{product.amount}}</span>

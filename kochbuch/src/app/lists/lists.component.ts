@@ -4,7 +4,7 @@ import {Router} from '@angular/router';
 import {State} from '../shared/app.state.service';
 import {ListsService} from '../lists.service';
 import {ListModel} from '../list/list.model';
-import {Validators} from '@angular/forms';
+import {Validators, FormBuilder} from '@angular/forms';
 
 @Component({
   selector: 'kb-lists',
@@ -13,21 +13,37 @@ import {Validators} from '@angular/forms';
 })
 export class ListsComponent implements OnInit {
   loading:boolean;
-  listsState:ListsModel;
   addListForm;
-  constructor(public state:State, public listsService:ListsService, private router:Router) {
+
+  constructor(public state:State, public listsService:ListsService, private router:Router, fb:FormBuilder) {
     this.addListForm = fb.group({
       'listName' : ['', Validators.required]
     });
   }
 
   ngOnInit(){
+    this.state.resetAlerts();
+
     if (!this.state.lists.length) {
       this.loading = true;
       this.listsService.getLists().toPromise().then((res) => {
         this.updateList(res);
       });
     }
+  }
+
+
+  addList(listName:string): void {
+    this.state.setAlert('alert-info', `Liste ${listName} wird hinzugefügt`);
+    this.listsService.addList(listName).toPromise().then((list) => {
+      if (list) {
+        this.state.setAlert('alert-success', `Liste ${listName} erfolgreich hinzugefügt`);
+        this.state.lists.push(list);
+        this.addListForm.reset();
+      }
+    }, () => {
+      this.state.setAlert('alert-danger', `Fehler beim anlegen der Liste :(`);
+    });
   }
 
   updateList(lists:ListModel[]) {
@@ -38,6 +54,10 @@ export class ListsComponent implements OnInit {
   selectList(list) {
     this.state.selectedList = list;
     this.router.navigate(['list', list.id]);
+  }
+
+  toSelection(){
+    this.router.navigate(['']);
   }
 
 }

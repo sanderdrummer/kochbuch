@@ -13,5 +13,8 @@ export class ListsService {
     getLists(){
       return this.http.get(Config.URL + 'list').map(res => res.json());
     }
+    addList(name:string) {
+      return this.http.get(Config.URL + 'list/create?name=' + name).map((config) => config.json());
+    }
 
 }

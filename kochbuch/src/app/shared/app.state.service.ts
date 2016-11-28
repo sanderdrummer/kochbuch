@@ -13,4 +13,25 @@ export class State {
     this.products = [];
     this.alerts = [];
   }
+
+  setAlert(className = 'alert-info', message) {
+    this.alerts = [{
+      className,
+      message
+    }];
+  }
+
+  pushAlert(className = 'alert-info', message) {
+    if (message) {
+      this.alerts.push({
+        className,
+        message
+      })
+    }
+
+  }
+
+  resetAlerts(){
+    this.alerts = [];
+  }
 }

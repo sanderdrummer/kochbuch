@@ -25,6 +25,8 @@ export class ProductsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.state.resetAlerts();
+
     if (!this.state.products.length) {
       this.loading = true;
       this.api.getProducts().toPromise().then((res) => {
@@ -75,7 +77,7 @@ export class ProductsComponent implements OnInit {
         this.state.selectedList.id).toPromise().then((res) => {
         if (res.item) {
           this.addItemAndReset(res.item);
-          this.state.alerts = [{className:'alert-success', message:`Produkt zuletzt ${this.addProduct.value.product} erfolgreich hinzugefügt`}];
+          this.state.setAlert('alert-success', `Produkt zuletzt ${this.addProduct.value.product} erfolgreich hinzugefügt`);
         }
         if (res.product) {
           this.state.products.push(res.product);
@@ -86,12 +88,12 @@ export class ProductsComponent implements OnInit {
   }
 
   selectProduct(id: number, amount: string = '1') {
-    this.state.alerts = [{className:'alert-info', message:`füge Produkt hinzu`}];
+    this.state.setAlert('alert-info', `füge Produkt hinzu`);
 
     this.api.addProductToList(amount, id, this.state.selectedList.id).toPromise().then((res) => {
       if (res.item) {
         this.addItemAndReset(res.item);
-        this.state.alerts = [{className:'alert-success', message:`Produkt ${res.item.name} erfolgreich hinzugefügt`}];
+        this.state.setAlert('alert-success', `Produkt ${res.item.name} erfolgreich hinzugefügt`);
       }
     });
   }
