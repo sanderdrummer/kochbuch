@@ -3,7 +3,7 @@ import {NavController, NavParams} from 'ionic-angular';
 import {FirebaseObjectObservable, AngularFire} from 'angularfire2';
 import {RecipeStore} from '../../stores/recipe.store';
 import {ParserService} from '../../providers/parser.service';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {RecipesCreateRecipePage} from '../recipes-create-recipe/recipes-create-recipe';
 import {RecipeModel} from '../../models/recipe.model';
 import {RecipesRecipePage} from '../recipes-recipe/recipes-recipe';

@@ -13,7 +13,7 @@ import {RecipesCategoriesPage} from '../pages/recipes-categories/recipes-categor
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage = RecipesPage;
+  rootPage = ListsPage;
   listsPage;
   recipesPage;
   categoriesPage;
@@ -32,6 +32,7 @@ export class MyApp {
       StatusBar.styleDefault();
       Splashscreen.hide();
       af.auth.login({ email: auth.name, password: auth.pw });
+      this.menu.open();
     });
   }
 

@@ -3,7 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import {AngularFire} from 'angularfire2';
 import {RecipeStore} from '../../stores/recipe.store';
 import {ParserService} from '../../providers/parser.service';
-import {FormGroup, FormBuilder} from '@angular/forms';
+import {FormBuilder} from '@angular/forms';
 
 /*
   Generated class for the RecipesCategories page.
