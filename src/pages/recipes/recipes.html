@@ -19,7 +19,7 @@
         Lade verfügbare Rezepte...
       </ion-item>
       <ion-item-sliding *ngFor="let recipe of store.recipes;">
-        <ion-item (click)="selectList(recipe)">
+        <ion-item (click)="selectRecipe(recipe)">
           {{ recipe.title }}
           <ion-icon name="recipe-box" item-left></ion-icon>
         </ion-item>

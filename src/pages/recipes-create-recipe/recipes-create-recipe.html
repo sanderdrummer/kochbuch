@@ -10,7 +10,7 @@
       <ion-icon name='menu'></ion-icon>
     </button>
     <ion-title>
-
+      {{title}}
     </ion-title>
   </ion-navbar>
 </ion-header>
@@ -24,7 +24,52 @@
         <ion-input type="text" formControlName="title"></ion-input>
       </ion-item>
       <ion-item>
-        <button type="submit" ion-button [disabled]="!recipeForm.valid" block>Neues Rezept anlegen</button>
+        <ion-label floating>Rezept Beschreibung</ion-label>
+        <ion-textarea autosize formControlName="description"></ion-textarea>
+      </ion-item>
+
+      <div formArrayName="products">
+        <div *ngFor="let c of recipeForm.controls.products.controls; let i = index">
+          <div [formGroupName]="i">
+            <ion-item>
+              <ion-label floating>Produkt</ion-label>
+              <ion-input type="text" formControlName="title"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label floating>Anzahl</ion-label>
+              <ion-input type="text" formControlName="amount"></ion-input>
+            </ion-item>
+          </div>
+          <ion-item>
+            <button (click)="removeItem('products', i)" type="button" ion-button>Produkt entfernen</button>
+          </ion-item>
+        </div>
+      </div>
+
+      <ion-item>
+        <button (click)="addProduct()" type="button" ion-button>Produkt hinzufügen</button>
+      </ion-item>
+
+      <div formArrayName="categories">
+        <div *ngFor="let c of recipeForm.controls.categories.controls; let i = index">
+          <div [formGroupName]="i">
+            <ion-item>
+              <ion-label floating>Kategory</ion-label>
+              <ion-input type="text" formControlName="category"></ion-input>
+            </ion-item>
+          </div>
+          <ion-item>
+            <button (click)="removeItem('categories', i)" type="button" ion-button>Kategorie entfernen</button>
+          </ion-item>
+        </div>
+      </div>
+
+      <ion-item>
+        <button (click)="addCategory()" type="button" ion-button>Kategorie hinzufügen</button>
+      </ion-item>
+
+      <ion-item>
+        <button type="submit" ion-button [disabled]="!recipeForm.valid" block>{{submitButtonLabel}}</button>
       </ion-item>
     </form>
   </ion-card>

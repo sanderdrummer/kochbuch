@@ -6,6 +6,7 @@ import {ParserService} from '../../providers/parser.service';
 import {FormBuilder} from '@angular/forms';
 import {RecipesCreateRecipePage} from '../recipes-create-recipe/recipes-create-recipe';
 import {RecipeModel} from '../../models/recipe.model';
+import {RecipesRecipePage} from '../recipes-recipe/recipes-recipe';
 
 /*
   Generated class for the Recipes page.
@@ -49,11 +50,12 @@ export class RecipesPage {
   }
 
   selectRecipe(recipe:RecipeModel) {
-    this.store.slectedRecipe = recipe;
+    this.store.selectedRecipe = recipe;
+    this.navCtrl.push(RecipesRecipePage);
   }
 
   addRecipe(){
-    this.store.slectedRecipe = null;
+    this.store.selectedRecipe = null;
     this.navCtrl.push(RecipesCreateRecipePage);
   }
 

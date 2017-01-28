@@ -6,6 +6,6 @@ import {RecipeModel} from '../models/recipe.model';
 @Injectable()
 export class RecipeStore{
   recipes: RecipeModel[];
-  slectedRecipe: RecipeModel;
+  selectedRecipe: RecipeModel;
   categories: string[];
 }

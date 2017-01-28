@@ -7,12 +7,36 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>recipes/recipe</ion-title>
+    <ion-title>{{recipe.title}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+  <ion-card>
+    <ion-list>
+      <ion-item *ngFor="let product of recipe.products">
+        {{product.title}} {{product.amount}}
+      </ion-item>
+    </ion-list>
+  </ion-card>
+  <ion-card>
+    <ion-card-content>
+      <p style="white-space: pre;">{{recipe.description}}</p>
+    </ion-card-content>
+  </ion-card>
 
+
+  <ion-fab left bottom>
+    <button (click)="edit()" ion-fab color="light">
+      <ion-icon name="brush"></ion-icon>
+    </button>
+  </ion-fab>
+
+  <ion-fab right bottom>
+    <button (click)="addToCart()" ion-fab color="primary">
+      <ion-icon name="cart"></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>
