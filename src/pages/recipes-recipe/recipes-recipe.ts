@@ -3,6 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import {RecipeStore} from '../../stores/recipe.store';
 import {RecipesCreateRecipePage} from '../recipes-create-recipe/recipes-create-recipe';
 import {RecipeModel} from '../../models/recipe.model';
+import {RecipesProductsToListPage} from '../recipes-products-to-list/recipes-products-to-list';
 
 /*
   Generated class for the RecipesRecipe page.
@@ -25,5 +26,9 @@ export class RecipesRecipePage {
   }
   edit(){
     this.navCtrl.push(RecipesCreateRecipePage);
+  }
+
+  addToCart(){
+    this.navCtrl.push(RecipesProductsToListPage);
   }
 }

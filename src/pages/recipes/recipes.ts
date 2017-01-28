@@ -26,7 +26,7 @@ export class RecipesPage {
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public store: RecipeStore,
-              af: AngularFire,
+              public af: AngularFire,
               public parser: ParserService,
               fb: FormBuilder) {
     this.recipes$ = af.database.object('/recipes');

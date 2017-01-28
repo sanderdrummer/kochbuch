@@ -15,6 +15,7 @@ import {RecipesRecipePage} from '../pages/recipes-recipe/recipes-recipe';
 import {RecipesCategoriesPage} from '../pages/recipes-categories/recipes-categories';
 import {RecipeStore} from '../stores/recipe.store';
 import {RecipesCreateRecipePage} from '../pages/recipes-create-recipe/recipes-create-recipe';
+import {RecipesProductsToListPage} from '../pages/recipes-products-to-list/recipes-products-to-list';
 
 // Must export the config
 export const firebaseConfig = {
@@ -40,7 +41,8 @@ const myFirebaseAuthConfig = {
     RecipesCategoriesPage,
     RecipesRecipePage,
     RecipesCreateRecipePage,
-    AddProductToListModalPage
+    AddProductToListModalPage,
+    RecipesProductsToListPage,
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -58,8 +60,8 @@ const myFirebaseAuthConfig = {
     RecipesCategoriesPage,
     RecipesCreateRecipePage,
     RecipesRecipePage,
-    AddProductToListModalPage
-
+    AddProductToListModalPage,
+    RecipesProductsToListPage,
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, ListStore, RecipeStore, ParserService, AuthService]
 })
