@@ -10,6 +10,11 @@ import {ListStore} from '../stores/list.store';
 import {ParserService} from '../providers/parser.service';
 import {AddProductToListModalPage} from '../pages/add-product-to-list-modal/add-product-to-list-modal';
 import {AuthService} from '../providers/auth.service';
+import {RecipesPage} from '../pages/recipes/recipes';
+import {RecipesRecipePage} from '../pages/recipes-recipe/recipes-recipe';
+import {RecipesCategoriesPage} from '../pages/recipes-categories/recipes-categories';
+import {RecipeStore} from '../stores/recipe.store';
+import {RecipesCreateRecipePage} from '../pages/recipes-create-recipe/recipes-create-recipe';
 
 // Must export the config
 export const firebaseConfig = {
@@ -31,6 +36,10 @@ const myFirebaseAuthConfig = {
     ListsPage,
     ListsListPage,
     ProductsPage,
+    RecipesPage,
+    RecipesCategoriesPage,
+    RecipesRecipePage,
+    RecipesCreateRecipePage,
     AddProductToListModalPage
   ],
   imports: [
@@ -45,10 +54,14 @@ const myFirebaseAuthConfig = {
     ListsPage,
     ListsListPage,
     ProductsPage,
+    RecipesPage,
+    RecipesCategoriesPage,
+    RecipesCreateRecipePage,
+    RecipesRecipePage,
     AddProductToListModalPage
 
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, ListStore, ParserService, AuthService]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, ListStore, RecipeStore, ParserService, AuthService]
 })
 export class AppModule {
 }

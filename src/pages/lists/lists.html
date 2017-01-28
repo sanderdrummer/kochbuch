@@ -16,6 +16,9 @@
 <ion-content padding>
   <ion-card>
     <ion-list>
+      <ion-item *ngIf="loading">
+        Lade verfügabre Einkaufslisten...
+      </ion-item>
       <ion-item-sliding *ngFor="let list of store.lists;" >
         <ion-item (click)="selectList(list)">
           {{ list.title }}
@@ -40,4 +43,3 @@
     </form>
   </ion-card>
 </ion-content>
-lists

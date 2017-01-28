@@ -21,6 +21,7 @@ export class ListsPage {
   addListForm;
   lists$: FirebaseObjectObservable<any>;
   listsSubscription;
+  loading:boolean;
   constructor(
               public navCtrl: NavController,
               public navParams: NavParams,
@@ -38,16 +39,17 @@ export class ListsPage {
   }
 
   ionViewWillLeave(){
-    console.log('test' );
     this.listsSubscription.unsubscribe();
   }
 
   ionViewWillEnter() {
+    this.loading = true;
     this.listsSubscription = this.lists$.subscribe((listObj) => {
       this.store.lists = [];
       this.parser.parseFireBaseObjToArray(listObj).forEach((listId) => {
         this.store.lists.push(new ListModel(listObj[listId]));
       });
+      this.loading = false;
     });
   }
 
