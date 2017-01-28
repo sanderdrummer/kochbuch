@@ -31,7 +31,8 @@ export class RecipesCreateRecipePage {
     this.recipeForm = fb.group({
       title: ['', Validators.required],
       description: [],
-      categories: fb.array([this.createCategory()]),
+      categories: [],
+      // categories: fb.array([this.createCategory()]),
       products: fb.array([this.createProduct()])
     });
   }
@@ -63,18 +64,12 @@ export class RecipesCreateRecipePage {
     products.forEach(() => {
       this.addProduct()
     });
-    categories.forEach(() => this.addCategory());
   }
 
   createCategory() {
     return this.fb.group({
       category: []
     })
-  }
-
-  addCategory() {
-    this.recipeForm.controls['categories'].push(this.createCategory());
-    console.log(this.recipeForm.controls.categories.controls);
   }
 
   createProduct() {

@@ -13,12 +13,39 @@
 </ion-header>
 
 <ion-content padding>
+
+  <ion-card>
+    <ion-card-header>
+      Filter
+    </ion-card-header>
+    <ion-card-content>
+      <form [formGroup]="filterForm">
+        <ion-item>
+          <ion-label floating>Suche</ion-label>
+          <ion-input type="text" formControlName="text"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Kategorie</ion-label>
+          <ion-select multiple formControlName="categories">
+            <ion-option value="{{category}}" *ngFor="let category of store.categories">{{category}}</ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <button (click)="filterForm.reset()" type="button" ion-button>
+            Filter zurücksetzen
+          </button>
+        </ion-item>
+      </form>
+    </ion-card-content>
+
+  </ion-card>
+
   <ion-card>
     <ion-list>
       <ion-item *ngIf="loading">
         Lade verfügbare Rezepte...
       </ion-item>
-      <ion-item-sliding *ngFor="let recipe of store.recipes;">
+      <ion-item-sliding *ngFor="let recipe of filteredRecipes">
         <ion-item (click)="selectRecipe(recipe)">
           {{ recipe.title }}
           <ion-icon name="recipe-box" item-left></ion-icon>

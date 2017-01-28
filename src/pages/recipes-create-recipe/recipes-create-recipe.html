@@ -50,22 +50,12 @@
         <button (click)="addProduct()" type="button" ion-button>Produkt hinzufügen</button>
       </ion-item>
 
-      <div formArrayName="categories">
-        <div *ngFor="let c of recipeForm.controls.categories.controls; let i = index">
-          <div [formGroupName]="i">
-            <ion-item>
-              <ion-label floating>Kategory</ion-label>
-              <ion-input type="text" formControlName="category"></ion-input>
-            </ion-item>
-          </div>
-          <ion-item>
-            <button (click)="removeItem('categories', i)" type="button" ion-button>Kategorie entfernen</button>
-          </ion-item>
-        </div>
-      </div>
-
       <ion-item>
-        <button (click)="addCategory()" type="button" ion-button>Kategorie hinzufügen</button>
+        <ion-select multiple formControlName="categories" >
+          <ion-option
+                      value="{{category}}"
+                      *ngFor="let category of store.categories">{{category}}</ion-option>
+        </ion-select>
       </ion-item>
 
       <ion-item>
