@@ -9,14 +9,14 @@ import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/toPromise'
 
 @Injectable()
-export class RecipeStore{
+export class RecipeStore {
   recipes: RecipeModel[];
   selectedRecipe: RecipeModel;
   categories: string[];
   recipesLoading: boolean;
-  categoriesLoading:boolean;
+  categoriesLoading: boolean;
 
-  constructor(public af:AngularFire, public parser:ParserService){
+  constructor(public af: AngularFire, public parser: ParserService) {
     this.recipes = [];
     this.selectedRecipe = null;
     this.categories = [];

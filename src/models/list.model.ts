@@ -5,7 +5,6 @@ export class ListModel {
   inBasket: ProductModel[];
 
   constructor(config:any) {
-    console.log(config );
     this.title = config.title || 'Neue Liste';
     this.forBasket = config.forBasket || [];
     this.inBasket = config.inBasket || [];

@@ -4,6 +4,7 @@ import {FormBuilder, FormArray, Validators} from '@angular/forms';
 import {AngularFire} from 'angularfire2';
 import {RecipeStore} from '../../stores/recipe.store';
 import {RecipeModel} from '../../models/recipe.model';
+import {RecipesPage} from '../recipes/recipes';
 
 /*
  Generated class for the RecipesCreateRecipe page.
@@ -90,7 +91,7 @@ export class RecipesCreateRecipePage {
 
   createOrUpdateRecipe(values: RecipeModel) {
     if (this.store.selectedRecipe) {
-      this.recipe$ = this.af.database.object(this.baseLink + this.store.selectedRecipe.title);
+      this.recipe$ = this.getSelectedFireBase();
     } else {
       this.recipe$ = this.af.database.object(this.baseLink + values.title);
     }
@@ -102,6 +103,16 @@ export class RecipesCreateRecipePage {
         console.log('fehler');
       }
     );
+  }
+
+  getSelectedFireBase() {
+    return  this.af.database.object(this.baseLink + this.store.selectedRecipe.title);
+  }
+
+  deleteRecipe() {
+    this.recipe$ = this.getSelectedFireBase();
+    this.recipe$.remove().then(() => this.navCtrl.popToRoot());
+
   }
 
   ionViewDidLoad() {
