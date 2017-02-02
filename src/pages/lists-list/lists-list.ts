@@ -19,9 +19,15 @@ import {ListModel} from '../../models/list.model';
 export class ListsListPage {
   errorMsg:string;
   listSubscribtion;
-
+  loading: {};
   constructor(public navCtrl: NavController, public navParams: NavParams, public store: ListStore,
-              public parser: ParserService, public af:AngularFire) {
+              public parser: ParserService, af:AngularFire) {
+
+    this.loading = {
+      inBasket:false,
+      forBasket:false
+    };
+
     if (this.store.selectedList && this.store.selectedList.title) {
       this.store.selectedFirebase$ = af.database.object(`/lists/${this.store.selectedList.title}`);
     } else {
@@ -52,14 +58,21 @@ export class ListsListPage {
     }
 
     this.store.selectedList[target].push(product);
-    this.store.selectedFirebase$.update(this.store.selectedList);
+    this.loading[source] = true;
+    this.store.selectedFirebase$.update(this.store.selectedList).then(() => {
+      this.loading[source] = false;
+    })
   }
 
-  removeProduct(item, index, source) {
+  removeProduct(index, source) {
     if (this.store.selectedList[source]) {
-      item.loading = true;
-      this.af.database.object(`/lists/${this.store.selectedList.title}/${source}/${index}`).remove();
+      this.store.selectedList[source].splice(index, 1);
     }
+    this.loading[source] = true;
+    this.store.selectedFirebase$.update(this.store.selectedList).then(() => {
+      this.loading[source] = false;
+    })
+
   }
 
   removeList() {
