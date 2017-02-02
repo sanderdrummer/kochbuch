@@ -43,10 +43,10 @@ export class RecipesPage {
       this.filterRecipes(values)
     });
 
+    this.loading = true;
   }
 
   ionViewWillEnter() {
-    this.loading = true;
     this.recipesSubscription = this.store.resolveRecipes().subscribe(() => {
       this.filterRecipes(this.filterForm.value);
       this.loading = false;

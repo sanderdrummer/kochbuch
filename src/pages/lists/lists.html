@@ -20,7 +20,7 @@
   <ion-card>
     <ion-list>
       <ion-item *ngIf="loading">
-        Lade verfügabre Einkaufslisten...
+        Lade verfügabre Einkaufslisten...  <ion-spinner icon="spiral"></ion-spinner>
       </ion-item>
       <ion-item-sliding *ngFor="let list of store.lists;" >
         <ion-item (click)="selectList(list)">

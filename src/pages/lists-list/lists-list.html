@@ -25,10 +25,10 @@
             {{ item.amount }}
             {{ item.title }}
             <ion-icon name="cart" item-left></ion-icon>
-
+            <ion-spinner *ngIf="item?.loading" icon="spiral"></ion-spinner>
           </ion-item>
           <ion-item-options side="right">
-            <button color="danger" ion-button (click)="removeProduct(i, 'forBasket')">
+            <button color="danger" ion-button (click)="removeProduct(item, i, 'forBasket')">
               <ion-icon name="trash"></ion-icon></button>
           </ion-item-options>
         </ion-item-sliding>

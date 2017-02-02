@@ -21,7 +21,7 @@ export class ListsListPage {
   listSubscribtion;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public store: ListStore,
-              public parser: ParserService, af:AngularFire) {
+              public parser: ParserService, public af:AngularFire) {
     if (this.store.selectedList && this.store.selectedList.title) {
       this.store.selectedFirebase$ = af.database.object(`/lists/${this.store.selectedList.title}`);
     } else {
@@ -55,13 +55,11 @@ export class ListsListPage {
     this.store.selectedFirebase$.update(this.store.selectedList);
   }
 
-  removeProduct(index, source) {
+  removeProduct(item, index, source) {
     if (this.store.selectedList[source]) {
-      this.store.selectedList[source].splice(index, 1);
+      item.loading = true;
+      this.af.database.object(`/lists/${this.store.selectedList.title}/${source}/${index}`).remove();
     }
-
-    this.store.selectedFirebase$.update(this.store.selectedList);
-
   }
 
   removeList() {

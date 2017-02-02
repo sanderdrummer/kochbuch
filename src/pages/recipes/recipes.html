@@ -46,7 +46,7 @@
   <ion-card>
     <ion-list>
       <ion-item *ngIf="loading">
-        Lade verfügbare Rezepte...
+        Lade verfügbare Rezepte... <ion-spinner icon="spiral"></ion-spinner>
       </ion-item>
       <ion-item-sliding *ngFor="let recipe of filteredRecipes">
         <ion-item (click)="selectRecipe(recipe)">
