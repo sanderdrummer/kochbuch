@@ -32,7 +32,6 @@ export class MyApp {
       StatusBar.styleDefault();
       Splashscreen.hide();
       af.auth.login({ email: auth.name, password: auth.pw });
-      this.menu.open();
     });
   }
 

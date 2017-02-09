@@ -15,7 +15,7 @@
 
 <ion-content padding>
   <form [formGroup]="searchForm">
-    <ion-searchbar formControlName="input" name="input" (ionInput)="getItems($event)"></ion-searchbar>
+    <ion-searchbar #focus="focus" [focus]="" formControlName="input" name="input" (ionInput)="getItems($event)"></ion-searchbar>
   </form>
 
   <ion-list>

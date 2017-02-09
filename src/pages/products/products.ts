@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {NavController, NavParams, ModalController} from 'ionic-angular';
 import {ListStore} from '../../stores/list.store';
 import {FirebaseObjectObservable, AngularFire} from 'angularfire2';
@@ -6,6 +6,7 @@ import {ProductModel} from '../../models/product.model';
 import {ParserService} from '../../providers/parser.service';
 import {AddProductToListModalPage} from '../add-product-to-list-modal/add-product-to-list-modal';
 import {FormControl, FormGroup} from '@angular/forms';
+import {FocusDirective} from '../../app/shared/focus';
 
 /*
  Generated class for the Products page.
@@ -18,6 +19,8 @@ import {FormControl, FormGroup} from '@angular/forms';
   templateUrl: 'products.html'
 })
 export class ProductsPage {
+  @ViewChild('focus') focus:FocusDirective;
+
   newProductTitle: string;
   filteredProducts: ProductModel[];
   products$: FirebaseObjectObservable<any>;
@@ -25,6 +28,8 @@ export class ProductsPage {
   searchForm: FormGroup;
   errorMsg: string;
   limit:number;
+
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public modalCtrl: ModalController,
               public store: ListStore, public af: AngularFire, public parser: ParserService) {
@@ -48,7 +53,10 @@ export class ProductsPage {
       });
       // init filteredProducts
       this.resetFilter();
+      this.focus.setFocus();
     });
+
+    console.log(this.focus );
   }
 
   ionViewWillLeave() {

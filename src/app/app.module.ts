@@ -16,6 +16,7 @@ import {RecipesCategoriesPage} from '../pages/recipes-categories/recipes-categor
 import {RecipeStore} from '../stores/recipe.store';
 import {RecipesCreateRecipePage} from '../pages/recipes-create-recipe/recipes-create-recipe';
 import {RecipesProductsToListPage} from '../pages/recipes-products-to-list/recipes-products-to-list';
+import {FocusDirective} from './shared/focus';
 
 // Must export the config
 export const firebaseConfig = {
@@ -43,6 +44,7 @@ const myFirebaseAuthConfig = {
     RecipesCreateRecipePage,
     AddProductToListModalPage,
     RecipesProductsToListPage,
+    FocusDirective
   ],
   imports: [
     IonicModule.forRoot(MyApp),

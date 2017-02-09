@@ -25,16 +25,13 @@ export class RecipesProductsToListPage extends ListsPage {
               public navParams: NavParams,
               public store: ListStore,
               public af: AngularFire,
-              public parser: ParserService,
               public recipeStore:RecipeStore,
               fb: FormBuilder) {
-    super(navCtrl, navParams, store, af, parser, fb);
+    super(navCtrl, navParams, store, fb);
   }
 
   addToCart(list:ListModel){
-    const selectedList$ = this.af.database.object('/lists/' + list.title);
-    list.forBasket = list.forBasket.concat(this.recipeStore.selectedRecipe.products);
-    selectedList$.update(list).then(() => {
+    this.store.addToCart(list, this.recipeStore.selectedRecipe.products).then(() => {
       this.store.selectedList = list;
       this.navCtrl.push(ListsListPage);
     });

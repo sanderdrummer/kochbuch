@@ -4,7 +4,6 @@ import {FormBuilder, FormArray, Validators} from '@angular/forms';
 import {AngularFire} from 'angularfire2';
 import {RecipeStore} from '../../stores/recipe.store';
 import {RecipeModel} from '../../models/recipe.model';
-import {RecipesPage} from '../recipes/recipes';
 
 /*
  Generated class for the RecipesCreateRecipe page.

@@ -44,19 +44,18 @@
           <div [formGroupName]="i">
             <ion-grid>
               <ion-row>
-                <ion-col width-60>
-                  <ion-item>
-                    <ion-label floating>Produkt</ion-label>
-                    <ion-input type="text" formControlName="title"></ion-input>
-                  </ion-item>
-
-                </ion-col>
                 <ion-col width-40>
                   <ion-item>
                     <ion-label floating>Anzahl</ion-label>
                     <ion-input type="text" formControlName="amount"></ion-input>
                   </ion-item>
+                </ion-col><ion-col width-60>
+                  <ion-item>
+                    <ion-label floating>Produkt</ion-label>
+                    <ion-input type="text" formControlName="title"></ion-input>
+                  </ion-item>
                 </ion-col>
+
               </ion-row>
             </ion-grid>
 

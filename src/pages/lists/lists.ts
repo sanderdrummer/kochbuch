@@ -26,12 +26,7 @@ export class ListsPage {
               public navCtrl: NavController,
               public navParams: NavParams,
               public store: ListStore,
-              af: AngularFire,
-              public parser: ParserService,
               fb: FormBuilder) {
-
-    this.lists$ = af.database.object('/lists');
-
 
     this.addListForm = fb.group({
       'listName': ['', Validators.required]
@@ -43,26 +38,20 @@ export class ListsPage {
   }
 
   ionViewWillEnter() {
-    this.loading = true;
-    this.listsSubscription = this.lists$.subscribe((listObj) => {
-      this.store.lists = [];
-      this.parser.parseFireBaseObjToArray(listObj).forEach((listId) => {
-        this.store.lists.push(new ListModel(listObj[listId]));
-      });
-      this.loading = false;
-    });
+    // this.loading = true;
+    this.listsSubscription = this.store.fetchLists();
   }
 
   selectList(list:ListModel) {
-    this.store.selectedList = list;
+    this.store.selectList(list);
     this.navCtrl.push(ListsListPage);
   }
 
   addList(title:string) {
-
-    const newList = {};
-    newList[title] = new ListModel({title});
-    this.lists$.update(newList);
-    this.addListForm.reset();
+    this.addListForm.disable();
+    this.store.addList(title).then(() => {
+      this.addListForm.enable();
+      this.addListForm.reset();
+    });
   }
 }
