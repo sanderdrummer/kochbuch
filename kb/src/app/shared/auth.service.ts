@@ -9,6 +9,6 @@ export class AuthService {
 
   constructor() {
     this.name = 'funkpunkdrummer@gmail.com';
-    this.pw = 'xoquox22';
+    this.pw = '';
   }
 }
