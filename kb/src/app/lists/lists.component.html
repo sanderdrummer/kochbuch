@@ -1,3 +1,27 @@
-<p>
-  lists works!
-</p>
+<md-card>
+  <md-list>
+    <md-list-item *ngIf="loading">
+      Lade verfügabre Einkaufslisten...
+    </md-list-item>
+    <md-list-item *ngFor="let list of (store.state$ | async)?.lists;" >
+      <span (click)="selectList(list)">
+        {{ list.title }}
+      </span>
+    </md-list-item>
+  </md-list>
+</md-card>
+
+<!--<md-card>-->
+  <!--<form [formGroup]="addListForm" (submit)="addList(addListForm.value.listName)">-->
+    <!--<ion-item [class.error]="!addListForm.valid && addListForm.touched">-->
+      <!--<ion-label floating>Neue Liste</ion-label>-->
+      <!--<ion-input type="text" value=""-->
+                 <!--[formControl]="addListForm.controls['listName']"-->
+      <!--&gt;</ion-input>-->
+    <!--</ion-item>-->
+    <!--<ion-item>-->
+      <!--<button type="submit" ion-button outline [disabled]="!addListForm.valid" block>Neue Liste anlegen</button>-->
+    <!--</ion-item>-->
+
+  <!--</form>-->
+<!--</md-card>-->

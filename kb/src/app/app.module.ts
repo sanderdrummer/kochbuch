@@ -14,6 +14,7 @@ import {RecipeStore} from './shared/stores/recipe.store';
 import {ProductsStore} from './shared/stores/products.store';
 import {ListStore} from './shared/stores/list.store';
 import {AuthProviders, AuthMethods, AngularFireModule} from 'angularfire2';
+import {ParserService} from './shared/parser.service';
 // Must export the config
 
 export const firebaseConfig = {
@@ -46,7 +47,7 @@ const myFirebaseAuthConfig = {
     AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
     MaterialModule.forRoot(),
   ],
-  providers: [ListStore,ProductsStore,RecipeStore],
+  providers: [ParserService, ListStore,ProductsStore,RecipeStore],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

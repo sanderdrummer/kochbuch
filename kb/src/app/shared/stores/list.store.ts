@@ -13,7 +13,7 @@ export class ListStore {
   selectedList: ListModel;
   selectedFirebase$: FirebaseObjectObservable<any>;
   url:string;
-  lists$: BehaviorSubject<ListModel[]>;
+  state$: BehaviorSubject<any>;
   listsFirebase$: FirebaseObjectObservable<any>;
 
   constructor(public parser: ParserService, public af: AngularFire) {
@@ -24,7 +24,8 @@ export class ListStore {
     this.selectedFirebase$ = null;
     this.url = '/lists';
     this.listsFirebase$ = this.af.database.object(this.url);
-    this.lists$ = new BehaviorSubject([]);
+    this.state$ = new BehaviorSubject({});
+    this.fetchLists();
   }
 
   fetchLists() {
@@ -33,7 +34,7 @@ export class ListStore {
       this.parser.parseFireBaseObjToArray(listObj).forEach((listId) => {
         this.lists.push(new ListModel(listObj[listId]));
       });
-      this.lists$.next(this.lists);
+      this.state$.next({lists:this.lists});
     });
   }
 
