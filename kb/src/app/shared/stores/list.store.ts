@@ -3,7 +3,6 @@ import {ProductModel} from '../models/product.model';
 import {ListModel} from '../models/list.model';
 import {FirebaseObjectObservable, AngularFire} from 'angularfire2';
 import {BehaviorSubject} from 'rxjs';
-import {FormGroup} from '@angular/forms';
 import {ParserService} from '../parser.service';
 
 @Injectable()

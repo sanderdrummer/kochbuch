@@ -4,9 +4,9 @@
 import {Injectable} from '@angular/core';
 import {RecipeModel} from '../models/recipe.model';
 import {AngularFire} from 'angularfire2';
-import {ParserService} from '../providers/parser.service';
 import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/toPromise'
+import {ParserService} from '../parser.service';
 
 @Injectable()
 export class RecipeStore {

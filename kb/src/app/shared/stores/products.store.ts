@@ -5,7 +5,7 @@ import {Injectable} from '@angular/core';
 import {ProductModel} from '../models/product.model';
 import {BehaviorSubject} from 'rxjs';
 import {AngularFire} from 'angularfire2';
-import {ParserService} from '../providers/parser.service';
+import {ParserService} from '../parser.service';
 @Injectable()
 export class ProductsStore {
 
