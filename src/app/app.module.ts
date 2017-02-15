@@ -17,6 +17,7 @@ import {RecipeStore} from '../stores/recipe.store';
 import {RecipesCreateRecipePage} from '../pages/recipes-create-recipe/recipes-create-recipe';
 import {RecipesProductsToListPage} from '../pages/recipes-products-to-list/recipes-products-to-list';
 import {FocusDirective} from './shared/focus';
+import {ProductsStore} from '../stores/products.store';
 
 // Must export the config
 export const firebaseConfig = {
@@ -65,7 +66,7 @@ const myFirebaseAuthConfig = {
     AddProductToListModalPage,
     RecipesProductsToListPage,
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, ListStore, RecipeStore, ParserService, AuthService]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, ProductsStore, ListStore, RecipeStore, ParserService, AuthService]
 })
 export class AppModule {
 }
