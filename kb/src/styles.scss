@@ -1,1 +1,28 @@
 /* You can add global styles to this file, and also import other style files */
+.flex {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.grow {
+  flex-grow: 1;
+}
+
+.m-1 {
+  margin: 0.5rem;
+}
+.p-1 {
+  padding: 0.5rem;
+}
+
+.w100 {
+  width: 100%;
+}
+html, body, kb-root {
+  height: 100%;
+  display: block;
+}
