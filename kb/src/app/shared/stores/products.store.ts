@@ -10,21 +10,23 @@ import {ParserService} from '../parser.service';
 export class ProductsStore {
 
   products$;
-  state$:BehaviorSubject<ProductsState>;
-  state:ProductsState;
+  state$: BehaviorSubject<ProductsState>;
+  state: ProductsState;
+  limit;
+  baseUrl: string;
 
-  baseUrl:string;
-
-  constructor(private af:AngularFire, private parser:ParserService) {
+  constructor(private af: AngularFire, private parser: ParserService) {
 
     this.baseUrl = '/products';
 
     this.products$ = af.database.object('/products');
-
+    this.limit = 25;
 
     this.state = {
+      query:'',
       products: [],
-      selectedProduct: null
+      selectedProduct: null,
+      filteredProducts: []
     };
 
 
@@ -33,26 +35,48 @@ export class ProductsStore {
     this.fetchProducts()
   }
 
-  fetchProducts(){
+  fetchProducts() {
     this.products$.subscribe((productsObj) => {
       const products = [];
       this.parser.parseFireBaseObjToArray(productsObj).forEach((id) => {
         products.push(new ProductModel(productsObj[id]));
       });
 
+      // this.state.products = products;
+
       this.state$.next(Object.assign(this.state, {products}));
+      this.updateFilteredProducts(this.state.query);
     });
   }
 
-  selectProduct(selectedProduct){
+  filterProducts(query) {
+    if (query && query.trim().length) {
+      return this.state.products.filter((item) => {
+        return (item && item.title.toLowerCase().indexOf(query.toLowerCase()) > -1);
+      });
+    } else {
+      return this.state.products;
+    }
+  }
+
+  updateFilteredProducts(query) {
+    const limitedProducts = this.filterProducts(query);
+    limitedProducts.sort((a, b) => {
+      return b.popularity - a.popularity;
+    });
+    this.state$.next(Object.assign(this.state, {filteredProducts: limitedProducts.slice(0, this.limit)}));
+  }
+
+
+  selectProduct(selectedProduct) {
     this.state$.next(Object.assign(this.state, {selectedProduct}));
   }
 
-  addProduct(product){
+  addProduct(product) {
 
   }
 
-  editProduct(){
+  editProduct() {
 
   }
 
@@ -63,6 +87,8 @@ export class ProductsStore {
 }
 
 interface ProductsState {
+  query:string,
   products: ProductModel[],
-  selectedProduct:ProductModel
+  selectedProduct: ProductModel,
+  filteredProducts: ProductModel[]
 }

@@ -4,9 +4,13 @@
 import {Routes, RouterModule} from '@angular/router';
 import {ListComponent} from './lists/list/list.component';
 import {ListsComponent} from './lists/lists.component';
+import {ProductsComponent} from './products/products.component';
+import {AddProductToListComponent} from './lists/list/add-product-to-list/add-product-to-list.component';
 
 export const appRoutes: Routes = [
   {path: '', component: ListsComponent},
+  {path: 'list/:title', component: ListComponent},
+  {path: 'list/:title/add', component: AddProductToListComponent},
   {path: 'recipes', loadChildren: 'app/recipes/recipes.module#RecipesModule'}
 
 ];

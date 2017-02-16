@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {FirebaseObjectObservable} from 'angularfire2';
 import {ListStore} from '../shared/stores/list.store';
-import {FormBuilder, Validators} from '@angular/forms';
+import {FormBuilder, Validators, FormGroup} from '@angular/forms';
 import {ListModel} from '../shared/models/list.model';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'kb-lists',
@@ -10,11 +11,10 @@ import {ListModel} from '../shared/models/list.model';
   styleUrls: ['./lists.component.scss']
 })
 export class ListsComponent implements OnInit {
-  addListForm;
-  lists$: FirebaseObjectObservable<any>;
-  listsSubscription;
+  addListForm:FormGroup;
   loading:boolean;
   constructor(
+    private router:Router,
     public store: ListStore,
     fb: FormBuilder) {
 
@@ -23,16 +23,13 @@ export class ListsComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
-  ngOnDestroy(){
-    this.listsSubscription.unsubscribe();
-
-  }
+  ngOnDestroy(){}
 
   selectList(list:ListModel) {
     this.store.selectList(list);
+    this.router.navigate(['list', list.title]);
   }
 
   addList(title:string) {

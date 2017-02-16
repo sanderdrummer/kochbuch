@@ -3,25 +3,22 @@
     <md-list-item *ngIf="loading">
       Lade verfügabre Einkaufslisten...
     </md-list-item>
-    <md-list-item *ngFor="let list of (store.state$ | async)?.lists;" >
-      <span (click)="selectList(list)">
-        {{ list.title }}
-      </span>
+    <md-list-item (click)="selectList(list)" *ngFor="let list of (store.state$ | async)?.lists;">
+      <md-icon>list</md-icon>
+      <p class="grow">{{ list.title }} </p>
+      <md-icon (click)="store.removeList(list)">delete forever</md-icon>
     </md-list-item>
   </md-list>
 </md-card>
 
-<!--<md-card>-->
-  <!--<form [formGroup]="addListForm" (submit)="addList(addListForm.value.listName)">-->
-    <!--<ion-item [class.error]="!addListForm.valid && addListForm.touched">-->
-      <!--<ion-label floating>Neue Liste</ion-label>-->
-      <!--<ion-input type="text" value=""-->
-                 <!--[formControl]="addListForm.controls['listName']"-->
-      <!--&gt;</ion-input>-->
-    <!--</ion-item>-->
-    <!--<ion-item>-->
-      <!--<button type="submit" ion-button outline [disabled]="!addListForm.valid" block>Neue Liste anlegen</button>-->
-    <!--</ion-item>-->
-
-  <!--</form>-->
-<!--</md-card>-->
+<md-card>
+  <form [formGroup]="addListForm" (submit)="store.addList(addListForm.value.listName)">
+    <md-input-container class="w100">
+      <input class="w100" md-input formControlName="listName" type="text" placeholder="Neue Liste">
+    </md-input-container>
+    <button md-raised-button type="submit" [disabled]="!addListForm.valid">
+      <md-icon>add</md-icon>
+      Neue Liste anlegen
+    </button>
+  </form>
+</md-card>

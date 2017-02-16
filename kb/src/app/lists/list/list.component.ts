@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import {ListStore} from '../../shared/stores/list.store';
+import {ActivatedRoute} from '@angular/router';
+import {ListModel} from '../../shared/models/list.model';
+import {loadavg} from 'os';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'kb-list',
@@ -7,9 +12,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListComponent implements OnInit {
 
-  constructor() { }
+  routeSubscribtion;
+  storeSubscribtion;
+  list:ListModel;
+  loading:boolean;
+  constructor(private route:ActivatedRoute, public store:ListStore) {
 
-  ngOnInit() {
+    this.list = new ListModel({});
+    this.storeSubscribtion = store.state$.subscribe((state) => {
+      if (state.selectedList) {
+        this.list = state.selectedList;
+        this.loading = state.loading;
+      } else {
+        const title = this.route.snapshot.params['title'];
+        this.store.setSelectedListByTitle(title);
+      }
+    });
   }
 
+  ngOnInit() {}
+
+  ngOnDestroy(){
+    this.storeSubscribtion.unsubscribe();
+  }
 }

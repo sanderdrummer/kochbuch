@@ -15,7 +15,7 @@ export class ListStore {
   url:string;
   state$: BehaviorSubject<any>;
   listsFirebase$: FirebaseObjectObservable<any>;
-
+  state:any;
   constructor(public parser: ParserService, public af: AngularFire) {
     this.products = [];
     this.lists = [];
@@ -24,7 +24,12 @@ export class ListStore {
     this.selectedFirebase$ = null;
     this.url = '/lists';
     this.listsFirebase$ = this.af.database.object(this.url);
-    this.state$ = new BehaviorSubject({});
+    this.state = {
+      loading:false,
+      lists: [],
+      selectedList: null
+    };
+    this.state$ = new BehaviorSubject(this.state);
     this.fetchLists();
   }
 
@@ -34,7 +39,11 @@ export class ListStore {
       this.parser.parseFireBaseObjToArray(listObj).forEach((listId) => {
         this.lists.push(new ListModel(listObj[listId]));
       });
-      this.state$.next({lists:this.lists});
+
+      this.state$.next(Object.assign(this.state,{
+        lists:this.lists,
+        loading:false,
+      }));
     });
   }
 
@@ -45,12 +54,62 @@ export class ListStore {
   }
 
   selectList(newList: ListModel) {
-    this.selectedList = newList;
+    this.state$.next(Object.assign(this.state, {selectedList:newList}));
+  }
+
+  getFireBaseOfList(list:ListModel) {
+    return this.af.database.object('/lists/' + list.title);
   }
 
   addToCart(list:ListModel, products:any[]) {
-    const selectedList$ = this.af.database.object('/lists/' + list.title);
+    const selectedList$ = this.getFireBaseOfList(list);
     list.forBasket = list.forBasket.concat(products);
     return selectedList$.update(list);
+  }
+
+  removeList(list:ListModel){
+    const selectedList$ = this.getFireBaseOfList(list);
+    selectedList$.remove();
+  }
+
+  removeProductFromList(index:number, source:string){
+    const selectedList$ = this.getFireBaseOfList(this.state.selectedList);
+
+    if (this.state.selectedList[source]) {
+      this.state.selectedList[source].splice(index, 1);
+    }
+
+    this.state$.next(Object.assign(this.state, {loading:true}));
+    selectedList$.update(this.state.selectedList);
+  }
+
+  swapProductBetweenLists(product, index, source, target) {
+    const selectedList$ = this.getFireBaseOfList(this.state.selectedList);
+
+    if (this.state.selectedList[source]) {
+      this.state.selectedList[source].splice(index, 1);
+    }
+    if (!this.state.selectedList[target]) {
+      this.state.selectedList[target] = [];
+    }
+
+    this.state.selectedList[target].push(product);
+    this.state$.next(Object.assign(this.state, {loading:true}));
+    selectedList$.update(this.state.selectedList);
+  }
+
+  clearSelectedList(){
+    const selectedList$ = this.getFireBaseOfList(this.state.selectedList);
+    this.state.selectedList.forBasket = [];
+    this.state.selectedList.inBasket = [];
+    this.state$.next(Object.assign(this.state, {loading:true}));
+    selectedList$.update(this.state.selectedList);
+  }
+
+  setSelectedListByTitle(title:string){
+        const selectedList = this.lists.find(list => list.title === title);
+        if (selectedList) {
+          this.state$.next(Object.assign(this.state, {selectedList}));
+        }
   }
 }

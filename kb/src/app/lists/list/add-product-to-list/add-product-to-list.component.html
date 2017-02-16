@@ -1,3 +1,17 @@
-<p>
-  add-product-to-list works!
-</p>
+<md-card>
+  <md-input-container class="w100">
+    <input class="grow" md-input placeholder="Suche" [formControl]="searchControl" type="search">
+  </md-input-container>
+</md-card>
+
+<md-card class="mt-1">
+  <md-list>
+    <md-list-item (click)="selectList(product)" *ngFor="let product of (store.state$ | async)?.filteredProducts;">
+      <md-icon>product</md-icon>
+      <p class="grow">{{ product.title }} </p>
+      <md-icon (click)="store.removeList(product)">delete forever</md-icon>
+    </md-list-item>
+  </md-list>
+</md-card>
+
+<button md-raised-button type="button" *ngIf="searchControl?.value?.length">{{searchControl.value}}</button>
