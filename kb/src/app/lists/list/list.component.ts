@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ElementRef} from '@angular/core';
 import {ListStore} from '../../shared/stores/list.store';
 import {ActivatedRoute} from '@angular/router';
 import {ListModel} from '../../shared/models/list.model';
@@ -14,9 +14,16 @@ export class ListComponent implements OnInit {
 
   routeSubscribtion;
   storeSubscribtion;
-  list:ListModel;
-  loading:boolean;
-  constructor(private route:ActivatedRoute, public store:ListStore) {
+  list: ListModel;
+  loading: boolean;
+  isVisible: boolean;
+
+  constructor(private route: ActivatedRoute, public store: ListStore) {
+    this.isVisible = true;
+    this.route.url.subscribe((url) => {
+      this.isVisible = true;
+      document.body.scrollTop = 0;
+    });
 
     this.list = new ListModel({});
     this.storeSubscribtion = store.state$.subscribe((state) => {
@@ -30,9 +37,14 @@ export class ListComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  toggleIsVisible() {
+    this.isVisible = false;
+  }
 
-  ngOnDestroy(){
+  ngOnInit() {
+  }
+
+  ngOnDestroy() {
     this.storeSubscribtion.unsubscribe();
   }
 }

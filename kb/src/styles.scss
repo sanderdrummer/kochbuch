@@ -5,12 +5,24 @@
   flex-direction: row;
 }
 
+.flex.is-row {
+  flex-direction: row;
+}
+
+.flex.is-column{
+  flex-direction: column;
+}
+
 .flex-wrap {
   flex-wrap: wrap;
 }
 
 .grow {
   flex-grow: 1;
+}
+
+.mt-1 {
+  margin-top: 1rem;
 }
 
 .m-1 {
@@ -25,5 +37,4 @@
 }
 html, body, kb-root {
   height: 100%;
-  display: block;
 }

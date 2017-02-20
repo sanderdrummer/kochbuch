@@ -9,8 +9,9 @@ import {AddProductToListComponent} from './lists/list/add-product-to-list/add-pr
 
 export const appRoutes: Routes = [
   {path: '', component: ListsComponent},
-  {path: 'list/:title', component: ListComponent},
-  {path: 'list/:title/add', component: AddProductToListComponent},
+  {path: 'list/:title', component: ListComponent, children: [
+    {path: 'add', component: AddProductToListComponent},
+  ]},
   {path: 'recipes', loadChildren: 'app/recipes/recipes.module#RecipesModule'}
 
 ];

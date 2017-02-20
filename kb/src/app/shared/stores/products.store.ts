@@ -6,6 +6,7 @@ import {ProductModel} from '../models/product.model';
 import {BehaviorSubject} from 'rxjs';
 import {AngularFire} from 'angularfire2';
 import {ParserService} from '../parser.service';
+import {FormControl, Form} from '@angular/forms';
 @Injectable()
 export class ProductsStore {
 
@@ -72,16 +73,26 @@ export class ProductsStore {
     this.state$.next(Object.assign(this.state, {selectedProduct}));
   }
 
+
+
   addProduct(product) {
+    const newProduct = new ProductModel({title: product});
+    const fireBaseEntry = {};
 
+    fireBaseEntry[product] = newProduct;
+
+    this.state$.next(Object.assign(this.state, {
+      selectedProduct: newProduct,
+      query: '',
+    }));
+    return this.products$.update(fireBaseEntry).then(() => {
+      return newProduct;
+    });
   }
 
-  editProduct() {
-
-  }
-
-  deletProduct() {
-
+  removeProduct(title) {
+    this.state$.next(Object.assign(this.state, {selectedProduct:null}));
+    return this.af.database.object(this.baseUrl + '/' + title).remove();
   }
 
 }

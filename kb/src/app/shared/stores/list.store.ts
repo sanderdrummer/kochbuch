@@ -67,6 +67,15 @@ export class ListStore {
     return selectedList$.update(list);
   }
 
+  addProductWithAmountToList(amount:string, product:ProductModel) {
+    const selectedList$ = this.getFireBaseOfList(this.state.selectedList);
+
+    product.amount = amount;
+    this.state.selectedList.forBasket.push(product);
+
+    return selectedList$.update(this.state.selectedList);
+  }
+
   removeList(list:ListModel){
     const selectedList$ = this.getFireBaseOfList(list);
     selectedList$.remove();
