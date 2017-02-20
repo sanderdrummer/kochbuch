@@ -6,6 +6,6 @@ export class KbPage {
   }
 
   getParagraphText() {
-    return element(by.css('kb-root h1')).getText();
+    return element(by.css('hv-root h1')).getText();
   }
 }

@@ -1,6 +1,6 @@
 import { KbPage } from './app.po';
 
-describe('kb App', function() {
+describe('kb App', () => {
   let page: KbPage;
 
   beforeEach(() => {
@@ -9,6 +9,6 @@ describe('kb App', function() {
 
   it('should display message saying app works', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('kb works!');
+    expect(page.getParagraphText()).toEqual('hv works!');
   });
 });
