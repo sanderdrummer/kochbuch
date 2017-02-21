@@ -4,16 +4,16 @@
 import {Injectable} from '@angular/core';
 import {ProductModel} from '../models/product.model';
 import {BehaviorSubject} from 'rxjs';
-import {AngularFire} from 'angularfire2';
+import {AngularFire, FirebaseObjectObservable} from 'angularfire2';
 import {ParserService} from '../parser.service';
 import {FormControl, Form} from '@angular/forms';
 @Injectable()
 export class ProductsStore {
 
-  products$;
+  products$:FirebaseObjectObservable<any>;
   state$: BehaviorSubject<ProductsState>;
   state: ProductsState;
-  limit;
+  limit:number;
   baseUrl: string;
 
   constructor(private af: AngularFire, private parser: ParserService) {
@@ -42,8 +42,6 @@ export class ProductsStore {
       this.parser.parseFireBaseObjToArray(productsObj).forEach((id) => {
         products.push(new ProductModel(productsObj[id]));
       });
-
-      // this.state.products = products;
 
       this.state$.next(Object.assign(this.state, {products}));
       this.updateFilteredProducts(this.state.query);

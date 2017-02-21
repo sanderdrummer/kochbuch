@@ -1,16 +1,19 @@
-
-:host{
+:host {
   min-width: 40%;
+  z-index: 1;
+  box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.3);
+  md-sidenav {
+    width: 80%;
+  }
 }
 
-
-.back-fab{
+.back-fab {
   position: absolute;
   top: 25px;
   right: 25px;
   z-index: 2000;
 }
 
-.relative{
+.relative {
   position: relative;
 }

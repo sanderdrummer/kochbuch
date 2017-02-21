@@ -15,6 +15,8 @@ import {ProductsStore} from './shared/stores/products.store';
 import {ListStore} from './shared/stores/list.store';
 import {AuthProviders, AuthMethods, AngularFireModule} from 'angularfire2';
 import {ParserService} from './shared/parser.service';
+import {AddAmountToProductComponent} from './lists/list/add-amount-to-product/add-amount-to-product.component';
+import {FlexLayoutModule} from '@angular/flex-layout';
 // Must export the config
 
 export const firebaseConfig = {
@@ -37,6 +39,7 @@ const myFirebaseAuthConfig = {
     ListComponent,
     ProductsComponent,
     AddProductToListComponent,
+    AddAmountToProductComponent
   ],
   imports: [
     BrowserModule,

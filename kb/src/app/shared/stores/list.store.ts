@@ -4,28 +4,20 @@ import {ListModel} from '../models/list.model';
 import {FirebaseObjectObservable, AngularFire} from 'angularfire2';
 import {BehaviorSubject} from 'rxjs';
 import {ParserService} from '../parser.service';
+import {ListStateInterface} from './list-state.interface';
 
 @Injectable()
 export class ListStore {
-  products: ProductModel[];
-  lists: ListModel[];
-  selectedProduct: ProductModel;
-  selectedList: ListModel;
-  selectedFirebase$: FirebaseObjectObservable<any>;
-  url:string;
-  state$: BehaviorSubject<any>;
+  url: string;
+  state$: BehaviorSubject<ListStateInterface>;
   listsFirebase$: FirebaseObjectObservable<any>;
-  state:any;
+  state: ListStateInterface;
+
   constructor(public parser: ParserService, public af: AngularFire) {
-    this.products = [];
-    this.lists = [];
-    this.selectedProduct = null;
-    this.selectedList = null;
-    this.selectedFirebase$ = null;
     this.url = '/lists';
     this.listsFirebase$ = this.af.database.object(this.url);
     this.state = {
-      loading:false,
+      loading: false,
       lists: [],
       selectedList: null
     };
@@ -35,39 +27,39 @@ export class ListStore {
 
   fetchLists() {
     this.listsFirebase$.subscribe((listObj) => {
-      this.lists = [];
+      const lists = [];
       this.parser.parseFireBaseObjToArray(listObj).forEach((listId) => {
-        this.lists.push(new ListModel(listObj[listId]));
+        lists.push(new ListModel(listObj[listId]));
       });
 
-      this.state$.next(Object.assign(this.state,{
-        lists:this.lists,
-        loading:false,
+      this.state$.next(Object.assign(this.state, {
+        lists: lists,
+        loading: false,
       }));
     });
   }
 
-  addList(title:string){
+  addList(title: string) {
     const newList = {};
     newList[title] = new ListModel({title});
     return this.listsFirebase$.update(newList);
   }
 
   selectList(newList: ListModel) {
-    this.state$.next(Object.assign(this.state, {selectedList:newList}));
+    this.state$.next(Object.assign(this.state, {selectedList: newList}));
   }
 
-  getFireBaseOfList(list:ListModel) {
+  getFireBaseOfList(list: ListModel) {
     return this.af.database.object('/lists/' + list.title);
   }
 
-  addToCart(list:ListModel, products:any[]) {
+  addToCart(list: ListModel, products: any[]) {
     const selectedList$ = this.getFireBaseOfList(list);
     list.forBasket = list.forBasket.concat(products);
     return selectedList$.update(list);
   }
 
-  addProductWithAmountToList(amount:string, product:ProductModel) {
+  addProductWithAmountToList(amount: string, product: ProductModel) {
     const selectedList$ = this.getFireBaseOfList(this.state.selectedList);
 
     product.amount = amount;
@@ -76,19 +68,19 @@ export class ListStore {
     return selectedList$.update(this.state.selectedList);
   }
 
-  removeList(list:ListModel){
+  removeList(list: ListModel) {
     const selectedList$ = this.getFireBaseOfList(list);
     selectedList$.remove();
   }
 
-  removeProductFromList(index:number, source:string){
+  removeProductFromList(index: number, source: string) {
     const selectedList$ = this.getFireBaseOfList(this.state.selectedList);
 
     if (this.state.selectedList[source]) {
       this.state.selectedList[source].splice(index, 1);
     }
 
-    this.state$.next(Object.assign(this.state, {loading:true}));
+    this.state$.next(Object.assign(this.state, {loading: true}));
     selectedList$.update(this.state.selectedList);
   }
 
@@ -103,22 +95,23 @@ export class ListStore {
     }
 
     this.state.selectedList[target].push(product);
-    this.state$.next(Object.assign(this.state, {loading:true}));
+    this.state$.next(Object.assign(this.state, {loading: true}));
     selectedList$.update(this.state.selectedList);
   }
 
-  clearSelectedList(){
+  clearSelectedList() {
     const selectedList$ = this.getFireBaseOfList(this.state.selectedList);
     this.state.selectedList.forBasket = [];
     this.state.selectedList.inBasket = [];
-    this.state$.next(Object.assign(this.state, {loading:true}));
+    this.state$.next(Object.assign(this.state, {loading: true}));
     selectedList$.update(this.state.selectedList);
   }
 
-  setSelectedListByTitle(title:string){
-        const selectedList = this.lists.find(list => list.title === title);
-        if (selectedList) {
-          this.state$.next(Object.assign(this.state, {selectedList}));
-        }
+  setSelectedListByTitle(title: string) {
+    const selectedList = this.state.lists.find(list => list.title === title);
+    if (selectedList) {
+      this.state$.next(Object.assign(this.state, {selectedList}));
+    }
   }
 }
+

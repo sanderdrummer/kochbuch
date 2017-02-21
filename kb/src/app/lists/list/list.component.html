@@ -1,7 +1,14 @@
-<div class="w100">
-  <h1>{{list?.title}}</h1>
-  <div class="flex is-column">
-    <md-card class="grow">
+<md-sidenav-container class="grow">
+
+  <md-sidenav mode="over" #sidenav>
+    <router-outlet></router-outlet>
+  </md-sidenav>
+  <div class="flex grow is-column">
+    <md-card>
+      <h1>{{list?.title}}</h1>
+    </md-card>
+
+    <md-card>
       Noch in den Einkaufskorb
       <md-list>
         <md-list-item *ngFor="let item of list?.forBasket; let i = index">
@@ -17,7 +24,7 @@
       </md-list>
     </md-card>
 
-    <md-card class="grow mt-1">
+    <md-card class="mt-1">
       Schon dabei
       <md-list>
         <md-list-item *ngFor="let item of list?.inBasket; let i = index">
@@ -33,14 +40,15 @@
       </md-list>
     </md-card>
 
-    <a class="add-fab" [routerLink]="['add']" (click)="toggleIsVisible()" md-fab color="primary">
+    <a class="add-fab" [routerLink]="['add']" (click)="toggleIsVisible();sidenav.toggle()" md-fab color="primary">
       <md-icon>add</md-icon>
     </a>
     <button (click)="store.clearSelectedList()" md-fab>
       <md-icon name="cart">clear</md-icon>
     </button>
-  </div>
-</div>
-<router-outlet></router-outlet>
 
+  </div>
+
+
+</md-sidenav-container>
 

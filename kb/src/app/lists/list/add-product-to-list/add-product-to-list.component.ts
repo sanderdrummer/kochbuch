@@ -3,6 +3,7 @@ import {ProductsStore} from '../../../shared/stores/products.store';
 import {FormControl} from '@angular/forms';
 import {MdSidenav} from '@angular/material';
 import {Location} from '@angular/common';
+import {Router, ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'kb-add-product-to-list',
@@ -11,27 +12,27 @@ import {Location} from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddProductToListComponent implements OnInit {
-  constructor(public store: ProductsStore, private location:Location) {
+
+  constructor(public activeRoute:ActivatedRoute, public router:Router, public store: ProductsStore, private location:Location) {
   }
 
-  @ViewChild(MdSidenav) sidenav: MdSidenav;
   searchControl: FormControl;
-
+  searchSubscription;
   ngOnInit() {
     this.searchControl = new FormControl();
-    this.searchControl.valueChanges.subscribe((query) => {
+    this.searchSubscription = this.searchControl.valueChanges.subscribe((query) => {
       this.store.updateFilteredProducts(query);
     });
   }
 
   ngOnDestroy() {
-
+    this.searchSubscription.unsubscribe();
   }
 
   selectProduct(product) {
     this.searchControl.reset();
     this.store.selectProduct(product);
-    this.sidenav.open();
+    this.router.navigate(['../amount'], {relativeTo: this.activeRoute});
   }
 
   addProduct(title: string) {

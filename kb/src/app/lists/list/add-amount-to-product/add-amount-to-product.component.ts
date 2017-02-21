@@ -1,6 +1,9 @@
 import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import {FormControl, FormBuilder, FormGroup, Validator, Validators} from '@angular/forms';
 import {ListStore} from '../../../shared/stores/list.store';
+import {ProductsStore} from '../../../shared/stores/products.store';
+import {ProductModel} from '../../../../../../src/models/product.model';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'kb-add-amount-to-product',
@@ -8,14 +11,18 @@ import {ListStore} from '../../../shared/stores/list.store';
   styleUrls: ['./add-amount-to-product.component.scss']
 })
 export class AddAmountToProductComponent implements OnInit {
-  @Input() product;
   @Output() onAddProduct = new EventEmitter();
+  product:ProductModel;
   amountForm:FormGroup;
 
-  constructor(public listStore:ListStore, fb:FormBuilder) {
+  constructor(private location:Location, public listStore:ListStore, store:ProductsStore, fb:FormBuilder) {
     document.body.scrollTop = 0;
     this.amountForm = fb.group({
       amount: ['1', Validators.required]
+    });
+
+    store.state$.map((state) => state.selectedProduct).subscribe((product) => {
+      this.product = product;
     });
   }
 
@@ -30,6 +37,10 @@ export class AddAmountToProductComponent implements OnInit {
       this.listStore.addProductWithAmountToList(amount, this.product).then((res) => {
         this.onAddProduct.emit();
       });
+  }
+
+  goBack(){
+    this.location.back();
   }
 
 }
