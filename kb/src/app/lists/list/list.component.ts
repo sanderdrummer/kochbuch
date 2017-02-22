@@ -1,9 +1,11 @@
-import {Component, OnInit, ElementRef} from '@angular/core';
+import {Component, OnInit, ElementRef, ViewChild} from '@angular/core';
 import {ListStore} from '../../shared/stores/list.store';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router, NavigationEnd} from '@angular/router';
 import {ListModel} from '../../shared/models/list.model';
 import {loadavg} from 'os';
 import {Observable} from 'rxjs';
+import {ProductsStore} from '../../shared/stores/products.store';
+import {MdSidenav} from '@angular/material';
 
 @Component({
   selector: 'kb-list',
@@ -11,18 +13,23 @@ import {Observable} from 'rxjs';
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
-
+  @ViewChild(MdSidenav) sideNav;
   routeSubscribtion;
   storeSubscribtion;
   list: ListModel;
   loading: boolean;
   isVisible: boolean;
 
-  constructor(private route: ActivatedRoute, public store: ListStore) {
-    this.isVisible = true;
-    this.route.url.subscribe((url) => {
-      this.isVisible = true;
-      document.body.scrollTop = 0;
+  constructor(private router:Router, private route: ActivatedRoute, public store: ListStore) {
+
+    this.routeSubscribtion = this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        if (event.url.indexOf('add') > -1 || event.url.indexOf('amount') > -1) {
+          this.sideNav.open();
+        } else {
+          this.sideNav.close();
+        }
+      }
     });
 
     this.list = new ListModel({});
@@ -46,5 +53,10 @@ export class ListComponent implements OnInit {
 
   ngOnDestroy() {
     this.storeSubscribtion.unsubscribe();
+    this.routeSubscribtion.unsubscribe();
+  }
+
+  updateRoute(){
+    this.router.navigate(['list', this.list.title]);
   }
 }

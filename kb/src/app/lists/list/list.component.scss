@@ -5,6 +5,16 @@
 
 .add-fab{
   position: absolute;
-  top: 95px;
-  right: 35px;
+  top: 1rem;
+  right: 2rem;
+}
+
+.mat-fab {
+  position: absolute;
+  bottom: 1rem;
+  right: 2rem;
+}
+
+md-sidenav {
+  min-width: 320px;
 }

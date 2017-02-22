@@ -1,6 +1,6 @@
 <md-card class="relative">
   <md-input-container class="w100">
-    <input (keydown.enter)="addProduct(searchControl.value)" class="grow" mdInput placeholder="Suche"
+    <input (keydown.enter)="addProduct(searchControl.value)" class="grow search-input" mdInput placeholder="Suche"
            [formControl]="searchControl" type="search">
   </md-input-container>
   <button class="back-fab" type="button" md-fab (click)="goBack()">

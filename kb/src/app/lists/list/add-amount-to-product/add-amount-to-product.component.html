@@ -1,7 +1,7 @@
 
 <form class="mt-1" [formGroup]="amountForm"(submit)="addProductToList(amount.value)">
   <md-input-container class="w100">
-    <input mdInput class="grow" type="text" #amount placeholder="Anzahl" formControlName="amount">
+    <input mdInput class="grow amount-input" type="text" #amount placeholder="Anzahl" formControlName="amount">
   </md-input-container>
   <div>
     <button md-raised-button type="submit">{{amount.value}} {{product?.title}} zur Liste</button>

@@ -1,6 +1,6 @@
 <md-sidenav-container class="grow">
 
-  <md-sidenav mode="over" #sidenav>
+  <md-sidenav mode="over" (close)="updateRoute()" #sidenav>
     <router-outlet></router-outlet>
   </md-sidenav>
   <div class="flex grow is-column">
@@ -40,7 +40,7 @@
       </md-list>
     </md-card>
 
-    <a class="add-fab" [routerLink]="['add']" (click)="toggleIsVisible();sidenav.toggle()" md-fab color="primary">
+    <a class="add-fab" [routerLink]="['add']" md-fab color="primary">
       <md-icon>add</md-icon>
     </a>
     <button (click)="store.clearSelectedList()" md-fab>

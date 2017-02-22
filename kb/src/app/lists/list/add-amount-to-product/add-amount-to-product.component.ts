@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef} from '@angular/core';
 import {FormControl, FormBuilder, FormGroup, Validator, Validators} from '@angular/forms';
 import {ListStore} from '../../../shared/stores/list.store';
 import {ProductsStore} from '../../../shared/stores/products.store';
@@ -15,7 +15,7 @@ export class AddAmountToProductComponent implements OnInit {
   product:ProductModel;
   amountForm:FormGroup;
 
-  constructor(private location:Location, public listStore:ListStore, store:ProductsStore, fb:FormBuilder) {
+  constructor(private el:ElementRef, private location:Location, public listStore:ListStore, store:ProductsStore, fb:FormBuilder) {
     document.body.scrollTop = 0;
     this.amountForm = fb.group({
       amount: ['1', Validators.required]
@@ -24,9 +24,11 @@ export class AddAmountToProductComponent implements OnInit {
     store.state$.map((state) => state.selectedProduct).subscribe((product) => {
       this.product = product;
     });
+
   }
 
   ngOnInit() {
+    this.el.nativeElement.querySelector('.amount-input').focus();
   }
 
   ngOnChanges(){
@@ -36,6 +38,7 @@ export class AddAmountToProductComponent implements OnInit {
   addProductToList(amount) {
       this.listStore.addProductWithAmountToList(amount, this.product).then((res) => {
         this.onAddProduct.emit();
+        this.location.back();
       });
   }
 

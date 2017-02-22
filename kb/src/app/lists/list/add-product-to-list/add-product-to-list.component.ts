@@ -1,7 +1,6 @@
-import {Component, OnInit, ChangeDetectionStrategy, ViewChild} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy, ElementRef} from '@angular/core';
 import {ProductsStore} from '../../../shared/stores/products.store';
 import {FormControl} from '@angular/forms';
-import {MdSidenav} from '@angular/material';
 import {Location} from '@angular/common';
 import {Router, ActivatedRoute} from '@angular/router';
 
@@ -13,9 +12,8 @@ import {Router, ActivatedRoute} from '@angular/router';
 })
 export class AddProductToListComponent implements OnInit {
 
-  constructor(public activeRoute:ActivatedRoute, public router:Router, public store: ProductsStore, private location:Location) {
+  constructor(private el:ElementRef, public activeRoute:ActivatedRoute, public router:Router, public store: ProductsStore, private location:Location) {
   }
-
   searchControl: FormControl;
   searchSubscription;
   ngOnInit() {
@@ -23,6 +21,7 @@ export class AddProductToListComponent implements OnInit {
     this.searchSubscription = this.searchControl.valueChanges.subscribe((query) => {
       this.store.updateFilteredProducts(query);
     });
+    this.el.nativeElement.querySelector('.search-input').focus();
   }
 
   ngOnDestroy() {

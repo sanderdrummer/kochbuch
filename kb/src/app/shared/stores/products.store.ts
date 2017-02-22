@@ -10,10 +10,10 @@ import {FormControl, Form} from '@angular/forms';
 @Injectable()
 export class ProductsStore {
 
-  products$:FirebaseObjectObservable<any>;
+  products$: FirebaseObjectObservable<any>;
   state$: BehaviorSubject<ProductsState>;
   state: ProductsState;
-  limit:number;
+  limit: number;
   baseUrl: string;
 
   constructor(private af: AngularFire, private parser: ParserService) {
@@ -24,7 +24,8 @@ export class ProductsStore {
     this.limit = 25;
 
     this.state = {
-      query:'',
+      show: false,
+      query: '',
       products: [],
       selectedProduct: null,
       filteredProducts: []
@@ -72,7 +73,6 @@ export class ProductsStore {
   }
 
 
-
   addProduct(product) {
     const newProduct = new ProductModel({title: product});
     const fireBaseEntry = {};
@@ -89,14 +89,15 @@ export class ProductsStore {
   }
 
   removeProduct(title) {
-    this.state$.next(Object.assign(this.state, {selectedProduct:null}));
+    this.state$.next(Object.assign(this.state, {selectedProduct: null}));
     return this.af.database.object(this.baseUrl + '/' + title).remove();
   }
 
 }
 
 interface ProductsState {
-  query:string,
+  show: boolean,
+  query: string,
   products: ProductModel[],
   selectedProduct: ProductModel,
   filteredProducts: ProductModel[]
