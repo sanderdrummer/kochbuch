@@ -1,9 +1,10 @@
 <md-sidenav-container class="grow">
 
+
   <md-sidenav mode="over" (close)="updateRoute()" #sidenav>
     <router-outlet></router-outlet>
   </md-sidenav>
-  <div class="flex grow is-column">
+  <div class="p-1 flex grow is-column">
     <md-card>
       <h1>{{list?.title}}</h1>
     </md-card>
@@ -39,15 +40,12 @@
         </md-list-item>
       </md-list>
     </md-card>
-
-    <a class="add-fab" [routerLink]="['add']" md-fab color="primary">
-      <md-icon>add</md-icon>
-    </a>
-
   </div>
 
-
-  <button (click)="store.clearSelectedList()" md-fab>
+  <a class="add-fab" [routerLink]="['add']" md-fab color="primary">
+    <md-icon>add</md-icon>
+  </a>
+  <button class="clear-fab" (click)="store.clearSelectedList()" md-fab>
     <md-icon name="cart">clear</md-icon>
   </button>
 </md-sidenav-container>

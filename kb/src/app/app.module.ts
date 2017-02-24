@@ -17,6 +17,7 @@ import {AuthProviders, AuthMethods, AngularFireModule} from 'angularfire2';
 import {ParserService} from './shared/parser.service';
 import {AddAmountToProductComponent} from './lists/list/add-amount-to-product/add-amount-to-product.component';
 import {FlexLayoutModule} from '@angular/flex-layout';
+import {AuthService} from './shared/auth.service';
 // Must export the config
 
 export const firebaseConfig = {
@@ -50,7 +51,7 @@ const myFirebaseAuthConfig = {
     AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
     MaterialModule.forRoot(),
   ],
-  providers: [ParserService, ListStore,ProductsStore,RecipeStore],
+  providers: [AuthService, ParserService, ListStore,ProductsStore,RecipeStore],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

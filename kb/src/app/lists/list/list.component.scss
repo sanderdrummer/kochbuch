@@ -1,18 +1,20 @@
-:host, md-sidenav-container{
+:host, md-sidenav-container {
   display: block;
   height: calc(100% - 64px);
 }
 
-.add-fab{
+.add-fab {
   position: absolute;
   top: 1rem;
   right: 2rem;
 }
 
-.mat-fab {
-float: right;
+.clear-fab {
+  float: right;
+  margin-right: 2rem;
 }
 
 md-sidenav {
   min-width: 320px;
 }
+

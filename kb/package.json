@@ -8,6 +8,8 @@
     "start": "ng serve",
     "test": "ng test",
     "lint": "ng lint",
+    "build": "ng build --aot=true --prod=true",
+    "appbuild": "ng build --aot=true --target=production --environment=prod --base-href=.",
     "e2e": "ng e2e"
   },
   "private": true,
