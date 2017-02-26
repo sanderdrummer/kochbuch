@@ -1,3 +1,29 @@
-<p>
-  recipes works!
-</p>
+<md-card>
+    <form [formGroup]="filterForm">
+        <md-input-container>
+            <input mdInput type="text" formControlName="text" placeholder="Suche">
+        </md-input-container>
+        <md-select multiple placeholder="Kategorie" formControlName="categories">
+            <md-option value="{{category}}" *ngFor="let category of state.categories">{{category}}</md-option>
+        </md-select>
+        <div>
+
+            <button md-raised-button (click)="filterForm.reset()" type="button">
+                Filter zurücksetzen
+            </button>
+        </div>
+    </form>
+</md-card>
+
+<md-card class="mt-1">
+    <md-list>
+        <div *ngFor="let recipe of state.filteredRecipes">
+            <md-list-item (click)="selectRecipe(recipe)">
+                {{ recipe.title }}
+                <md-icon name="recipe-box" item-left></md-icon>
+            </md-list-item>
+        </div>
+    </md-list>
+</md-card>
+
+<button (click)="addRecipe()" md-fab><md-icon>add</md-icon></button>

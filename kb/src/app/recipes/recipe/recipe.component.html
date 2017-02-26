@@ -1,3 +1,21 @@
-<p>
-  recipe works!
-</p>
+<md-card>
+    <md-card-header>
+        {{recipe.title}}
+    </md-card-header>
+    <md-list>
+        <md-list-item *ngFor="let product of recipe.products">
+            {{product.title}} {{product.amount}}
+        </md-list-item>
+    </md-list>
+</md-card>
+<md-card class="mt-1">
+    <md-card-content>
+        <p style="white-space: pre;">{{recipe.description}}</p>
+    </md-card-content>
+</md-card>
+<button (click)="addToCart()" md-fab color="primary">
+    <md-icon>cart</md-icon>
+</button>
+<button (click)="edit()" md-fab color="light">
+    <md-icon>brush</md-icon>
+</button>
