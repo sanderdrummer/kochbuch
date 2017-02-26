@@ -14,13 +14,13 @@ import {RecipeState} from "../models/recipe.state";
 export class RecipeStore {
     state$: BehaviorSubject<RecipeState>;
     state: RecipeState;
-    productsUrl: string;
+    recipesUrl: string;
     categoriesUrl: string;
 
     constructor(public af: AngularFire, public parser: ParserService) {
         this.state = new RecipeState({});
         this.state$ = new BehaviorSubject(this.state);
-        this.productsUrl = '/products';
+        this.recipesUrl = '/recipes';
         this.categoriesUrl = '/categories';
 
         this.resolveRecipes().subscribe();
@@ -70,4 +70,21 @@ export class RecipeStore {
             this.selectRecipe(selectedRecipe);
         }
     }
+
+    updateRecipe(values) {
+        const recipe = new RecipeModel(values);
+        const fireBase = this.getFireBaseOfRecipe(recipe);
+        return fireBase.update(recipe).then(() => {
+            this.selectRecipe(recipe);
+        });
+    }
+
+    getFireBaseOfRecipe(recipe: RecipeModel) {
+        return this.af.database.object(this.recipesUrl + '/' +  recipe.title);
+    }
+
+    deleteRecipe(recipe:RecipeModel){
+        return this.getFireBaseOfRecipe(recipe).remove();
+    }
+
 }

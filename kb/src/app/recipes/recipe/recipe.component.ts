@@ -12,7 +12,7 @@ import {Subscription} from "rxjs";
 export class RecipeComponent implements OnInit {
     recipe:RecipeModel;
     recipeSubscription:Subscription;
-    constructor(router: Router, route: ActivatedRoute, store: RecipeStore) {
+    constructor(private router: Router, private route: ActivatedRoute, private store: RecipeStore) {
 
         this.recipe = new RecipeModel({});
 
@@ -24,19 +24,19 @@ export class RecipeComponent implements OnInit {
                 const title = route.snapshot.params['title'];
                 store.setSelectedRecipeByTitle(title);
             }
-            console.log(recipe);
-        })
+        });
     }
 
     ngOnInit() {
     }
 
     edit() {
-        // this.navCtrl.push(RecipesCreateRecipePage);
+        this.router.navigate(['update'], {relativeTo: this.route});
     }
 
     addToCart() {
-        // this.navCtrl.push(RecipesProductsToListPage);
+        this.router.navigate(['add'], {relativeTo: this.route});
+
     }
 
 }

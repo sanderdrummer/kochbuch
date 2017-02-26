@@ -45,7 +45,7 @@ export class RecipesCreateRecipePage {
     }
   }
 
-  initCreate(){
+  initCreate() {
     this.initializeChildForms(this.store.selectedRecipe.products, this.store.selectedRecipe.categories);
     this.recipeForm.patchValue(this.store.selectedRecipe);
 
