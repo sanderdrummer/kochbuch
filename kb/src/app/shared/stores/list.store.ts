@@ -113,5 +113,12 @@ export class ListStore {
       this.state$.next(Object.assign(this.state, {selectedList}));
     }
   }
+
+  addProductsTolist(list, products) {
+    const list$ = this.getFireBaseOfList(list);
+    list.forBasket = products;
+    list.inBasket = [];
+    return list$.update(list);
+  }
 }
 
