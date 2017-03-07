@@ -9,6 +9,6 @@ describe('kb App', () => {
 
   it('should display message saying app works', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('hv works!');
+    expect(page.getParagraphText()).toEqual('kb works!');
   });
 });
