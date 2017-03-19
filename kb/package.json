@@ -9,6 +9,7 @@
     "lint": "ng lint",
     "build": "ng build --aot=true --prod=true",
     "appbuild": "ng build --aot=true --target=production --environment=prod --base-href=.",
+    "electronBuild": "ng build --aot=true --target=production --environment=prod --base-href=. --output-path=../electron/app",
     "e2e": "ng e2e"
   },
   "private": true,
