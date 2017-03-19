@@ -51,7 +51,6 @@ export class RecipeStore extends Store<RecipeState> {
 
   filterRecipes() {
     const filteredRecipes = this.state.filterRecipes();
-
     this.updateState({filteredRecipes});
   }
 
@@ -84,6 +83,11 @@ export class RecipeStore extends Store<RecipeState> {
 
   deleteRecipe(recipe: RecipeModel) {
     return this.getFireBaseOfRecipe(recipe).remove();
+  }
+
+  updateRecipeFilter(filter){
+    this.update({filter});
+    this.filterRecipes();
   }
 
 }

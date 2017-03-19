@@ -6,7 +6,7 @@ export class RecipeModel {
   categories: string[];
 
   constructor(config:any) {
-    this.title = config.title || 'Neue Liste';
+    this.title = config.title || '';
     this.products = config.products || [];
     this.description = config.description || '';
     this.categories = config.categories || [];

@@ -1,6 +1,6 @@
 :host, md-sidenav-container {
   display: block;
-  height: calc(100% - 64px);
+  height: 100%;
 }
 
 .add-fab {
@@ -12,6 +12,7 @@
 .clear-fab {
   float: right;
   margin-right: 2rem;
+  margin-bottom: 4rem;
 }
 
 md-sidenav {

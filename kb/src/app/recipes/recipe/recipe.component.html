@@ -1,21 +1,28 @@
+
 <md-card>
+  <button class="add" (click)="addToCart()" md-fab color="primary">
+    <md-icon>add</md-icon>
+  </button>
     <md-card-header>
-        {{recipe.title}}
+      <md-card-title>{{recipe.title}}</md-card-title>
     </md-card-header>
+  <md-card-content>
     <md-list>
-        <md-list-item *ngFor="let product of recipe.products">
-            {{product.title}} {{product.amount}}
-        </md-list-item>
+      <md-list-item *ngFor="let product of recipe.products">
+        {{product.title}} {{product.amount}}
+      </md-list-item>
     </md-list>
+  </md-card-content>
 </md-card>
 <md-card class="mt-1">
     <md-card-content>
         <p style="white-space: pre;">{{recipe.description}}</p>
     </md-card-content>
+  <md-card-actions>
+    <button md-button (click)="edit()">
+      <md-icon>brush</md-icon>
+    </button>
+  </md-card-actions>
 </md-card>
-<button (click)="addToCart()" md-fab color="primary">
-    <md-icon>cart</md-icon>
-</button>
-<button (click)="edit()" md-fab color="light">
-    <md-icon>brush</md-icon>
-</button>
+
+

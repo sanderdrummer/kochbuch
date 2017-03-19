@@ -7,43 +7,50 @@ import {RecipeModel} from "../shared/models/recipe.model";
 import {Router, ActivatedRoute} from "@angular/router";
 
 @Component({
-    selector: 'kb-recipes',
-    templateUrl: './recipes.component.html',
-    styleUrls: ['./recipes.component.scss']
+  selector: 'kb-recipes',
+  templateUrl: './recipes.component.html',
+  styleUrls: ['./recipes.component.scss']
 })
 export class RecipesComponent implements OnInit {
 
-    recipesSubscription:Subscription;
-    state:RecipeState;
-    filterForm: FormGroup;
+  recipesSubscription: Subscription;
+  state: RecipeState;
+  filterForm: FormGroup;
 
-    constructor(private router:Router, private activeRoute:ActivatedRoute, private store:RecipeStore, fb:FormBuilder) {
-        this.recipesSubscription = store.state$.subscribe((state:RecipeState) => {
-            this.state = state;
-            console.log(state);
-        });
+  constructor(private router: Router, private activeRoute: ActivatedRoute, private store: RecipeStore, fb: FormBuilder) {
 
-        this.filterForm = fb.group({
-            text: [],
-            categories: []
-        });
-    }
+    this.filterForm = fb.group({
+      text: [],
+      categories: []
+    });
 
-    ngOnInit() {
-    }
+    this.recipesSubscription = store.state$.subscribe((state: RecipeState) => {
+      this.state = state;
+    });
 
-    ngOnDestroy(){
-        this.recipesSubscription.unsubscribe();
-    }
 
-    selectRecipe(recipe:RecipeModel) {
-        this.store.selectRecipe(recipe);
-        this.router.navigate([recipe.title], {relativeTo: this.activeRoute});
-    }
+    this.filterForm.valueChanges.subscribe((values) => {
+      this.store.updateRecipeFilter(values);
+    });
 
-    addRecipe() {
-        this.store.selectRecipe(null);
-        this.router.navigate(['create'], {relativeTo: this.activeRoute});
-    }
+  }
+
+  ngOnInit() {
+  }
+
+  ngOnDestroy() {
+    this.recipesSubscription.unsubscribe();
+  }
+
+  selectRecipe(recipe: RecipeModel) {
+    this.store.selectRecipe(recipe);
+    this.router.navigate([recipe.title], {relativeTo: this.activeRoute});
+  }
+
+  addRecipe() {
+    const recipe = new RecipeModel({});
+    this.store.selectRecipe(recipe);
+    this.router.navigate(['create'], {relativeTo: this.activeRoute});
+  }
 
 }
