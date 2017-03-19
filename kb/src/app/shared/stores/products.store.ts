@@ -7,32 +7,28 @@ import {BehaviorSubject} from 'rxjs';
 import {AngularFire, FirebaseObjectObservable} from 'angularfire2';
 import {ParserService} from '../parser.service';
 import {FormControl, Form} from '@angular/forms';
+import {ProductsStoreInterface} from "./products.store.interface";
+import {Store} from "./store";
 @Injectable()
-export class ProductsStore {
+export class ProductsStore extends Store<ProductsStoreInterface>{
 
   products$: FirebaseObjectObservable<any>;
-  state$: BehaviorSubject<ProductsState>;
-  state: ProductsState;
   limit: number;
   baseUrl: string;
 
   constructor(private af: AngularFire, private parser: ParserService) {
-
+    super();
     this.baseUrl = '/products';
 
     this.products$ = af.database.object('/products');
     this.limit = 25;
-
-    this.state = {
+    this.init({
       show: false,
       query: '',
       products: [],
       selectedProduct: null,
       filteredProducts: []
-    };
-
-
-    this.state$ = new BehaviorSubject(this.state);
+    });
 
     this.fetchProducts()
   }

@@ -1,4 +1,4 @@
-import {RecipeModel} from "./recipe.model";
+import {RecipeModel} from "../models/recipe.model";
 /**
  * Created by funkp on 26.02.2017.
  */
@@ -44,8 +44,6 @@ export class RecipeState {
             if (matching) {
                 currentLength += 1;
             }
-
-            console.log(matching, this.filter);
 
             return matching && currentLength < maxLength;
         })

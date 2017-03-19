@@ -2,26 +2,24 @@ import {Injectable} from '@angular/core';
 import {ProductModel} from '../models/product.model';
 import {ListModel} from '../models/list.model';
 import {FirebaseObjectObservable, AngularFire} from 'angularfire2';
-import {BehaviorSubject} from 'rxjs';
 import {ParserService} from '../parser.service';
 import {ListStateInterface} from './list-state.interface';
+import {Store} from "./store";
 
 @Injectable()
-export class ListStore {
+export class ListStore extends Store<ListStateInterface> {
   url: string;
-  state$: BehaviorSubject<ListStateInterface>;
   listsFirebase$: FirebaseObjectObservable<any>;
-  state: ListStateInterface;
 
   constructor(public parser: ParserService, public af: AngularFire) {
+    super();
     this.url = '/lists';
     this.listsFirebase$ = this.af.database.object(this.url);
-    this.state = {
+    this.init({
       loading: false,
       lists: [],
       selectedList: null
-    };
-    this.state$ = new BehaviorSubject(this.state);
+    });
     this.fetchLists();
   }
 
@@ -32,10 +30,10 @@ export class ListStore {
         lists.push(new ListModel(listObj[listId]));
       });
 
-      this.state$.next(Object.assign(this.state, {
+      this.update({
         lists: lists,
         loading: false,
-      }));
+      });
     });
   }
 
@@ -46,7 +44,7 @@ export class ListStore {
   }
 
   selectList(newList: ListModel) {
-    this.state$.next(Object.assign(this.state, {selectedList: newList}));
+    this.update({selectedList: newList});
   }
 
   getFireBaseOfList(list: ListModel) {
@@ -79,8 +77,7 @@ export class ListStore {
     if (this.state.selectedList[source]) {
       this.state.selectedList[source].splice(index, 1);
     }
-
-    this.state$.next(Object.assign(this.state, {loading: true}));
+    this.update({loading: true});
     selectedList$.update(this.state.selectedList);
   }
 
@@ -95,7 +92,7 @@ export class ListStore {
     }
 
     this.state.selectedList[target].push(product);
-    this.state$.next(Object.assign(this.state, {loading: true}));
+    this.update({loading: true});
     selectedList$.update(this.state.selectedList);
   }
 
@@ -103,14 +100,14 @@ export class ListStore {
     const selectedList$ = this.getFireBaseOfList(this.state.selectedList);
     this.state.selectedList.forBasket = [];
     this.state.selectedList.inBasket = [];
-    this.state$.next(Object.assign(this.state, {loading: true}));
+    this.update({loading: true});
     selectedList$.update(this.state.selectedList);
   }
 
   setSelectedListByTitle(title: string) {
     const selectedList = this.state.lists.find(list => list.title === title);
     if (selectedList) {
-      this.state$.next(Object.assign(this.state, {selectedList}));
+      this.update({selectedList});
     }
   }
 

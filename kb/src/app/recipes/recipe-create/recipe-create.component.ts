@@ -4,7 +4,7 @@ import {Subscription} from "rxjs";
 import {Router, ActivatedRoute} from "@angular/router";
 import {RecipeStore} from "../../shared/stores/recipe.store";
 import {FormArray, FormGroup, FormBuilder, Validators} from "@angular/forms";
-import {RecipeState} from "../../shared/models/recipe.state";
+import {RecipeState} from "../../shared/stores/recipe.state";
 
 @Component({
     selector: 'kb-recipe-create',
