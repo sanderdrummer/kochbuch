@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {RecipeStore} from "../../shared/stores/recipe.store";
-import {RecipeModel} from "../../shared/models/recipe.model";
 import {Subscription} from "rxjs";
+import {RecipeModel} from '../shared/recipe.model';
+import {RecipeStore} from '../shared/recipe.store';
 
 @Component({
     selector: 'kb-recipe',

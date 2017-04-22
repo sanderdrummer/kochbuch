@@ -1,4 +1,4 @@
-import {ProductModel} from './product.model';
+import {ProductModel} from '../../products/product.model';
 export class ListModel {
   title:string;
   forBasket: ProductModel[];

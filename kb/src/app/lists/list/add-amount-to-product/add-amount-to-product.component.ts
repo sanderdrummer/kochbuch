@@ -1,9 +1,9 @@
-import {Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef} from '@angular/core';
-import {FormControl, FormBuilder, FormGroup, Validator, Validators} from '@angular/forms';
-import {ListStore} from '../../../shared/stores/list.store';
-import {ProductsStore} from '../../../shared/stores/products.store';
-import {ProductModel} from '../../../../../../src/models/product.model';
+import {Component, OnInit, Output, EventEmitter, ElementRef} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Location} from '@angular/common';
+import {ListStore} from '../../shared/list.store';
+import {ProductModel} from '../../products/product.model';
+import {ProductsStore} from '../../products/products.store';
 
 @Component({
   selector: 'kb-add-amount-to-product',

@@ -1,23 +1,21 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import {HttpModule} from '@angular/http';
 
-import { AppComponent } from './app.component';
-import { ListsComponent } from './lists/lists.component';
-import { ListComponent } from './lists/list/list.component';
-import { ProductsComponent } from './products/products.component';
-import { AddProductToListComponent } from './lists/list/add-product-to-list/add-product-to-list.component';
+import {AppComponent} from './app.component';
 import {Routing} from './app.routing';
-import {MaterialModule} from '@angular/material';
-import {RecipeStore} from './shared/stores/recipe.store';
-import {ProductsStore} from './shared/stores/products.store';
-import {ListStore} from './shared/stores/list.store';
 import {AuthProviders, AuthMethods, AngularFireModule} from 'angularfire2';
-import {ParserService} from './shared/parser.service';
-import {AddAmountToProductComponent} from './lists/list/add-amount-to-product/add-amount-to-product.component';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {AuthService} from './shared/auth.service';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {ParserService} from './shared/parser.service';
+import {ListStore} from './lists/shared/list.store';
+import {FireBaseCrudService} from './shared/firabase-crud.service';
+import {ListsModule} from './lists/lists.module';
+import {MaterialModule} from "@angular/material";
+import {ProductsStore} from './lists/products/products.store';
+import {RouterModule} from '@angular/router';
 // Must export the config
 
 export const firebaseConfig = {
@@ -36,11 +34,6 @@ const myFirebaseAuthConfig = {
 @NgModule({
   declarations: [
     AppComponent,
-    ListsComponent,
-    ListComponent,
-    ProductsComponent,
-    AddProductToListComponent,
-    AddAmountToProductComponent
   ],
   imports: [
     BrowserModule,
@@ -48,10 +41,14 @@ const myFirebaseAuthConfig = {
     ReactiveFormsModule,
     HttpModule,
     Routing,
-    AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
+    RouterModule,
+    ListsModule,
+    BrowserAnimationsModule,
     MaterialModule.forRoot(),
+    AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig)
   ],
-  providers: [AuthService, ParserService, ListStore,ProductsStore,RecipeStore],
+  providers: [AuthService, ParserService, ListStore, ProductsStore, FireBaseCrudService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

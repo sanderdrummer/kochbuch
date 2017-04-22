@@ -1,4 +1,5 @@
-import {ProductModel} from './product.model';
+
+import {ProductModel} from '../../lists/products/product.model';
 export class RecipeModel {
   title:string;
   products: ProductModel[];

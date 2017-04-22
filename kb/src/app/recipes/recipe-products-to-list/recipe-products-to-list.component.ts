@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {ListStore} from '../../shared/stores/list.store';
-import {RecipeStore} from '../../shared/stores/recipe.store';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {ListStore} from '../../lists/shared/list.store';
+import {RecipeStore} from '../shared/recipe.store';
 
 @Component({
   selector: 'kb-recipe-products-to-list',
@@ -10,7 +10,9 @@ import {ActivatedRoute, Router} from '@angular/router';
 })
 export class RecipeProductsToListComponent implements OnInit {
   products;
-  constructor(public listStore:ListStore, private recipeStore:RecipeStore, private router:Router) { }
+
+  constructor(public listStore: ListStore, private recipeStore: RecipeStore, private router: Router) {
+  }
 
   ngOnInit() {
     this.recipeStore.state$.subscribe(state => {
@@ -23,9 +25,9 @@ export class RecipeProductsToListComponent implements OnInit {
   }
 
   selectList(list) {
-      this.listStore.selectList(list);
-      this.listStore.addProductsTolist(list, this.products).then(() => {
-        this.router.navigate(['/list', list.title]);
-      });
+    this.listStore.selectList(list);
+    this.listStore.addProductsTolist(list, this.products).then(() => {
+      this.router.navigate(['/list', list.title]);
+    });
   }
 }

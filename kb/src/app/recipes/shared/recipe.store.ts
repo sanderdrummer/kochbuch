@@ -1,15 +1,11 @@
-/**
- * Created by Tobias on 27.01.2017.
- */
+
+
 import {Injectable} from '@angular/core';
-import {RecipeModel} from '../models/recipe.model';
 import {AngularFire} from 'angularfire2';
-import 'rxjs/add/operator/map'
-import 'rxjs/add/operator/toPromise'
-import {ParserService} from '../parser.service';
-import {BehaviorSubject} from "rxjs";
-import {RecipeState} from "./recipe.state";
-import {Store} from "./store";
+import {Store} from '../../shared/store';
+import {ParserService} from '../../shared/parser.service';
+import {RecipeState} from './recipe.state';
+import {RecipeModel} from './recipe.model';
 
 @Injectable()
 export class RecipeStore extends Store<RecipeState> {

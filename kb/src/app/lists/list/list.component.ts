@@ -1,12 +1,9 @@
-import {Component, OnInit, ElementRef, ViewChild} from '@angular/core';
-import {ListStore} from '../../shared/stores/list.store';
-import {ActivatedRoute, Router, NavigationEnd} from '@angular/router';
-import {ListModel} from '../../shared/models/list.model';
-import {loadavg} from 'os';
-import {Observable} from 'rxjs';
-import {ProductsStore} from '../../shared/stores/products.store';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {MdSidenav} from '@angular/material';
-
+import {Subscription} from 'rxjs/Subscription';
+import {ListModel} from './shared/list.model';
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
+import {ListStore} from '../shared/list.store';
 @Component({
   selector: 'kb-list',
   templateUrl: './list.component.html',
@@ -14,49 +11,50 @@ import {MdSidenav} from '@angular/material';
 })
 export class ListComponent implements OnInit {
   @ViewChild(MdSidenav) sideNav;
-  routeSubscribtion;
-  storeSubscribtion;
+  routeSubscription: Subscription;
+  storeSubscription: Subscription;
   list: ListModel;
   loading: boolean;
   isVisible: boolean;
 
-  constructor(private router:Router, private route: ActivatedRoute, public store: ListStore) {
-
-    this.routeSubscribtion = this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        if (event.url.indexOf('add') > -1 || event.url.indexOf('amount') > -1) {
-          this.sideNav.open();
-        } else {
-          this.sideNav.close();
-        }
-      }
-    });
-
+  constructor(private router: Router, private route: ActivatedRoute, public store: ListStore) {
     this.list = new ListModel({});
-    this.storeSubscribtion = store.state$.subscribe((state) => {
-      if (state.selectedList) {
-        this.list = state.selectedList;
-        this.loading = state.loading;
-      } else {
-        const title = this.route.snapshot.params['title'];
-        this.store.setSelectedListByTitle(title);
-      }
-    });
+
+    this.routeSubscription = this.router.events.subscribe(event => this.toggleSideNavOnRouteChange(event));
+    this.storeSubscription = store.state$.subscribe(state => this.setListByStoreOrRoute(state));
   }
 
-  toggleIsVisible() {
-    this.isVisible = false;
+  toggleSideNavOnRouteChange(event: any): void {
+    if (event instanceof NavigationEnd) {
+      const sideBarShouldOpen = event.url.indexOf('add') > -1 || event.url.indexOf('amount') > -1;
+      if (sideBarShouldOpen) {
+        this.sideNav.open();
+      } else {
+        this.sideNav.close();
+      }
+    }
   }
+
+  setListByStoreOrRoute(state): void {
+    if (state.selectedList) {
+      this.list = state.selectedList;
+      this.loading = state.loading;
+    } else {
+      const title = this.route.snapshot.params['title'];
+      this.store.setSelectedListByTitle(title);
+    }
+  }
+
 
   ngOnInit() {
   }
 
-  ngOnDestroy() {
-    this.storeSubscribtion.unsubscribe();
-    this.routeSubscribtion.unsubscribe();
+  ngOnDestroy(): void {
+    this.storeSubscription.unsubscribe();
+    this.routeSubscription.unsubscribe();
   }
 
-  updateRoute(){
+  updateRoute(): void {
     this.router.navigate(['list', this.list.title]);
   }
 }

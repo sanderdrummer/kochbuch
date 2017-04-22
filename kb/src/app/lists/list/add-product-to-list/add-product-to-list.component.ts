@@ -1,8 +1,8 @@
 import {Component, OnInit, ChangeDetectionStrategy, ElementRef} from '@angular/core';
-import {ProductsStore} from '../../../shared/stores/products.store';
 import {FormControl} from '@angular/forms';
 import {Location} from '@angular/common';
 import {Router, ActivatedRoute} from '@angular/router';
+import {ProductsStore} from '../../products/products.store';
 
 @Component({
   selector: 'kb-add-product-to-list',
@@ -12,10 +12,15 @@ import {Router, ActivatedRoute} from '@angular/router';
 })
 export class AddProductToListComponent implements OnInit {
 
-  constructor(private el:ElementRef, public activeRoute:ActivatedRoute, public router:Router, public store: ProductsStore, private location:Location) {
+  constructor(private el: ElementRef,
+              public activeRoute: ActivatedRoute,
+              public router: Router,
+              public store: ProductsStore, private location: Location) {
   }
+
   searchControl: FormControl;
   searchSubscription;
+
   ngOnInit() {
     this.searchControl = new FormControl();
     this.searchSubscription = this.searchControl.valueChanges.subscribe((query) => {
@@ -44,7 +49,7 @@ export class AddProductToListComponent implements OnInit {
     this.store.removeProduct(title).then(() => this.searchControl.reset());
   }
 
-  goBack(){
+  goBack() {
     this.location.back();
   }
 }

@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {RecipeModel} from "../../shared/models/recipe.model";
 import {Subscription} from "rxjs";
 import {Router, ActivatedRoute} from "@angular/router";
-import {RecipeStore} from "../../shared/stores/recipe.store";
 import {FormArray, FormGroup, FormBuilder, Validators} from "@angular/forms";
-import {RecipeState} from "../../shared/stores/recipe.state";
+import {RecipeModel} from '../shared/recipe.model';
+import {RecipeStore} from '../shared/recipe.store';
+import {RecipeState} from '../shared/recipe.state';
 
 @Component({
     selector: 'kb-recipe-create',

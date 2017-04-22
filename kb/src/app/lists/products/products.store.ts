@@ -1,16 +1,14 @@
+import {Injectable} from '@angular/core';
+import {Store} from '../../shared/store';
+import {AngularFire, FirebaseObjectObservable} from 'angularfire2';
+import {ParserService} from '../../shared/parser.service';
+import {ProductModel} from './product.model';
+import {ProductStateInterface} from './products.store.interface';
 /**
  * Created by Tobias on 09.02.2017.
  */
-import {Injectable} from '@angular/core';
-import {ProductModel} from '../models/product.model';
-import {BehaviorSubject} from 'rxjs';
-import {AngularFire, FirebaseObjectObservable} from 'angularfire2';
-import {ParserService} from '../parser.service';
-import {FormControl, Form} from '@angular/forms';
-import {ProductsStoreInterface} from "./products.store.interface";
-import {Store} from "./store";
 @Injectable()
-export class ProductsStore extends Store<ProductsStoreInterface>{
+export class ProductsStore extends Store<ProductStateInterface>{
 
   products$: FirebaseObjectObservable<any>;
   limit: number;
@@ -89,12 +87,4 @@ export class ProductsStore extends Store<ProductsStoreInterface>{
     return this.af.database.object(this.baseUrl + '/' + title).remove();
   }
 
-}
-
-interface ProductsState {
-  show: boolean,
-  query: string,
-  products: ProductModel[],
-  selectedProduct: ProductModel,
-  filteredProducts: ProductModel[]
 }

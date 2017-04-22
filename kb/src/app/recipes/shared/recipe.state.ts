@@ -1,4 +1,4 @@
-import {RecipeModel} from "../models/recipe.model";
+import {RecipeModel} from './recipe.model';
 /**
  * Created by funkp on 26.02.2017.
  */

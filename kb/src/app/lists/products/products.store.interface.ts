@@ -1,6 +1,6 @@
 
-import {ProductModel} from "../models/product.model";
-export interface ProductsStoreInterface {
+import {ProductModel} from './product.model';
+export interface ProductStateInterface {
   show: boolean,
   query: string,
   products: ProductModel[],

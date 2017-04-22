@@ -1,11 +1,12 @@
-import {Injectable} from '@angular/core';
-import {ProductModel} from '../models/product.model';
-import {ListModel} from '../models/list.model';
-import {FirebaseObjectObservable, AngularFire} from 'angularfire2';
-import {ParserService} from '../parser.service';
-import {ListStateInterface} from './list-state.interface';
-import {Store} from "./store";
 
+import {Injectable} from '@angular/core';
+import {Store} from '../../shared/store';
+import {AngularFire, FirebaseObjectObservable} from 'angularfire2';
+import {ParserService} from '../../shared/parser.service';
+import {ListStateInterface} from './list-state.interface';
+import {ListModel} from '../list/shared/list.model';
+import {ListConfig} from '../../shared/list.config';
+import {ProductModel} from '../products/product.model';
 @Injectable()
 export class ListStore extends Store<ListStateInterface> {
   url: string;
@@ -13,7 +14,7 @@ export class ListStore extends Store<ListStateInterface> {
 
   constructor(public parser: ParserService, public af: AngularFire) {
     super();
-    this.url = '/lists';
+    this.url = ListConfig.url;
     this.listsFirebase$ = this.af.database.object(this.url);
     this.init({
       loading: false,
@@ -25,6 +26,7 @@ export class ListStore extends Store<ListStateInterface> {
 
   fetchLists() {
     this.listsFirebase$.subscribe((listObj) => {
+      console.log(listObj, listObj.value );
       const lists = [];
       this.parser.parseFireBaseObjToArray(listObj).forEach((listId) => {
         lists.push(new ListModel(listObj[listId]));
