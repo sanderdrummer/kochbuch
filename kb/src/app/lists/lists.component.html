@@ -1,22 +1,26 @@
-<md-card>
+<md-card class="disabled" [ngClass]="{'disabled':loading}">
   <md-list>
-    <md-list-item *ngIf="loading">
-      Lade verfügabre Einkaufslisten...
-    </md-list-item>
     <h3 md-subheader>Einkaufslisten:</h3>
-    <div *ngFor="let list of (store.state$ | async)?.lists;">
-      <md-list-item (click)="selectList(list)" >
-        <md-icon>list</md-icon>
-        <p class="grow">{{ list.title }} </p>
-        <md-icon (click)="store.removeList(list)">delete forever</md-icon>
-      </md-list-item>
-      <md-divider></md-divider>
-    </div>
+    <md-progress-spinner
+      *ngIf="loading; else showList"
+      value="30"
+      mode="indeterminate"
+    ></md-progress-spinner>
+    <ng-template #showList>
+      <div *ngFor="let list of (listStore.state$ | async)?.lists;">
+        <md-list-item (click)="selectList(list)" >
+          <md-icon>list</md-icon>
+          <p class="grow">{{ list.title }} </p>
+          <md-icon (click)="deleteList(list)">delete forever</md-icon>
+        </md-list-item>
+        <md-divider></md-divider>
+      </div>
+    </ng-template>
   </md-list>
 </md-card>
 
 <md-card>
-  <form [formGroup]="addListForm" (submit)="store.addList(addListForm.value.listName)">
+  <form [formGroup]="addListForm" (submit)="addList(addListForm.value.listName)">
     <md-input-container class="w100">
       <input class="w100" mdInput formControlName="listName" type="text" placeholder="Neue Liste">
     </md-input-container>

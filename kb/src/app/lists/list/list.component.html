@@ -13,14 +13,11 @@
       Noch in den Einkaufskorb
       <md-list>
         <md-list-item *ngFor="let item of list?.forBasket; let i = index">
-          <span class="grow" (click)="store.swapProductBetweenLists(item, i, 'forBasket', 'inBasket')">
+          <span class="grow" (click)="swapProducts(item, i, 'forBasket', 'inBasket')">
             {{ item.amount }}
             {{ item.title }}
             <md-icon>cart</md-icon>
           </span>
-          <button color="danger" md-button (click)="store.removeProductFromList(i, 'forBasket')">
-            <md-icon>delete</md-icon>
-          </button>
         </md-list-item>
       </md-list>
     </md-card>
@@ -29,12 +26,12 @@
       Schon dabei
       <md-list>
         <md-list-item *ngFor="let item of list?.inBasket; let i = index">
-          <span class="grow" (click)="store.swapProductBetweenLists(item, i, 'inBasket', 'forBasket')">
+          <span class="grow" (click)="swapProducts(item, i, 'inBasket', 'forBasket')">
             {{ item.amount }}
             {{ item.title }}
             <md-icon>cart</md-icon>
           </span>
-          <button color="danger" md-button (click)="store.removeProductFromList(i, 'inBasket')">
+          <button color="danger" md-button (click)="removeProduct(i)">
             <md-icon>delete</md-icon>
           </button>
         </md-list-item>
@@ -45,7 +42,7 @@
   <a class="add-fab" [routerLink]="['add']" md-fab color="primary">
     <md-icon>add</md-icon>
   </a>
-  <button class="clear-fab" (click)="store.clearSelectedList()" md-fab>
+  <button class="clear-fab" (click)="clearBasket()" md-fab>
     <md-icon name="cart">clear</md-icon>
   </button>
 </md-sidenav-container>

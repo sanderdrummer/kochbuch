@@ -16,7 +16,7 @@ import {ListsModule} from './lists/lists.module';
 import {MaterialModule} from "@angular/material";
 import {ProductsStore} from './lists/products/products.store';
 import {RouterModule} from '@angular/router';
-// Must export the config
+import {ListService} from './lists/list/shared/list.service';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyCzRi2uePH1TPhEZhDVakWnN2H2HVRS-8U",
@@ -47,7 +47,12 @@ const myFirebaseAuthConfig = {
     MaterialModule.forRoot(),
     AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig)
   ],
-  providers: [AuthService, ParserService, ListStore, ProductsStore, FireBaseCrudService],
+  providers: [AuthService,
+    ParserService,
+    ListStore,
+    ListService,
+    ProductsStore,
+    FireBaseCrudService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

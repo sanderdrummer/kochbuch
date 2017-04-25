@@ -12,11 +12,11 @@ export class Store<T> {
 
   init(state:T) {
     this.state = state;
-    this.state$ = new BehaviorSubject(this.state);
+    this.state$ = new BehaviorSubject(state);
   }
 
 
   update(newState:any) {
-    this.state$.next(Object.assign(this.state, newState));
+    this.state$.next(Object.assign(this.state$.getValue(), newState));
   }
 }

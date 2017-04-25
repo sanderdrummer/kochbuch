@@ -31,7 +31,7 @@ export class AddProductToListComponent implements OnInit {
 
   ngOnDestroy() {
     this.searchSubscription.unsubscribe();
-  }
+  }   
 
   selectProduct(product) {
     this.searchControl.reset();

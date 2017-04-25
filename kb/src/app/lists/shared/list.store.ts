@@ -2,17 +2,17 @@
 import {Injectable} from '@angular/core';
 import {Store} from '../../shared/store';
 import {AngularFire, FirebaseObjectObservable} from 'angularfire2';
-import {ParserService} from '../../shared/parser.service';
 import {ListStateInterface} from './list-state.interface';
 import {ListModel} from '../list/shared/list.model';
 import {ListConfig} from '../../shared/list.config';
 import {ProductModel} from '../products/product.model';
+import {ListService} from '../list/shared/list.service';
 @Injectable()
 export class ListStore extends Store<ListStateInterface> {
   url: string;
   listsFirebase$: FirebaseObjectObservable<any>;
 
-  constructor(public parser: ParserService, public af: AngularFire) {
+  constructor(public af: AngularFire, public listService:ListService) {
     super();
     this.url = ListConfig.url;
     this.listsFirebase$ = this.af.database.object(this.url);
@@ -25,13 +25,7 @@ export class ListStore extends Store<ListStateInterface> {
   }
 
   fetchLists() {
-    this.listsFirebase$.subscribe((listObj) => {
-      console.log(listObj, listObj.value );
-      const lists = [];
-      this.parser.parseFireBaseObjToArray(listObj).forEach((listId) => {
-        lists.push(new ListModel(listObj[listId]));
-      });
-
+    this.listService.getAllLists().subscribe((lists) => {
       this.update({
         lists: lists,
         loading: false,
@@ -39,13 +33,7 @@ export class ListStore extends Store<ListStateInterface> {
     });
   }
 
-  addList(title: string) {
-    const newList = {};
-    newList[title] = new ListModel({title});
-    return this.listsFirebase$.update(newList);
-  }
-
-  selectList(newList: ListModel) {
+  updateSelectedList(newList: ListModel) {
     this.update({selectedList: newList});
   }
 
@@ -104,13 +92,6 @@ export class ListStore extends Store<ListStateInterface> {
     this.state.selectedList.inBasket = [];
     this.update({loading: true});
     selectedList$.update(this.state.selectedList);
-  }
-
-  setSelectedListByTitle(title: string) {
-    const selectedList = this.state.lists.find(list => list.title === title);
-    if (selectedList) {
-      this.update({selectedList});
-    }
   }
 
   addProductsTolist(list, products) {

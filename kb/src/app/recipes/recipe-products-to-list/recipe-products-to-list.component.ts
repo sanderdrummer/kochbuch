@@ -25,7 +25,7 @@ export class RecipeProductsToListComponent implements OnInit {
   }
 
   selectList(list) {
-    this.listStore.selectList(list);
+    this.listStore.updateSelectedList(list);
     this.listStore.addProductsTolist(list, this.products).then(() => {
       this.router.navigate(['/list', list.title]);
     });
