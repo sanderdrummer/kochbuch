@@ -24,8 +24,4 @@ export class LoginService {
   authByParams(email:string, password:string):firebase.Promise<FirebaseAuthState>{
     return this.af.auth.login({ email: email, password: password })
   }
-
-
-
-
 }
