@@ -10,6 +10,7 @@ import {RecipeStore} from '../shared/recipe.store';
 })
 export class RecipeProductsToListComponent implements OnInit {
   products;
+  loading:boolean;
 
   constructor(public listStore: ListStore, private recipeStore: RecipeStore, private router: Router) {
   }
