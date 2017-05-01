@@ -1,6 +1,7 @@
-:host, md-sidenav-container {
-  display: block;
-  height: 100%;
+:host {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .add-fab {
@@ -19,3 +20,10 @@ md-sidenav {
   min-width: 320px;
 }
 
+.list-content {
+  padding: 1rem;
+  md-card {
+    margin-bottom: 3rem;
+    min-width: 50%;
+  }
+}

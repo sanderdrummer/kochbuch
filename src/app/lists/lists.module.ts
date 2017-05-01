@@ -8,6 +8,7 @@ import {MaterialModule} from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {RouterModule} from '@angular/router';
+import {FlexLayoutModule} from '@angular/flex-layout';
 @NgModule({
   declarations: [
     ListsComponent,
@@ -22,6 +23,7 @@ import {RouterModule} from '@angular/router';
     HttpModule,
     RouterModule,
     ReactiveFormsModule,
+    FlexLayoutModule
   ]
 })
 export class ListsModule {
