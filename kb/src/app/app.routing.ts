@@ -14,8 +14,8 @@ export const appRoutes: Routes = [
     {path: 'amount', component: AddAmountToProductComponent},
   ]},
   {path: 'recipes', loadChildren: 'app/recipes/recipes.module#RecipesModule'},
-  {path: 'settings', loadChildren: 'app/settings/settings.module#SettingsModule'}
-
+  {path: 'settings', loadChildren: 'app/settings/settings.module#SettingsModule'},
+  {path: 'metrics', loadChildren: 'app/metrics/metrics.module#MetricsModule'},
 ];
 
 export const Routing = RouterModule.forRoot(appRoutes);
