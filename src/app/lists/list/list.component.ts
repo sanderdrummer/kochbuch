@@ -1,8 +1,7 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {MdSidenav} from '@angular/material';
+import {Component, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs/Subscription';
 import {ListModel} from './shared/list.model';
-import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {ListStore} from '../shared/list.store';
 import {ProductModel} from '../products/product.model';
 import {ListService} from './shared/list.service';
@@ -13,8 +12,6 @@ import {ListService} from './shared/list.service';
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
-  @ViewChild(MdSidenav) sideNav;
-  routeSubscription: Subscription;
   storeSubscription: Subscription;
   list: ListModel;
   loading: boolean;
@@ -25,22 +22,10 @@ export class ListComponent implements OnInit {
               private listStore: ListStore) {
     this.list = new ListModel({});
 
-    this.routeSubscription = this.router.events.subscribe(event => this.toggleSideNavOnRouteChange(event));
     this.storeSubscription = listStore.state$
       .map(state => state.selectedList)
       .distinctUntilChanged()
       .subscribe(state => this.setListByStoreOrRoute(state));
-  }
-
-  toggleSideNavOnRouteChange(event: any): void {
-    if (event instanceof NavigationEnd) {
-      const sideBarShouldOpen = event.url.indexOf('add') > -1 || event.url.indexOf('amount') > -1;
-      if (sideBarShouldOpen) {
-        this.sideNav.open();
-      } else {
-        this.sideNav.close();
-      }
-    }
   }
 
   setListByStoreOrRoute(list): void {
@@ -61,7 +46,6 @@ export class ListComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.storeSubscription.unsubscribe();
-    this.routeSubscription.unsubscribe();
   }
 
   updateRoute(): void {
@@ -78,8 +62,17 @@ export class ListComponent implements OnInit {
     this.updateList();
   }
 
+  addToForBasket(event) {
+    const {item, index} = event;
+    this.swapProducts(item, index, 'inBasket', 'forBasket');
+  }
+
+  addToInBasket(event) {
+    const {item, index} = event;
+    this.swapProducts(item, index, 'forBasket', 'inBasket');
+  }
+
   removeProduct(index:number):void{
-    console.log(this.list);
     this.list.removeProductFromBasket(index);
     this.updateList();
   }

@@ -1,0 +1,8 @@
+<md-list>
+  <md-list-item *ngFor="let item of products; let i = index">
+          <span class="grow" (click)="select(item, i)">
+            {{ item.amount }}
+            {{ item.title }}
+          </span>
+  </md-list-item>
+</md-list>

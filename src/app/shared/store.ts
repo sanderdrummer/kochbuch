@@ -17,6 +17,6 @@ export class Store<T> {
 
 
   update(newState:any) {
-    this.state$.next(Object.assign(this.state$.getValue(), newState));
+    this.state$.next(Object.assign({}, this.state$.getValue(), newState));
   }
 }

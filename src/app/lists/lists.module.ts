@@ -9,12 +9,15 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {RouterModule} from '@angular/router';
 import {FlexLayoutModule} from '@angular/flex-layout';
+import {ProductsModule} from '../products/products.module';
+import { ListProductsComponent } from './list/list-products/list-products.component';
 @NgModule({
   declarations: [
     ListsComponent,
     ListComponent,
     AddProductToListComponent,
     AddAmountToProductComponent,
+    ListProductsComponent,
   ],
   imports: [
     CommonModule,
@@ -23,7 +26,8 @@ import {FlexLayoutModule} from '@angular/flex-layout';
     HttpModule,
     RouterModule,
     ReactiveFormsModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    ProductsModule
   ]
 })
 export class ListsModule {

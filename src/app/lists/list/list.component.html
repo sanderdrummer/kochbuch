@@ -1,49 +1,37 @@
-<md-sidenav-container fxFill>
+<div class="list-content">
+  <md-card>
+    <h1>{{list?.title}}</h1>
+  </md-card>
 
-  <md-sidenav mode="over" (close)="updateRoute()" #sidenav>
-    <router-outlet></router-outlet>
-  </md-sidenav>
-  <div class="list-content">
-    <md-card fxLayout="row">
-      <h1>{{list?.title}}</h1>
-    </md-card>
-
-    <md-card>
+  <md-card>
+    <md-card-title>
       Noch in den Einkaufskorb
-      <md-list>
-        <md-list-item *ngFor="let item of list?.forBasket; let i = index">
-          <span class="grow" (click)="swapProducts(item, i, 'forBasket', 'inBasket')">
-            {{ item.amount }}
-            {{ item.title }}
-            <md-icon>cart</md-icon>
-          </span>
-        </md-list-item>
-      </md-list>
-    </md-card>
+    </md-card-title>
+    <kb-list-products
+      [products]="list?.forBasket"
+      (onSelect)="addToInBasket($event)"
+    ></kb-list-products>
+  </md-card>
 
-    <md-card>
+  <md-card>
+    <md-card-title>
       Schon dabei
-      <md-list>
-        <md-list-item *ngFor="let item of list?.inBasket; let i = index">
-          <span class="grow" (click)="swapProducts(item, i, 'inBasket', 'forBasket')">
-            {{ item.amount }}
-            {{ item.title }}
-            <md-icon>cart</md-icon>
-          </span>
-          <button color="danger" md-button (click)="removeProduct(i)">
-            <md-icon>delete</md-icon>
-          </button>
-        </md-list-item>
-      </md-list>
-    </md-card>
-  </div>
+    </md-card-title>
+    <kb-list-products
+      [products]="list?.inBasket"
+      (onSelect)="addToForBasket($event)"
+    ></kb-list-products>
+  </md-card>
+</div>
 
-  <a class="add-fab" [routerLink]="['add']" md-fab color="primary">
+<button class="clear-fab" (click)="clearBasket()" md-fab>
+  <md-icon>clear</md-icon>
+</button>
+
+<md-toolbar fxLayout="row" fxLayoutAlign="center">
+  <a [routerLink]="['add']" type="button" md-button>
     <md-icon>add</md-icon>
   </a>
-  <button class="clear-fab" (click)="clearBasket()" md-fab>
-    <md-icon name="cart">clear</md-icon>
-  </button>
-</md-sidenav-container>
+</md-toolbar>
 
 
