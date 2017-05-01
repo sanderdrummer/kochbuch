@@ -7,7 +7,6 @@ import {AppComponent} from './app.component';
 import {Routing} from './app.routing';
 import {AuthProviders, AuthMethods, AngularFireModule} from 'angularfire2';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import {AuthService} from './shared/auth.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ParserService} from './shared/parser.service';
 import {ListStore} from './lists/shared/list.store';
@@ -17,6 +16,7 @@ import {MaterialModule} from "@angular/material";
 import {ProductsStore} from './lists/products/products.store';
 import {RouterModule} from '@angular/router';
 import {ListService} from './lists/list/shared/list.service';
+import {LoginService} from './shared/login/login.service';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyCzRi2uePH1TPhEZhDVakWnN2H2HVRS-8U",
@@ -47,8 +47,9 @@ const myFirebaseAuthConfig = {
     MaterialModule.forRoot(),
     AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig)
   ],
-  providers: [AuthService,
+  providers: [
     ParserService,
+    LoginService,
     ListStore,
     ListService,
     ProductsStore,

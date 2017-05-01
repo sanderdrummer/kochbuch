@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import {AuthService} from './shared/auth.service';
-import {AngularFire} from 'angularfire2';
+import {LoginService} from './shared/login/login.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'kb-root',
@@ -9,7 +9,15 @@ import {AngularFire} from 'angularfire2';
 })
 export class AppComponent {
 
-  constructor(af:AngularFire, auth:AuthService){
-    af.auth.login({ email: auth.name, password: auth.pw });
+
+  constructor(loginService:LoginService, private router:Router){
+    loginService.authByLocalStorage().then(
+      null,
+      () => this.redirectToSettings()
+      );
+  }
+
+  redirectToSettings() {
+    this.router.navigate(['settings']);
   }
 }
