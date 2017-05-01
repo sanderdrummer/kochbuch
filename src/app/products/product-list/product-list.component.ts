@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {ProductStore} from '../shared/product.store';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {ProductModel} from '../shared/product.model';
@@ -11,9 +11,13 @@ import {ProductService} from '../shared/product.service';
 })
 export class ProductListComponent implements OnInit {
   @Output() onSelect = new EventEmitter();
+  @ViewChild('amount') private amountElement: ElementRef;
+  @ViewChild('filterName') private filterElement: ElementRef;
 
   products$;
   filterForm: FormGroup;
+  amountForm: FormGroup;
+  selectedProduct: ProductModel;
 
   constructor(private productService: ProductService,
               private productStore: ProductStore,
@@ -23,7 +27,10 @@ export class ProductListComponent implements OnInit {
 
   ngOnInit() {
     this.filterForm = this.fb.group({
-      filter: ['']
+      filter: [''],
+    });
+    this.amountForm = this.fb.group({
+      amount: [1]
     });
 
     this.filterForm.controls.filter.valueChanges.subscribe(value => {
@@ -33,19 +40,34 @@ export class ProductListComponent implements OnInit {
     this.products$ = this.productStore.getFilteredProducts();
   }
 
+  ngAfterViewInit() {
+    this.filterElement.nativeElement.focus();
+  }
+
   addProduct(title: string): void {
-    const product = new ProductModel(title);
-    this.productService.createProduct(title).then((res) => {
-      this.selectProduct(product);
-    });
+    console.log(title);
+    const product = new ProductModel({title});
+    this.productService.createProduct(title)
+      .then(() => {
+        this.selectProduct(product);
+      });
   }
 
   selectProduct(product: ProductModel): void {
-    this.onSelect.emit({product});
+    this.selectedProduct = product;
+    setTimeout(() => {
+      this.amountElement.nativeElement.focus();
+    },100);
   }
 
   filterProducts(query: string): void {
     this.productStore.setFilteredProducts(query);
   }
 
+  selectProductWithAmount(amount: number) {
+    this.onSelect.emit({
+      selectedProduct: this.selectedProduct,
+      amount: amount
+    });
+  }
 }

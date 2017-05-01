@@ -1,18 +1,34 @@
 <md-card>
-  <md-input-container>
-    <form [formGroup]="filterForm" (submit)="addProduct(filterName.value)">
+
+  <div *ngIf="selectedProduct">
+    <form (submit)="selectProductWithAmount(amount.value)" [formGroup]="amountForm">
+      <md-input-container>
+        <input
+          formControlName="amount"
+          mdInput
+          type="text"
+          #amount
+          placeholder="Anzahl"
+        >
+      </md-input-container>
+      <button md-raised-button>{{selectedProduct.title}}</button>
+    </form>
+  </div>
+
+  <form [formGroup]="filterForm" (submit)="addProduct(filterForm.value.filter)">
+    <md-input-container>
       <input
         mdInput
         formControlName="filter"
         type="search"
         #filterName
-        placeholder="Produkt finden">
-    </form>
-  </md-input-container>
+        placeholder="Produkt">
+    </md-input-container>
+  </form>
 
   <md-list>
     <md-list-item *ngFor="let product of (products$ | async)">
-     <span>
+     <span (click)="selectProduct(product)">
       {{product.title}}
      </span>
     </md-list-item>
