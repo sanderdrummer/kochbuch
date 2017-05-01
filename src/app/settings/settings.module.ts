@@ -5,6 +5,7 @@ import { SettingsComponent } from './settings.component';
 import {SettingsRouting} from './settings.routing';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MaterialModule} from '@angular/material';
+import {FlexLayoutModule} from '@angular/flex-layout';
 
 @NgModule({
   imports: [
@@ -12,7 +13,8 @@ import {MaterialModule} from '@angular/material';
     SettingsRouting,
     FormsModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
+    FlexLayoutModule
   ],
   declarations: [LoginComponent, SettingsComponent]
 })

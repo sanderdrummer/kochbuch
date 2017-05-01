@@ -45,6 +45,7 @@ const myFirebaseAuthConfig = {
     ListsModule,
     BrowserAnimationsModule,
     MaterialModule.forRoot(),
+    FlexLayoutModule,
     AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig)
   ],
   providers: [
