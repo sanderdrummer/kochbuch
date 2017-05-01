@@ -13,10 +13,12 @@ import {ListStore} from './lists/shared/list.store';
 import {FireBaseCrudService} from './shared/firabase-crud.service';
 import {ListsModule} from './lists/lists.module';
 import {MaterialModule} from "@angular/material";
-import {ProductsStore} from './lists/products/products.store';
 import {RouterModule} from '@angular/router';
 import {ListService} from './lists/list/shared/list.service';
 import {LoginService} from './shared/login/login.service';
+import {ProductService} from './products/shared/product.service';
+import {ProductStore} from './products/shared/product.store';
+import {ProductsModule} from './products/products.module';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyCzRi2uePH1TPhEZhDVakWnN2H2HVRS-8U",
@@ -46,15 +48,18 @@ const myFirebaseAuthConfig = {
     BrowserAnimationsModule,
     MaterialModule.forRoot(),
     FlexLayoutModule,
-    AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig)
+    AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
+    ProductsModule
   ],
   providers: [
+    FireBaseCrudService,
     ParserService,
     LoginService,
     ListStore,
     ListService,
-    ProductsStore,
-    FireBaseCrudService],
+    ProductService,
+    ProductStore
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

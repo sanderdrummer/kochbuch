@@ -1,9 +1,25 @@
-<md-list>
-  <md-list-item *ngFor="let item of products; let i = index">
-          <span class="grow" (click)="onSelect(item, i)">
-            {{ item.amount }}
-            {{ item.title }}
-            <md-icon>{{icon}}</md-icon>
-          </span>
-  </md-list-item>
-</md-list>
+<md-card>
+  <md-input-container>
+    <form [formGroup]="filterForm" (submit)="addProduct(filterName.value)">
+      <input
+        mdInput
+        formControlName="filter"
+        type="search"
+        #filterName
+        placeholder="Produkt finden">
+    </form>
+  </md-input-container>
+
+  <md-list>
+    <md-list-item *ngFor="let product of (products$ | async)">
+     <span>
+      {{product.title}}
+     </span>
+    </md-list-item>
+  </md-list>
+
+  <button md-raised-button
+          (click)="addProduct(filterName.value)"
+          type="button">{{filterName.value}}
+  </button>
+</md-card>
