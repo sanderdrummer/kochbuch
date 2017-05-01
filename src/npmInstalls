@@ -1,0 +1,5 @@
+npm install --save firebase@latest
+npm install --save angularfire2@latest
+npm install --save @angular/flex-layout@latest
+npm install --save @angular/material@latest
+

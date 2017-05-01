@@ -1,0 +1,25 @@
+<md-card class="relative">
+  <md-input-container class="w100">
+    <input (keydown.enter)="addProduct(searchControl.value)" class="grow search-input" mdInput placeholder="Suche"
+           [formControl]="searchControl" type="search">
+  </md-input-container>
+  <button class="back-fab" type="button" md-fab (click)="goBack()">
+    <md-icon>clear</md-icon>
+  </button>
+</md-card>
+<md-card class="mt-1">
+  <md-list>
+    <md-list-item (click)="selectProduct(product)"
+                  *ngFor="let product of (store.state$ | async)?.filteredProducts;">
+      <p class="grow">{{ product.title }} </p>
+      <md-icon (click)="removeProduct(product.title)">delete</md-icon>
+    </md-list-item>
+  </md-list>
+</md-card>
+<div>
+  <button md-raised-button
+          type="button"
+          (click)="addProduct(searchControl.value)"
+          *ngIf="searchControl?.value?.length">{{searchControl.value}} als neues Produkt hinzufügen
+  </button>
+</div>

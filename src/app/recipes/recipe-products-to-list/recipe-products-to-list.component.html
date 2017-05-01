@@ -1,0 +1,15 @@
+<md-card class="mt-1">
+  <md-list>
+    <md-list-item *ngIf="loading">
+      Lade verfügabre Einkaufslisten...
+    </md-list-item>
+    <h3 md-subheader>Einkaufslisten:</h3>
+    <div *ngFor="let list of (listStore.state$ | async)?.lists;">
+      <md-list-item (click)="selectList(list)" >
+        <md-icon>list</md-icon>
+        <p class="grow">{{ list.title }} </p>
+      </md-list-item>
+      <md-divider></md-divider>
+    </div>
+  </md-list>
+</md-card>

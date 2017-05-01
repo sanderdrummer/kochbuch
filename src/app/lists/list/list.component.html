@@ -1,0 +1,50 @@
+<md-sidenav-container class="grow">
+
+
+  <md-sidenav mode="over" (close)="updateRoute()" #sidenav>
+    <router-outlet></router-outlet>
+  </md-sidenav>
+  <div class="p-1 flex grow is-column">
+    <md-card>
+      <h1>{{list?.title}}</h1>
+    </md-card>
+
+    <md-card class="mt-1">
+      Noch in den Einkaufskorb
+      <md-list>
+        <md-list-item *ngFor="let item of list?.forBasket; let i = index">
+          <span class="grow" (click)="swapProducts(item, i, 'forBasket', 'inBasket')">
+            {{ item.amount }}
+            {{ item.title }}
+            <md-icon>cart</md-icon>
+          </span>
+        </md-list-item>
+      </md-list>
+    </md-card>
+
+    <md-card class="mt-1">
+      Schon dabei
+      <md-list>
+        <md-list-item *ngFor="let item of list?.inBasket; let i = index">
+          <span class="grow" (click)="swapProducts(item, i, 'inBasket', 'forBasket')">
+            {{ item.amount }}
+            {{ item.title }}
+            <md-icon>cart</md-icon>
+          </span>
+          <button color="danger" md-button (click)="removeProduct(i)">
+            <md-icon>delete</md-icon>
+          </button>
+        </md-list-item>
+      </md-list>
+    </md-card>
+  </div>
+
+  <a class="add-fab" [routerLink]="['add']" md-fab color="primary">
+    <md-icon>add</md-icon>
+  </a>
+  <button class="clear-fab" (click)="clearBasket()" md-fab>
+    <md-icon name="cart">clear</md-icon>
+  </button>
+</md-sidenav-container>
+
+

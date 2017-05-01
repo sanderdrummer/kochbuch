@@ -1,0 +1,42 @@
+<button class="delete" md-fab (click)="deleteRecipe()">
+  <md-icon name="cart">clear</md-icon>
+</button>
+
+<form [formGroup]="recipeForm" (submit)="createOrUpdateRecipe(recipeForm.value)">
+
+  <md-card>
+    <md-input-container class="w100">
+      <input mdInput type="text" placeholder="Rezept Name" formControlName="title">
+    </md-input-container>
+
+    <div>
+      <md-input-container class="w100 ">
+        <textarea class="description" placeholder="Rezept Beschreibung" mdInput formControlName="description"></textarea>
+      </md-input-container>
+    </div>
+
+  </md-card>
+
+  <md-card class="mt-1">
+    <md-card-content>
+      <div formArrayName="products">
+        <div *ngFor="let c of recipeForm.controls.products.controls; let i = index">
+          <div [formGroupName]="i">
+            <md-input-container>
+              <input type="text" mdInput placeholder="Anzahl" formControlName="amount">
+            </md-input-container>
+            <md-input-container>
+              <input mdInput type="text" placeholder="Produkt" formControlName="title">
+            </md-input-container>
+            <button (click)="removeItem('products', i)" type="button" md-button>Produkt entfernen</button>
+          </div>
+        </div>
+        <button (click)="addProduct('products', i)" type="button" md-button>Produkt hinzufügen</button>
+      </div>
+    </md-card-content>
+
+    <md-card-actions>
+      <button type="submit" md-button [disabled]="!recipeForm.valid" block>{{submitButtonLabel}}</button>
+    </md-card-actions>
+  </md-card>
+</form>

@@ -1,0 +1,19 @@
+<md-card>
+  <form
+    [formGroup]="loginForm"
+    (submit)="tryLogin(loginForm.value)">
+    <md-input-container>
+      <input mdInput
+             formControlName="email"
+             placeholder="email"
+             type="email">
+    </md-input-container>
+    <md-input-container>
+      <input mdInput
+             formControlName="password"
+             placeholder="password"
+             type="password">
+    </md-input-container>
+    <button md-raised-button >Login</button>
+  </form>
+</md-card>
