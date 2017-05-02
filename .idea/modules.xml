@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/kb.iml" filepath="$PROJECT_DIR$/.idea/kb.iml" />
+      <module fileurl="file://D:\ng2Projects\kochbuch\.idea\kb.iml" filepath="D:\ng2Projects\kochbuch\.idea\kb.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/kochbuch.iml" filepath="$PROJECT_DIR$/.idea/kochbuch.iml" />
     </modules>
   </component>
 </project>
