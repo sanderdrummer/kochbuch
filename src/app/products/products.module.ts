@@ -15,7 +15,8 @@ import { ProductListComponent } from './product-list/product-list.component';
     FlexLayoutModule
   ],
   exports: [
-    ProductSelectorComponent
+    ProductSelectorComponent,
+    ProductListComponent
   ],
   declarations: [ProductSelectorComponent, ProductListComponent]
 })

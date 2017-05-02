@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs/Subscription';
-import {ListModel} from './shared/list.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ListStore} from '../shared/list.store';
+import {ListModel} from '../shared/list.model';
+import {ListService} from '../shared/list.service';
 import {ProductModel} from '../products/product.model';
-import {ListService} from './shared/list.service';
 
 @Component({
   selector: 'kb-list',
@@ -18,7 +18,7 @@ export class ListComponent implements OnInit {
 
   constructor(private router: Router,
               private route: ActivatedRoute,
-              private listService:ListService,
+              private listService: ListService,
               private listStore: ListStore) {
     this.list = new ListModel({});
 
@@ -33,10 +33,7 @@ export class ListComponent implements OnInit {
       this.list = list;
     } else {
       const title = this.route.snapshot.params['title'];
-      this.listService.readList(title).first().subscribe((list) => {
-        this.list = list;
-        this.listStore.updateSelectedList(list);
-      });
+      this.listStore.setSelectedListByTitle(title);
     }
   }
 
@@ -52,12 +49,12 @@ export class ListComponent implements OnInit {
     this.router.navigate(['list', this.list.title]);
   }
 
-  clearBasket():void {
+  clearBasket(): void {
     this.list.clearBasket();
     this.updateList();
   }
 
-  swapProducts(item:ProductModel, index:number, source:string, target:string):void {
+  swapProducts(item: ProductModel, index: number, source: string, target: string): void {
     this.list.swapProducts(item, index, source, target);
     this.updateList();
   }
@@ -72,7 +69,7 @@ export class ListComponent implements OnInit {
     this.swapProducts(item, index, 'forBasket', 'inBasket');
   }
 
-  removeProduct(index:number):void{
+  removeProduct(index: number): void {
     this.list.removeProductFromBasket(index);
     this.updateList();
   }
