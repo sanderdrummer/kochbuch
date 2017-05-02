@@ -1,9 +1,8 @@
-import {ListModel} from '../list/shared/list.model';
+import {ListModel} from './list.model';
 /**
  * Created by Tobias on 20.02.2017.
  */
 export interface ListStateInterface {
-  loading?:boolean
-  lists: ListModel[],
-  selectedList: ListModel
+  lists: ListModel[];
+  selectedList: ListModel;
 }

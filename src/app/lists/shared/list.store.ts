@@ -1,23 +1,21 @@
-
 import {Injectable} from '@angular/core';
 import {Store} from '../../shared/store';
 import {AngularFire, FirebaseObjectObservable} from 'angularfire2';
 import {ListStateInterface} from './list-state.interface';
-import {ListModel} from '../list/shared/list.model';
 import {ListConfig} from '../../shared/list.config';
 import {ProductModel} from '../products/product.model';
-import {ListService} from '../list/shared/list.service';
+import {ListService} from './list.service';
+import {ListModel} from './list.model';
 @Injectable()
 export class ListStore extends Store<ListStateInterface> {
   url: string;
   listsFirebase$: FirebaseObjectObservable<any>;
 
-  constructor(public af: AngularFire, public listService:ListService) {
+  constructor(public af: AngularFire, public listService: ListService) {
     super();
     this.url = ListConfig.url;
     this.listsFirebase$ = this.af.database.object(this.url);
     this.init({
-      loading: false,
       lists: [],
       selectedList: null
     });
@@ -25,16 +23,33 @@ export class ListStore extends Store<ListStateInterface> {
   }
 
   fetchLists() {
-    this.listService.getAllLists().subscribe((lists) => {
+    this.listService.readLists().subscribe((lists) => {
       this.update({
         lists: lists,
-        loading: false,
       });
     });
   }
 
-  updateSelectedList(newList: ListModel) {
-    this.update({selectedList: newList});
+  updateSelectedList(selectedList: ListModel) {
+    this.update({selectedList});
+  }
+
+  setSelectedListByTitle(title) {
+    const state = this.state$.getValue();
+    if (!state.selectedList) {
+      this.listService.readList(title)
+        .first()
+        .subscribe((list: ListModel) => this.updateSelectedList(list));
+    }
+  }
+
+  addProductToList(product: ProductModel): firebase.Promise<void> {
+    const state = this.state$.getValue();
+    console.log(state);
+    state.selectedList.forBasket.push(product);
+    this.updateSelectedList(state.selectedList);
+
+    return this.listService.updateList(state.selectedList);
   }
 
   getFireBaseOfList(list: ListModel) {
@@ -45,15 +60,6 @@ export class ListStore extends Store<ListStateInterface> {
     const selectedList$ = this.getFireBaseOfList(list);
     list.forBasket = list.forBasket.concat(products);
     return selectedList$.update(list);
-  }
-
-  addProductWithAmountToList(amount: string, product: ProductModel) {
-    const selectedList$ = this.getFireBaseOfList(this.state.selectedList);
-
-    product.amount = amount;
-    this.state.selectedList.forBasket.push(product);
-
-    return selectedList$.update(this.state.selectedList);
   }
 
   removeList(list: ListModel) {

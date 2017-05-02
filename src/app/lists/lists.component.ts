@@ -1,10 +1,9 @@
-
 import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {ListStore} from './shared/list.store';
-import {ListModel} from './list/shared/list.model';
-import {ListService} from './list/shared/list.service';
+import {ListService} from './shared/list.service';
+import {ListModel} from './shared/list.model';
 
 @Component({
   selector: 'kb-lists',
@@ -25,12 +24,12 @@ export class ListsComponent {
     });
   }
 
-  selectList(list: ListModel):void {
+  selectList(list: ListModel): void {
     this.listStore.updateSelectedList(list);
     this.router.navigate(['list', list.title]);
   }
 
-  addList(title: string):void {
+  addList(title: string): void {
     this.addListForm.disable();
     this.listService.createList(title).then(() => {
       this.addListForm.enable();
@@ -38,7 +37,7 @@ export class ListsComponent {
     });
   }
 
-  deleteList(list){
+  deleteList(list) {
     this.loading = true;
     this.listService.deleteList(list).then(() => {
       this.loading = false;

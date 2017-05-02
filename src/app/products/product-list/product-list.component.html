@@ -1,21 +1,22 @@
 <md-card>
 
   <div *ngIf="selectedProduct">
-    <form (submit)="selectProductWithAmount(amount.value)" [formGroup]="amountForm">
+    <form [formGroup]="amountForm">
       <md-input-container>
         <input
           formControlName="amount"
           mdInput
           type="text"
+          (keydown.enter)="selectProductWithAmount(amount.value)"
           #amount
           placeholder="Anzahl"
         >
       </md-input-container>
-      <button md-raised-button>{{selectedProduct.title}}</button>
+      <button type="button" (click)="selectProductWithAmount(amount.value)" md-raised-button>{{selectedProduct.title}}</button>
     </form>
   </div>
 
-  <form [formGroup]="filterForm" (submit)="addProduct(filterForm.value.filter)">
+  <form [formGroup]="filterForm" (ngSubmit)="addProduct(filterForm.value.filter)">
     <md-input-container>
       <input
         mdInput

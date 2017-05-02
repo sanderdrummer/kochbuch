@@ -6,9 +6,9 @@ import {Injectable} from '@angular/core';
 @Injectable()
 export class ParserService {
 
-  parseFireBaseObjToArray(obj: {}):any[] {
+  parseFireBaseObjToArray(obj: {}): any[] {
     return Object.keys(obj).filter((id) => {
-      return id && id.indexOf('$') == -1
-    })
+      return id && id.indexOf('$') === -1;
+    });
   }
 }

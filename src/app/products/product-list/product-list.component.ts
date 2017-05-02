@@ -31,7 +31,7 @@ export class ProductListComponent implements OnInit, AfterViewInit, ProductListC
       filter: [''],
     });
     this.amountForm = this.fb.group({
-      amount: [1]
+      amount: ['1']
     });
     this.subscribeToFilterChanges();
     this.products$ = this.productStore.getFilteredProducts();
@@ -63,16 +63,18 @@ export class ProductListComponent implements OnInit, AfterViewInit, ProductListC
     this.productStore.setFilteredProducts(query);
   }
 
-  selectProductWithAmount(amount: number): void {
+  selectProductWithAmount(amount: string): void {
+    this.selectedProduct.amount = amount;
+
     this.onSelect.emit({
       selectedProduct: this.selectedProduct,
-      amount: amount
     });
   }
 
   reset(): void {
     this.filterForm.reset({filter: ''});
-    this.amountForm.reset({amount: 1});
+    this.amountForm.reset({amount: '1'});
+    this.selectedProduct = null;
     this.focusProduct();
   }
 
