@@ -10,7 +10,7 @@ import {ProductListComponentInterface} from './product-list-component.interface'
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.scss']
 })
-export class ProductListComponent implements OnInit, AfterViewInit, ProductListComponentInterface {
+export class ProductListComponent implements OnInit, AfterViewInit {
   @Output() onSelect = new EventEmitter();
   @ViewChild('amount') private amountElement: ElementRef;
   @ViewChild('filterName') private filterElement: ElementRef;
