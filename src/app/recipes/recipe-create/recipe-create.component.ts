@@ -6,6 +6,7 @@ import {RecipeModel} from '../shared/recipe.model';
 import {RecipeStore} from '../shared/recipe.store';
 import {RecipeState} from '../shared/recipe.state';
 import {CategoryModel} from '../recipe-categories/shared/category.model';
+import {RecipeService} from '../shared/recipe.service';
 
 @Component({
     selector: 'kb-recipe-create',
@@ -22,7 +23,11 @@ export class RecipeCreateComponent implements OnInit {
     title:string;
     submitButtonLabel:string;
 
-    constructor(private fb:FormBuilder, private router: Router, private route: ActivatedRoute, private store: RecipeStore) {
+    constructor(private fb:FormBuilder,
+                private router: Router,
+                private route: ActivatedRoute,
+                private service: RecipeService,
+                private store: RecipeStore) {
 
         this.recipe = new RecipeModel({});
         this.categories = [];
@@ -43,8 +48,6 @@ export class RecipeCreateComponent implements OnInit {
                 store.setSelectedRecipeByTitle(title);
                 this.initCreate();
             }
-
-            this.categories = state.categories || [];
         });
     }
 
@@ -95,14 +98,13 @@ export class RecipeCreateComponent implements OnInit {
     }
 
     createOrUpdateRecipe(values: RecipeModel) {
-        this.store.updateRecipe(values).then((recipe) => {
-            console.log(recipe);
+        this.service.updateRecipe(values).then((recipe) => {
             this.router.navigate(['../'], {relativeTo: this.route});
         });
     }
 
     deleteRecipe(){
-        this.store.deleteRecipe(this.recipe).then( () => {
+        this.service.deleteRecipe(this.recipe).then( () => {
             this.router.navigate(['recipes']);
         });
     }

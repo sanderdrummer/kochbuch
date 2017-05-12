@@ -14,35 +14,35 @@ export class RecipeService {
   }
 
   readRecipes(): Observable<RecipeModel[]> {
-    return this.crud.read(this.baseUrl).distinctUntilChanged().map(listObj => {
-      const lists = [];
+    return this.crud.read(this.baseUrl).distinctUntilChanged().map(recipeObj => {
+      const recipes = [];
 
-      this.parser.parseFireBaseObjToArray(listObj).forEach((listId) => {
-        lists.push(new RecipeModel(listObj[listId]));
+      this.parser.parseFireBaseObjToArray(recipeObj).forEach((recipeId) => {
+        recipes.push(new RecipeModel(recipeObj[recipeId]));
       });
 
-      return lists;
+      return recipes;
     });
   }
 
   readRecipe(title: string): Observable<RecipeModel> {
     const path = this.getPath(title);
-    return this.crud.read(path).map(listConfig => new RecipeModel(listConfig));
+    return this.crud.read(path).map(recipeConfig => new RecipeModel(recipeConfig));
   }
 
   createRecipe(title: string): firebase.Promise<void> {
-    const list = new RecipeModel({title});
+    const recipe = new RecipeModel({title});
     const path = this.getPath(title);
-    return this.crud.update(path, list);
+    return this.crud.update(path, recipe);
   }
 
-  updateRecipe(list: RecipeModel): firebase.Promise<void> {
-    const path = this.getPath(list.title);
-    return this.crud.update(path, list);
+  updateRecipe(recipe: RecipeModel): firebase.Promise<void> {
+    const path = this.getPath(recipe.title);
+    return this.crud.update(path, recipe);
   }
 
-  deleteRecipe(list: RecipeModel): firebase.Promise<void> {
-    const path = this.getPath(list.title);
+  deleteRecipe(recipe: RecipeModel): firebase.Promise<void> {
+    const path = this.getPath(recipe.title);
     return this.crud.delete(path);
   }
 

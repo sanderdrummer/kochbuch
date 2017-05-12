@@ -4,14 +4,12 @@ import {CategoryModel} from '../recipe-categories/shared/category.model';
  * Created by funkp on 26.02.2017.
  */
 export class RecipeState {
-  categories: CategoryModel[];
   recipes: RecipeModel[];
   filteredRecipes: RecipeModel[];
   selectedRecipe: RecipeModel;
   filter: any;
 
   constructor(config: any) {
-    this.categories = config.categories || [];
     this.recipes = config.recipes || [];
     this.filteredRecipes = config.filteredRecipes || [];
     this.selectedRecipe = config.selectedRecipe || null;
@@ -33,12 +31,6 @@ export class RecipeState {
           return recipe.title.toLowerCase().indexOf(subText.toLowerCase()) > -1;
         });
       }
-
-      // if (this.filter && this.filter.categories && this.filter.categories.length) {
-      //   matchingCategory = this.filter.categories.every((category: string) => {
-      //     return recipe.categories.indexOf(category) > -1;
-      //   });
-      // }
 
       matching = matchingText && matchingCategory;
 
