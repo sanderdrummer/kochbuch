@@ -3,16 +3,15 @@
     <md-input-container class="w100">
       <input mdInput type="text" formControlName="text" placeholder="Suche">
     </md-input-container>
-    <!--<div>-->
-      <!--<md-checkbox *ngFor="let categorie of state.categories"-->
-        <!--class="example-margin"-->
-        <!--[checked]="checked"-->
-        <!--[align]="align">-->
-      <!--{{categorie}}-->
-      <!--</md-checkbox>-->
-    <!--</div>-->
     <div>
-
+      <md-checkbox *ngFor="let categorie of state.categories"
+        class="example-margin"
+        [checked]="checked"
+        [align]="align">
+      {{categorie}}
+      </md-checkbox>
+    </div>
+    <div>
       <button md-raised-button (click)="filterForm.reset()" type="button">
         Filter zurücksetzen
       </button>
@@ -34,3 +33,5 @@
 <button class="add-fab" (click)="addRecipe()" md-fab>
   <md-icon>add</md-icon>
 </button>
+
+<!--<a routerLink="categories">Kategorien</a>-->

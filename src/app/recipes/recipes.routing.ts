@@ -7,13 +7,14 @@ import {RecipeCategoriesComponent} from "./recipe-categories/recipe-categories.c
 import {RecipeComponent} from "./recipe/recipe.component";
 import {RecipeCreateComponent} from "./recipe-create/recipe-create.component";
 import {RecipeProductsToListComponent} from "./recipe-products-to-list/recipe-products-to-list.component";
+import {RecipeCategoriesUpdateComponent} from './recipe-categories/recipe-categories-update/recipe-categories-update.component';
 
 const routes = [
   {
-    path: '', component: RecipesComponent, children: [
-    {path: 'categories', component: RecipeCategoriesComponent}
-  ]
+    path: '', component: RecipesComponent
   },
+  {path: 'categories', component: RecipeCategoriesComponent},
+  {path: 'categories/:title', component: RecipeCategoriesUpdateComponent},
   {path: 'create', component: RecipeCreateComponent},
   {path: ':title', component: RecipeComponent},
   {path: ':title/update', component: RecipeCreateComponent},

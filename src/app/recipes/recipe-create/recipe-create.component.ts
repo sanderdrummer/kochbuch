@@ -5,6 +5,7 @@ import {FormArray, FormGroup, FormBuilder, Validators} from "@angular/forms";
 import {RecipeModel} from '../shared/recipe.model';
 import {RecipeStore} from '../shared/recipe.store';
 import {RecipeState} from '../shared/recipe.state';
+import {CategoryModel} from '../recipe-categories/shared/category.model';
 
 @Component({
     selector: 'kb-recipe-create',
@@ -17,7 +18,7 @@ export class RecipeCreateComponent implements OnInit {
     recipeSubscription: Subscription;
     recipeForm:FormGroup;
     products:FormArray;
-    categories: string[];
+    categories: CategoryModel[];
     title:string;
     submitButtonLabel:string;
 

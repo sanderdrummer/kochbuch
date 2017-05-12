@@ -12,6 +12,10 @@ import {RecipeStore} from './shared/recipe.store';
 import {
   MaterialModule
 } from '@angular/material';
+import { RecipeCategoriesUpdateComponent } from './recipe-categories/recipe-categories-update/recipe-categories-update.component';
+import {CategoryStore} from './recipe-categories/shared/category.store';
+import {BaseCrudService} from '../shared/base-crud.service';
+import {CategoryService} from './recipe-categories/shared/category.service';
 
 @NgModule({
   imports: [
@@ -28,10 +32,14 @@ import {
     RecipeCreateComponent,
     RecipeProductsToListComponent,
     RecipeCategoriesComponent,
+    RecipeCategoriesUpdateComponent,
   ],
   providers: [
     RecipeStore,
     RecipeService,
+    CategoryStore,
+    CategoryService,
+    BaseCrudService
   ]
 })
 export class RecipesModule {

@@ -1,22 +1,21 @@
-
-
 import {Injectable} from '@angular/core';
 import {AngularFire} from 'angularfire2';
 import {Store} from '../../shared/store';
 import {ParserService} from '../../shared/parser.service';
 import {RecipeState} from './recipe.state';
 import {RecipeModel} from './recipe.model';
+import {CategoryStore} from '../recipe-categories/shared/category.store';
 
 @Injectable()
 export class RecipeStore extends Store<RecipeState> {
   recipesUrl: string;
-  categoriesUrl: string;
 
-  constructor(public af: AngularFire, public parser: ParserService) {
+  constructor(public af: AngularFire,
+              public parser: ParserService,
+              private categoryStore: CategoryStore) {
     super();
     this.init(new RecipeState({}));
     this.recipesUrl = '/recipes';
-    this.categoriesUrl = '/categories';
 
     this.resolveRecipes().subscribe();
     this.resolveCategories().subscribe();
@@ -81,7 +80,7 @@ export class RecipeStore extends Store<RecipeState> {
     return this.getFireBaseOfRecipe(recipe).remove();
   }
 
-  updateRecipeFilter(filter){
+  updateRecipeFilter(filter) {
     this.update({filter});
     this.filterRecipes();
   }

@@ -1,10 +1,11 @@
 
 import {ProductModel} from '../../lists/products/product.model';
+import {CategoryModel} from '../recipe-categories/shared/category.model';
 export class RecipeModel {
   title:string;
   products: ProductModel[];
   description:string;
-  categories: string[];
+  categories: CategoryModel[];
 
   constructor(config:any) {
     this.title = config.title || '';
