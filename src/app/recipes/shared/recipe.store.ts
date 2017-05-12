@@ -41,4 +41,8 @@ export class RecipeStore extends Store<RecipeState> {
     this.filterRecipes();
   }
 
+  getSelected() {
+    return this.state$.distinctUntilChanged().map(state => state.selectedRecipe);
+  }
+
 }

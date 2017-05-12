@@ -9,104 +9,69 @@ import {CategoryModel} from '../recipe-categories/shared/category.model';
 import {RecipeService} from '../shared/recipe.service';
 
 @Component({
-    selector: 'kb-recipe-create',
-    templateUrl: './recipe-create.component.html',
-    styleUrls: ['./recipe-create.component.scss']
+  selector: 'kb-recipe-create',
+  templateUrl: './recipe-create.component.html',
+  styleUrls: ['./recipe-create.component.scss']
 })
 export class RecipeCreateComponent implements OnInit {
 
-    recipe: RecipeModel;
-    recipeSubscription: Subscription;
-    recipeForm:FormGroup;
-    products:FormArray;
-    categories: CategoryModel[];
-    title:string;
-    submitButtonLabel:string;
+  recipe: RecipeModel;
+  products: FormArray;
+  title: string;
+  submitButtonLabel: string;
 
-    constructor(private fb:FormBuilder,
-                private router: Router,
-                private route: ActivatedRoute,
-                private service: RecipeService,
-                private store: RecipeStore) {
+  constructor(private fb: FormBuilder,
+              private router: Router,
+              private route: ActivatedRoute,
+              private service: RecipeService,
+              private store: RecipeStore) {
 
-        this.recipe = new RecipeModel({});
-        this.categories = [];
-        this.recipeSubscription = store.state$.subscribe((state:RecipeState)=> {
-            this.products = new FormArray([this.createProduct()]);
-            this.recipeForm = fb.group({
-                title: ['', Validators.required],
-                description: [],
-                categories: [],
-                products: this.products
-            });
+    this.recipe = new RecipeModel({});
+    store.state$.subscribe((state: RecipeState) => {
 
-            if (state.selectedRecipe) {
-                this.recipe = state.selectedRecipe;
-                this.initUpdate();
-            } else {
-                const title = route.snapshot.params['title'];
-                store.setSelectedRecipeByTitle(title);
-                this.initCreate();
-            }
-        });
-    }
+      if (state.selectedRecipe) {
+        this.recipe = state.selectedRecipe;
+        this.initUpdate();
+      } else {
+        const title = route.snapshot.params['title'];
+        store.setSelectedRecipeByTitle(title);
+        this.initCreate();
+      }
+    });
+  }
 
-    ngOnInit() {
-    }
+  ngOnInit() {
+  }
 
-    initUpdate(){
-        this.initializeChildForms(this.recipe.products, this.recipe.categories);
-        this.recipeForm.patchValue(this.recipe);
+  initUpdate() {
+    this.title = this.recipe.title;
+    this.submitButtonLabel = this.title + ' aktualisieren';
+  }
 
-        this.title = this.recipe.title;
-        this.submitButtonLabel = this.title + ' aktualisieren';
-    }
+  initCreate() {
+    this.title = 'Neues Rezept';
+    this.submitButtonLabel = 'Neues Rezept anlegen';
 
-    initCreate(){
-        this.recipeForm.reset();
-        this.title = 'Neues Rezept';
-        this.submitButtonLabel = 'Neues Rezept anlegen';
+  }
 
-    }
+  deleteProduct(productIndex: number): void {
+    this.recipe.products.splice(productIndex, 1);
+    this.service.updateRecipe(this.recipe);
+  }
 
-    initializeChildForms(products, categories) {
-        products.forEach(() => {
-            this.addProduct()
-        });
-    }
+  createOrUpdateRecipe(values: RecipeModel) {
+    this.recipe.title = values.title;
+    this.recipe.description = values.description;
+    this.service.updateRecipe(this.recipe).then(() => {
+      this.store.update({selctedRecipe: this.recipe});
+      this.router.navigate(['../'], {relativeTo: this.route});
+    });
+  }
 
-    createCategory() {
-        return this.fb.group({
-            category: []
-        })
-    }
-
-    createProduct() {
-        return this.fb.group({
-            title: [],
-            amount: []
-        })
-    }
-
-    addProduct() {
-        this.products.push(this.createProduct());
-    }
-
-    removeItem(type: string, index: number) {
-        const control = <FormArray>this.recipeForm.controls[type];
-        control.removeAt(index);
-    }
-
-    createOrUpdateRecipe(values: RecipeModel) {
-        this.service.updateRecipe(values).then((recipe) => {
-            this.router.navigate(['../'], {relativeTo: this.route});
-        });
-    }
-
-    deleteRecipe(){
-        this.service.deleteRecipe(this.recipe).then( () => {
-            this.router.navigate(['recipes']);
-        });
-    }
+  deleteRecipe() {
+    this.service.deleteRecipe(this.recipe).then(() => {
+      this.router.navigate(['recipes']);
+    });
+  }
 
 }
