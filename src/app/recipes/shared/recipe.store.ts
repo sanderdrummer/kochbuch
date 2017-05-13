@@ -3,6 +3,8 @@ import {Store} from '../../shared/store';
 import {RecipeState} from './recipe.state';
 import {RecipeModel} from './recipe.model';
 import {RecipeService} from './recipe.service';
+import {RecipeFilterModel} from './recipe-filter.model';
+import {max} from 'rxjs/operator/max';
 
 @Injectable()
 export class RecipeStore extends Store<RecipeState> {
@@ -16,14 +18,27 @@ export class RecipeStore extends Store<RecipeState> {
 
   resolveRecipes() {
     this.recipeService.readRecipes().subscribe((recipes) => {
-      this.update({recipes, filteredRecipes: recipes});
+      this.update({recipes});
+      this.filterRecipes();
     });
   }
 
   filterRecipes() {
-    const filteredRecipes = this.state.filterRecipes();
-    this.update({filteredRecipes});
+    const maxLength = 150;
+    const state: RecipeState = this.state$.getValue();
+    if (state.filter.text) {
+      const lowerCaseFilter = state.filter.text.toLowerCase();
+      const filteredRecipes = state.recipes
+        .filter((recipe: RecipeModel) => {
+          return recipe.title.toLowerCase().includes(lowerCaseFilter);
+        }).slice(0, maxLength);
+      this.update({filteredRecipes});
+    } else {
+      this.update({filteredRecipes: state.recipes.slice(0, maxLength)});
+    }
+
   }
+
 
   selectRecipe(selectedRecipe: RecipeModel) {
     this.update({selectedRecipe});
@@ -36,7 +51,7 @@ export class RecipeStore extends Store<RecipeState> {
     }
   }
 
-  updateRecipeFilter(filter) {
+  updateRecipeFilter(filter: RecipeFilterModel) {
     this.update({filter});
     this.filterRecipes();
   }
