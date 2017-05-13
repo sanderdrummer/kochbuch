@@ -1,4 +1,7 @@
-import {Component, ElementRef, EventEmitter, OnInit, Output, AfterViewInit, ViewChild} from '@angular/core';
+import {
+  Component, ElementRef, EventEmitter, OnInit, Output, AfterViewInit, ViewChild,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import {ProductStore} from '../shared/product.store';
 import {FormBuilder, FormGroup, AbstractControl} from '@angular/forms';
 import {ProductModel} from '../shared/product.model';
@@ -8,7 +11,8 @@ import {ProductListComponentInterface} from './product-list-component.interface'
 @Component({
   selector: 'kb-product-list',
   templateUrl: './product-list.component.html',
-  styleUrls: ['./product-list.component.scss']
+  styleUrls: ['./product-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductListComponent implements OnInit, AfterViewInit {
   @Output() onSelect = new EventEmitter();

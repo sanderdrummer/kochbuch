@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {ListStore} from './shared/list.store';
@@ -8,7 +8,8 @@ import {ListModel} from './shared/list.model';
 @Component({
   selector: 'kb-lists',
   templateUrl: './lists.component.html',
-  styleUrls: ['./lists.component.scss']
+  styleUrls: ['./lists.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ListsComponent {
   addListForm: FormGroup;

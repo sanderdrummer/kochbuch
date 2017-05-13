@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ProductListComponent} from '../../../products/product-list/product-list.component';
 import {ListStore} from '../../shared/list.store';
@@ -6,7 +6,8 @@ import {ListStore} from '../../shared/list.store';
 @Component({
   selector: 'kb-list-add-product',
   templateUrl: './list-add-product.component.html',
-  styleUrls: ['./list-add-product.component.scss']
+  styleUrls: ['./list-add-product.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ListAddProductComponent implements OnInit {
   @ViewChild(ProductListComponent) productList;

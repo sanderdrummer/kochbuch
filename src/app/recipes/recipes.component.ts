@@ -1,4 +1,4 @@
-import {Component, OnInit, state} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
 import {FormGroup, FormBuilder} from "@angular/forms";
 import {Router, ActivatedRoute} from "@angular/router";
@@ -9,9 +9,11 @@ import {RecipeModel} from './shared/recipe.model';
 @Component({
   selector: 'kb-recipes',
   templateUrl: './recipes.component.html',
-  styleUrls: ['./recipes.component.scss']
+  styleUrls: ['./recipes.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
+
 })
-export class RecipesComponent implements OnInit {
+export class RecipesComponent implements OnInit, OnDestroy{
 
   recipesSubscription: Subscription;
   state: RecipeState;
