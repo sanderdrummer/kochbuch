@@ -62,10 +62,12 @@ export class RecipeCreateComponent implements OnInit {
   createOrUpdateRecipe(values: RecipeModel) {
     this.recipe.title = values.title;
     this.recipe.description = values.description;
-    this.service.updateRecipe(this.recipe).then(() => {
-      this.store.update({selctedRecipe: this.recipe});
-      this.router.navigate(['../'], {relativeTo: this.route});
-    });
+    if (this.recipe.title) {
+      this.service.updateRecipe(this.recipe).then(() => {
+        this.store.update({selctedRecipe: this.recipe});
+        this.router.navigate(['../'], {relativeTo: this.route});
+      });
+    }
   }
 
   deleteRecipe() {
