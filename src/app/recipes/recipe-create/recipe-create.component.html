@@ -5,12 +5,12 @@
 <form #recipeForm="ngForm" (submit)="createOrUpdateRecipe(recipeForm.value)">
 
   <md-card>
-    <md-input-container class="w100">
+    <md-input-container>
       <input mdInput type="text" required placeholder="Rezept Name" [ngModel]="recipe.title" name="title">
     </md-input-container>
 
     <div>
-      <md-input-container class="w100 ">
+      <md-input-container>
         <textarea class="description" required placeholder="Rezept Beschreibung" mdInput [ngModel]="recipe.description" name="description"></textarea>
       </md-input-container>
     </div>
