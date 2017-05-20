@@ -11,8 +11,7 @@ import {ProductListComponentInterface} from './product-list-component.interface'
 @Component({
   selector: 'kb-product-list',
   templateUrl: './product-list.component.html',
-  styleUrls: ['./product-list.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./product-list.component.scss']
 })
 export class ProductListComponent implements OnInit, AfterViewInit {
   @Output() onSelect = new EventEmitter();
@@ -52,10 +51,8 @@ export class ProductListComponent implements OnInit, AfterViewInit {
 
   addProduct(title: string): void {
     const product = new ProductModel({title});
-    this.productService.createProduct(title)
-      .then(() => {
-        this.selectProduct(product);
-      });
+    this.selectProduct(product);
+    this.productService.createProduct(title);
   }
 
   selectProduct(product: ProductModel): void {
@@ -84,7 +81,9 @@ export class ProductListComponent implements OnInit, AfterViewInit {
 
   focusAmount(): void {
     setTimeout(() => {
-      this.amountElement.nativeElement.focus();
+      if (this.amountElement && this.amountElement.nativeElement) {
+        this.amountElement.nativeElement.focus();
+      }
     }, 100);
   }
 
