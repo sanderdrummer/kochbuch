@@ -13,7 +13,7 @@
 
 <md-card class="mt-1 w100">
   <md-list>
-    <div *ngFor="let recipe of state.filteredRecipes">
+    <div *ngFor="let recipe of recipes$ | async">
       <md-list-item (click)="selectRecipe(recipe)">
         {{ recipe.title }}
         <md-icon name="recipe-box" item-left></md-icon>

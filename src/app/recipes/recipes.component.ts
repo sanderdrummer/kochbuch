@@ -5,6 +5,7 @@ import {Router, ActivatedRoute} from "@angular/router";
 import {RecipeState} from './shared/recipe.state';
 import {RecipeStore} from './shared/recipe.store';
 import {RecipeModel} from './shared/recipe.model';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'kb-recipes',
@@ -13,11 +14,10 @@ import {RecipeModel} from './shared/recipe.model';
   changeDetection: ChangeDetectionStrategy.OnPush
 
 })
-export class RecipesComponent implements OnInit, OnDestroy{
+export class RecipesComponent implements OnInit {
 
-  recipesSubscription: Subscription;
-  state: RecipeState;
   filterForm: FormGroup;
+  recipes$: Observable<RecipeModel[]>;
 
   constructor(private router: Router, private activeRoute: ActivatedRoute, private store: RecipeStore, fb: FormBuilder) {
 
@@ -25,10 +25,7 @@ export class RecipesComponent implements OnInit, OnDestroy{
       text: [],
       categories: []
     });
-
-    this.recipesSubscription = store.state$.subscribe((state: RecipeState) => {
-      this.state = state;
-    });
+    this.recipes$ = this.store.state$.map(state => state.filteredRecipes);
 
 
     this.filterForm.valueChanges.subscribe((values) => {
@@ -40,9 +37,6 @@ export class RecipesComponent implements OnInit, OnDestroy{
   ngOnInit() {
   }
 
-  ngOnDestroy() {
-    this.recipesSubscription.unsubscribe();
-  }
 
   selectRecipe(recipe: RecipeModel) {
     this.store.selectRecipe(recipe);
