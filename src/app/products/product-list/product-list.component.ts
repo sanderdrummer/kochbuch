@@ -11,7 +11,8 @@ import {ProductListComponentInterface} from './product-list-component.interface'
 @Component({
   selector: 'kb-product-list',
   templateUrl: './product-list.component.html',
-  styleUrls: ['./product-list.component.scss']
+  styleUrls: ['./product-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductListComponent implements OnInit, AfterViewInit {
   @Output() onSelect = new EventEmitter();
