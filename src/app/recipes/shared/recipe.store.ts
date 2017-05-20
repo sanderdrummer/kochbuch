@@ -5,16 +5,23 @@ import {RecipeModel} from './recipe.model';
 import {RecipeService} from './recipe.service';
 import {RecipeFilterModel} from './recipe-filter.model';
 import {max} from 'rxjs/operator/max';
+import {CategoryStore} from '../recipe-categories/shared/category.store';
 
 @Injectable()
 export class RecipeStore extends Store<RecipeState> {
 
-  constructor(private recipeService: RecipeService) {
+  constructor(private recipeService: RecipeService, private categoryStore:CategoryStore) {
     super();
     this.init(new RecipeState({}));
     this.resolveRecipes();
-
+    this.linkCategories();
   }
+
+
+  linkCategories() {
+    this.categoryStore.state$.distinctUntilChanged().subscribe(categories => this.update({categories}));
+  }
+
 
   resolveRecipes() {
     this.recipeService.readRecipes().subscribe((recipes) => {
@@ -56,8 +63,18 @@ export class RecipeStore extends Store<RecipeState> {
     this.filterRecipes();
   }
 
+  resetFilter() {
+    const filter = new RecipeFilterModel({text:''});
+    this.update({filter});
+    this.filterRecipes();
+  }
+
   getSelected() {
     return this.state$.distinctUntilChanged().map(state => state.selectedRecipe);
+  }
+
+  getRecipes() {
+    return this.state$.map(state => state.filteredRecipes).distinctUntilChanged();
   }
 
 }
