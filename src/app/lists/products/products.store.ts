@@ -1,24 +1,24 @@
 import {Injectable} from '@angular/core';
 import {Store} from '../../shared/store';
-import {AngularFire, FirebaseObjectObservable} from 'angularfire2';
 import {ParserService} from '../../shared/parser.service';
 import {ProductModel} from './product.model';
 import {ProductStateInterface} from './products.store.interface';
+import {AngularFireDatabase, FirebaseObjectObservable} from 'angularfire2/database';
 /**
  * Created by Tobias on 09.02.2017.
  */
 @Injectable()
-export class ProductsStore extends Store<ProductStateInterface>{
+export class ProductsStore extends Store<ProductStateInterface> {
 
   products$: FirebaseObjectObservable<any>;
   limit: number;
   baseUrl: string;
 
-  constructor(private af: AngularFire, private parser: ParserService) {
+  constructor(private af: AngularFireDatabase, private parser: ParserService) {
     super();
     this.baseUrl = '/products';
 
-    this.products$ = af.database.object('/products');
+    this.products$ = af.object('/products');
     this.limit = 25;
     this.init({
       show: false,
@@ -28,7 +28,7 @@ export class ProductsStore extends Store<ProductStateInterface>{
       filteredProducts: []
     });
 
-    this.fetchProducts()
+    this.fetchProducts();
   }
 
   fetchProducts() {
@@ -84,7 +84,7 @@ export class ProductsStore extends Store<ProductStateInterface>{
 
   removeProduct(title) {
     this.state$.next(Object.assign(this.state, {selectedProduct: null}));
-    return this.af.database.object(this.baseUrl + '/' + title).remove();
+    return this.af.object(this.baseUrl + '/' + title).remove();
   }
 
 }

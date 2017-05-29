@@ -5,7 +5,7 @@ import {HttpModule} from '@angular/http';
 
 import {AppComponent} from './app.component';
 import {Routing} from './app.routing';
-import {AuthProviders, AuthMethods, AngularFireModule} from 'angularfire2';
+import {AngularFireModule} from 'angularfire2';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ParserService} from './shared/parser.service';
@@ -19,6 +19,8 @@ import {ProductService} from './products/shared/product.service';
 import {ProductStore} from './products/shared/product.store';
 import {ProductsModule} from './products/products.module';
 import {SharedModule} from './shared/shared.module';
+import {AngularFireDatabaseModule} from 'angularfire2/database';
+import {AngularFireAuthModule} from 'angularfire2/auth';
 
 export const firebaseConfig = {
   apiKey: 'AIzaSyCzRi2uePH1TPhEZhDVakWnN2H2HVRS-8U',
@@ -28,11 +30,6 @@ export const firebaseConfig = {
   messagingSenderId: '916192258488'
 };
 
-const myFirebaseAuthConfig = {
-  provider: AuthProviders.Password,
-  method: AuthMethods.Password
-};
-
 @NgModule({
   declarations: [
     AppComponent
@@ -40,15 +37,17 @@ const myFirebaseAuthConfig = {
   imports: [
     BrowserModule,
     FormsModule,
-    SharedModule,
     ReactiveFormsModule,
     HttpModule,
     Routing,
+    SharedModule,
     RouterModule,
     ListsModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
-    AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireDatabaseModule,
+    AngularFireAuthModule,
     ProductsModule
   ],
   providers: [

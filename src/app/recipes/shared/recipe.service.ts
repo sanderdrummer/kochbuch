@@ -10,7 +10,7 @@ export class RecipeService {
 
   constructor(private parser: ParserService,
               private crud: FireBaseCrudService) {
-    this.baseUrl = '/recipes/'
+    this.baseUrl = '/recipes/';
   }
 
   readRecipes(): Observable<RecipeModel[]> {
@@ -30,18 +30,18 @@ export class RecipeService {
     return this.crud.read(path).map(recipeConfig => new RecipeModel(recipeConfig));
   }
 
-  createRecipe(title: string): firebase.Promise<void> {
+  createRecipe(title: string): Promise<void> {
     const recipe = new RecipeModel({title});
     const path = this.getPath(title);
     return this.crud.update(path, recipe);
   }
 
-  updateRecipe(recipe: RecipeModel): firebase.Promise<void> {
+  updateRecipe(recipe: RecipeModel): Promise<void> {
     const path = this.getPath(recipe.title);
     return this.crud.update(path, recipe);
   }
 
-  deleteRecipe(recipe: RecipeModel): firebase.Promise<void> {
+  deleteRecipe(recipe: RecipeModel): Promise<void> {
     const path = this.getPath(recipe.title);
     return this.crud.delete(path);
   }

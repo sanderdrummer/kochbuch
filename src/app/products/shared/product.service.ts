@@ -7,7 +7,7 @@ import {Observable} from 'rxjs/Observable';
 @Injectable()
 export class ProductService {
   private baseUrl: string;
-  private listLimit:number;
+  private listLimit: number;
 
   constructor(private crud: FireBaseCrudService,
               private parser: ParserService) {
@@ -48,13 +48,13 @@ export class ProductService {
 
   }
 
-  createProduct(title: string): firebase.Promise<void> {
+  createProduct(title: string): Promise<void> {
     const product = new ProductModel({title});
     const path = this.getPath(title);
     return this.crud.update(path, product);
   }
 
-  deleteProduct(product: ProductModel): firebase.Promise<void> {
+  deleteProduct(product: ProductModel): Promise<void> {
     const path = this.getPath(product.title);
     return this.crud.delete(path);
   }

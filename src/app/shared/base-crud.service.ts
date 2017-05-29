@@ -6,13 +6,13 @@ import {Observable} from 'rxjs/Observable';
 export class BaseCrudService<T> {
 
   baseUrl: string;
-  type:any;
+  type: any;
 
   constructor(private parser: ParserService,
               private crud: FireBaseCrudService) {
   }
 
-  setType(type:any) {
+  setType(type: any) {
     this.type = type;
   }
 
@@ -38,18 +38,18 @@ export class BaseCrudService<T> {
     return this.crud.read(path).map(itemConfig => new this.type(itemConfig));
   }
 
-  createItem(key: string): firebase.Promise<void> {
+  createItem(key: string): Promise<void> {
     const item = new this.type({key});
     const path = this.getPath(key);
     return this.crud.update(path, item);
   }
 
-  updateItem(item: T, key:string): firebase.Promise<void> {
+  updateItem(item: T, key: string): Promise<void> {
     const path = this.getPath(key);
     return this.crud.update(path, item);
   }
 
-  deleteItem(item: T, key:string): firebase.Promise<void> {
+  deleteItem(item: T, key: string): Promise<void> {
     const path = this.getPath(key);
     return this.crud.delete(path);
   }

@@ -33,18 +33,18 @@ export class ListService {
     return this.crud.read(path).map(listConfig => new ListModel(listConfig));
   }
 
-  createList(title: string): firebase.Promise<void> {
+  createList(title: string): Promise<void> {
     const list = new ListModel({title});
     const path = this.getPath(title);
     return this.crud.update(path, list);
   }
 
-  updateList(list: ListModel): firebase.Promise<void> {
+  updateList(list: ListModel): Promise<void> {
     const path = this.getPath(list.title);
     return this.crud.update(path, list);
   }
 
-  deleteList(list: ListModel): firebase.Promise<void> {
+  deleteList(list: ListModel): Promise<void> {
     const path = this.getPath(list.title);
     return this.crud.delete(path);
   }

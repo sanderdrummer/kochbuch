@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
-import {AngularFire, FirebaseAuthState} from 'angularfire2';
+import {AngularFireAuth} from 'angularfire2/auth';
 
 @Injectable()
 export class LoginService {
 
-  constructor(private af: AngularFire) {
+  constructor(private af: AngularFireAuth ) {
   }
 
-  authByLocalStorage(): firebase.Promise<FirebaseAuthState> {
+  authByLocalStorage(): Promise<any> {
     const email = localStorage.getItem('email');
     const password = localStorage.getItem('password');
     return this.authByParams(email, password);
@@ -22,7 +22,7 @@ export class LoginService {
     localStorage.clear();
   }
 
-  authByParams(email: string, password: string): firebase.Promise<FirebaseAuthState> {
-    return this.af.auth.login({email: email, password: password})
+  authByParams(email: string, password: string): any {
+    return this.af.auth.signInWithEmailAndPassword(email, password);
   }
 }

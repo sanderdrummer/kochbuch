@@ -34,18 +34,18 @@ export class CategoryService {
     return this.crud.read(path).map(categoryConfig => new CategoryModel(categoryConfig));
   }
 
-  createCategory(title: string): firebase.Promise<void> {
+  createCategory(title: string): Promise<void> {
     const category = new CategoryModel({title});
     const path = this.getPath(title);
     return this.crud.update(path, category);
   }
 
-  updateCategory(category: CategoryModel): firebase.Promise<void> {
+  updateCategory(category: CategoryModel): Promise<void> {
     const path = this.getPath(category.title);
     return this.crud.update(path, category);
   }
 
-  deleteCategory(category: CategoryModel): firebase.Promise<void> {
+  deleteCategory(category: CategoryModel): Promise<void> {
     const path = this.getPath(category.title);
     return this.crud.delete(path);
   }

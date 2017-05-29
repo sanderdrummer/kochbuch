@@ -1,20 +1,20 @@
 import {Injectable} from '@angular/core';
 import {Store} from '../../shared/store';
-import {AngularFire, FirebaseObjectObservable} from 'angularfire2';
 import {ListStateInterface} from './list-state.interface';
 import {ListConfig} from '../../shared/list.config';
 import {ProductModel} from '../products/product.model';
 import {ListService} from './list.service';
 import {ListModel} from './list.model';
+import {AngularFireDatabase, FirebaseObjectObservable} from 'angularfire2/database';
 @Injectable()
 export class ListStore extends Store<ListStateInterface> {
   url: string;
   listsFirebase$: FirebaseObjectObservable<any>;
 
-  constructor(public af: AngularFire, public listService: ListService) {
+  constructor(public af: AngularFireDatabase, public listService: ListService) {
     super();
     this.url = ListConfig.url;
-    this.listsFirebase$ = this.af.database.object(this.url);
+    this.listsFirebase$ = this.af.object(this.url);
     this.init({
       lists: [],
       selectedList: null
@@ -43,7 +43,7 @@ export class ListStore extends Store<ListStateInterface> {
     }
   }
 
-  addProductToList(product: ProductModel): firebase.Promise<void> {
+  addProductToList(product: ProductModel): Promise<void> {
     const state = this.state$.getValue();
     console.log(state);
     state.selectedList.forBasket.push(product);
@@ -53,7 +53,7 @@ export class ListStore extends Store<ListStateInterface> {
   }
 
   getFireBaseOfList(list: ListModel) {
-    return this.af.database.object('/lists/' + list.title);
+    return this.af.object('/lists/' + list.title);
   }
 
   addToCart(list: ListModel, products: any[]) {

@@ -1,4 +1,4 @@
-<div fxFill fxLayoutAlign="space-around center" fxLayout="column">
+<div>
   <md-card class="disabled" [ngClass]="{'disabled':loading}">
     <md-list>
       <h3 md-subheader>Einkaufslisten:</h3>
@@ -23,7 +23,7 @@
   <md-card>
     <form [formGroup]="addListForm" (submit)="addList(addListForm.value.listName)">
       <md-input-container class="w100">
-        <input class="w100" mdInput formControlName="listName" type="text" placeholder="Neue Liste">
+        <input class="w100" mdInput formControlName="listName" placeholder="Neue Liste">
       </md-input-container>
       <button md-raised-button type="submit" [disabled]="!addListForm.valid">
         <md-icon>add</md-icon>

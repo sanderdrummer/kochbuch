@@ -1,19 +1,20 @@
 import {Injectable} from '@angular/core';
-import {AngularFire, FirebaseObjectObservable} from 'angularfire2';
+import {AngularFireDatabase, FirebaseObjectObservable} from 'angularfire2/database';
 @Injectable()
 export class FireBaseCrudService {
 
-  constructor(public af: AngularFire) {}
+  constructor(public af: AngularFireDatabase) {
+  }
 
-  update(path:string, obj:any):firebase.Promise<void> {
+  update(path: string, obj: any): any {
     return this.read(path).update(obj);
   }
 
-  delete(path:string):firebase.Promise<void> {
+  delete(path: string): any {
     return this.read(path).remove();
   }
 
-  read(path:string):FirebaseObjectObservable<any> {
-    return this.af.database.object(path);
+  read(path: string): FirebaseObjectObservable<any> {
+    return this.af.object(path);
   }
 }
