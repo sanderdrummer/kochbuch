@@ -1,11 +1,11 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { LoginComponent } from './login/login.component';
-import { SettingsComponent } from './settings.component';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {LoginComponent} from './login/login.component';
+import {SettingsComponent} from './settings.component';
 import {SettingsRouting} from './settings.routing';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MaterialModule} from '@angular/material';
 import {FlexLayoutModule} from '@angular/flex-layout';
+import {SharedModule} from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -13,9 +13,10 @@ import {FlexLayoutModule} from '@angular/flex-layout';
     SettingsRouting,
     FormsModule,
     ReactiveFormsModule,
-    MaterialModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    SharedModule
   ],
   declarations: [LoginComponent, SettingsComponent]
 })
-export class SettingsModule { }
+export class SettingsModule {
+}
