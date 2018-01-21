@@ -21,7 +21,7 @@ export const userService = {
     getToken() {
         const user = JSON.parse(localStorage.getItem('user'));
         if (user && user.idToken) {
-            return user.idToken
+            return '?auth=' + user.idToken;
         } else {
             return ''
         }

@@ -6,11 +6,11 @@ export const invoiceService = {
 
     fetchInvoices() {
         const token = userService.getToken();
-        return axios.get(appConfig.url + 'invoices.json');
+        return axios.get(appConfig.url + 'invoices.json' + token);
     },
 
     patchInvoice(invoice) {
         const token = userService.getToken();
-        return axios.post(appConfig.url + 'invoices.json', invoice);
+        return axios.post(appConfig.url + 'invoices.json' + token, invoice);
     }
 };

@@ -4,16 +4,15 @@ import {userService} from '../User/userService';
 
 const listService = {
 
-    getLists () {
-
+    getLists(){
         const token = userService.getToken();
-        console.log(token);
-        return axios.get(appConfig.url + 'list.json?auth=' + token);
+        return axios.get(appConfig.url + 'list.json' + token);
     },
 
-    updateList(list) {
-        return axios.patch(appConfig.url + 'list.json',
-         {[list.name]: list}
+    updateList(list){
+        const token = userService.getToken();
+        return axios.patch(appConfig.url + 'list.json' + token,
+            {[list.name]: list}
         );
     }
 
