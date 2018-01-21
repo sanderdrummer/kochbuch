@@ -39,6 +39,7 @@ class ShoppingListDetailsContainer extends Component {
             toBasket: [],
             inBasket: []
         });
+        this.props.history.push('/invoices/add');
     };
 
     render(){

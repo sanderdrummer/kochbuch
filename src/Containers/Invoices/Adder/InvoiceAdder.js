@@ -20,6 +20,7 @@ class InvoiceAdderContainer extends Component {
 
     updateValue = (e) =>{
         const value = e.target.value;
+
         this.setState(() =>{
             return {
                 value
@@ -40,6 +41,7 @@ class InvoiceAdderContainer extends Component {
             <IfElse if={!this.props.ui.isLoading} else={content}>
                 <h1>Neue Rechnung hinzufügen</h1>
                 <AddItem
+                    inputType='number'
                     placeholder="Einkaufswert"
                     buttonLabel="Neue Rechung"
                     triggerOnClick={this.addInvoice}

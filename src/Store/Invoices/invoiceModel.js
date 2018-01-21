@@ -9,6 +9,7 @@ export class InvoiceModel {
 
     constructor(config = {}) {
         this.from = config.from || Date.now();
+        this.to = config.from;
         this.description = config.description || '';
         this.value = config.value;
     }

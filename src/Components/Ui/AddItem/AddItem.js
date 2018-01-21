@@ -9,7 +9,7 @@ const AddItem = (props) => (
                    autoFocus="true"
                    onChange={props.updateValue}
                    value={props.value}
-                   type="text"
+                   type={props.inputType || 'text'}
                    placeholder={props.placeholder} />
         </div>
         <div className="control">
@@ -21,6 +21,7 @@ const AddItem = (props) => (
 );
 
 AddItem.propTypes = {
+    inputType: PropTypes.string,
     buttonLabel: PropTypes.string,
     placeholder: PropTypes.string,
     value: PropTypes.string,
