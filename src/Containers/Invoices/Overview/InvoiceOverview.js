@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
 import * as invoiceActions from '../../../Store/Invoices/invoiceActions';
 import {Link} from 'react-router-dom';
 import InvoiceList from '../../../Components/Invoice/InvoiceList/InvoiceList';
-import Loader from '../../../Components/Ui/Loader/Loader';
+import InputButton from '../../../Components/Ui/AddItem/InputButton';
 
 class InvoiceOverview extends Component {
 
@@ -15,19 +14,20 @@ class InvoiceOverview extends Component {
 
     render() {
 
-        let loader;
+
+        let linkButtonClasses = 'm-b-1 button is-primary';
         if (this.props.ui.isLoading) {
-            loader = (<button className="button loader is-primary"></button>);
+            linkButtonClasses += ' is-loading';
         }
 
 
         return (
             <div>
-                <Link className="m-b-1 button is-primary"
+                <InputButton/>
+                <Link className={linkButtonClasses}
                       to={this.props.match.url + '/add'}>
                     neue Rechnung
                 </Link>
-                <Loader show={this.props.ui}/>
                 <InvoiceList
                     list={Object.values(this.props.invoices)}/>
             </div>

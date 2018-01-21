@@ -3,9 +3,9 @@ import {connect} from 'react-redux';
 import * as listSelectors from '../../../Store/Lists/listSelectors';
 import * as listActions from '../../../Store/Lists/listActions';
 import ListModel from '../../../Store/Lists/listModel';
-import AddItem from '../../../Components/Ui/AddItem/AddItem';
 import NamedListSelector from '../../../Components/Ui/NamedListSelector/NamedListSelector';
 import Notification from '../../../Components/Ui/Notification/Notification';
+import InputButton from '../../../Components/Ui/AddItem/InputButton';
 
 class ShoppingListContainer extends Component {
 
@@ -54,7 +54,7 @@ class ShoppingListContainer extends Component {
                     type="is-danger"
                     message={this.props.ui.errorMessage}
                 />
-                <AddItem
+                <InputButton
                     isLoading={this.props.ui.isLoading}
                     buttonLabel="anlegen"
                     placeholder="neue Liste"

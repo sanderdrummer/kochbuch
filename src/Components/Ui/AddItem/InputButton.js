@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const AddItem = (props) => (
+const InputButton = (props) => (
     <div className="field has-addons">
         <div className="control grow">
             <input className="input"
@@ -22,7 +22,7 @@ const AddItem = (props) => (
     </div>
 );
 
-AddItem.propTypes = {
+InputButton.propTypes = {
     inputType: PropTypes.string,
     buttonLabel: PropTypes.string,
     placeholder: PropTypes.string,
@@ -32,4 +32,4 @@ AddItem.propTypes = {
     isLoading: PropTypes.bool
 };
 
-export default AddItem;
+export default InputButton;

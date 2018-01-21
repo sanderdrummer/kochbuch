@@ -3,9 +3,9 @@ import * as productSelectors from '../../../Store/Products/productSelectors';
 import * as productActions from '../../../Store/Products/productActions';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import AddItem from '../../../Components/Ui/AddItem/AddItem';
 import ProductModel from '../../../Store/Products/productModel';
 import NamedListSelector from '../../../Components/Ui/NamedListSelector/NamedListSelector';
+import InputButton from '../../../Components/Ui/AddItem/InputButton';
 
 class ProductSelector extends Component {
 
@@ -37,7 +37,7 @@ class ProductSelector extends Component {
     render(){
         return (
             <div>
-                <AddItem
+                <InputButton
                     buttonLabel="zur Liste"
                     placeholder="neues Produkt"
                     value={this.props.ui.filterString}

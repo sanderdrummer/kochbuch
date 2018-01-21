@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
 import * as invoiceActions from '../../../Store/Invoices/invoiceActions';
 import {InvoiceModel} from '../../../Store/Invoices/invoiceModel';
-import AddItem from '../../../Components/Ui/AddItem/AddItem';
 import IfElse from '../../../Components/Ui/IfElse/IfElse';
+import InputButton from '../../../Components/Ui/AddItem/InputButton';
 
 class InvoiceAdderContainer extends Component {
 
@@ -40,7 +39,7 @@ class InvoiceAdderContainer extends Component {
         return (
             <IfElse if={!this.props.ui.isLoading} else={content}>
                 <h1>Neue Rechnung hinzufügen</h1>
-                <AddItem
+                <InputButton
                     inputType='number'
                     placeholder="Einkaufswert"
                     buttonLabel="Neue Rechung"
@@ -69,7 +68,5 @@ const mapDispatchToProps = dispatch =>{
         addInvoice: (invoice) => dispatch(invoiceActions.patchInvoice(invoice))
     }
 };
-
-InvoiceAdderContainer.propTypes = {};
 
 export default connect(mapStateToProps, mapDispatchToProps)(InvoiceAdderContainer);

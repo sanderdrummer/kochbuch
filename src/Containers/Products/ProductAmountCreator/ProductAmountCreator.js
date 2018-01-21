@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import AddItem from '../../../Components/Ui/AddItem/AddItem';
 import PropTypes from 'prop-types';
+import InputButton from '../../../Components/Ui/AddItem/InputButton';
 
 class ProductAmountCreator extends Component {
 
@@ -10,7 +10,7 @@ class ProductAmountCreator extends Component {
 
     updateAmount = (e) => {
         const amount = e.target.value;
-        this.setState(state => {
+        this.setState(() => {
             return {
                 amount
             }
@@ -30,7 +30,7 @@ class ProductAmountCreator extends Component {
 
         return (
             <div>
-                <AddItem
+                <InputButton
                     buttonLabel={name + ' hinzufügen'}
                     placeholder="Menge"
                     value={this.state.amount}
