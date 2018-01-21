@@ -7,9 +7,15 @@ export const userService = {
         return axios.post('https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=' + appConfig.apiKey,
             info);
     },
+
     auth(info) {
-        return axios.post('https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyCustomToken?key' + appConfig.apiKey,
-            info);
+
+        const params = {...info
+        ,returnSecureToken: true
+        };
+
+        return axios.post('https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=' + appConfig.apiKey,
+            params);
     },
 
     getToken() {

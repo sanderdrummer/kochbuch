@@ -30,6 +30,9 @@ const Layout = (props) => (
                 <Route path="/invoices" component={InvoiceLayout}/>
             </div>
         </div>
+        <div className="section">
+            <UserAuthForm/>
+        </div>
     </div>
 );
 
