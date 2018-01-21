@@ -1,9 +1,10 @@
 import * as actions from './invoiceActions';
 
 const initialState = {
-    isLoading: '',
+    isLoading: false,
     errorMessage: '',
     invoiceDone: '',
+    filterDate: Date.now()
 };
 
 const reducer = (state = initialState, action) =>{
@@ -41,6 +42,11 @@ const reducer = (state = initialState, action) =>{
                 ...state,
                 isLoading: false,
                 errorMessage: 'Fehler beim Laden der Rechnungen'
+            };
+        case actions.UPDATE_INVOICE_FILTER:
+            return {
+                ...state,
+                filterDate: action.payload
             };
         default:
             return state;

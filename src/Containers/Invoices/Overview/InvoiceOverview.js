@@ -8,11 +8,18 @@ import InputButton from '../../../Components/Ui/AddItem/InputButton';
 class InvoiceOverview extends Component {
 
 
-    componentDidMount () {
+    updateFilterDate = (e) => {
+        const date = e.target.value;
+        console.log(date);
+        this.props.updateFilterDate(date);
+    };
+
+
+    componentDidMount(){
         this.props.fetchInvoices();
     }
 
-    render() {
+    render(){
 
 
         let linkButtonClasses = 'm-b-1 button is-primary';
@@ -23,7 +30,13 @@ class InvoiceOverview extends Component {
 
         return (
             <div>
-                <InputButton/>
+                <InputButton
+                    inputType="date"
+                    value={this.props.ui.filterDate}
+                    updateValue={this.updateFilterDate}
+                    isLoading={this.props.ui.isLoading}
+                    buttonLabel="Rechnungen filtern"
+                />
                 <Link className={linkButtonClasses}
                       to={this.props.match.url + '/add'}>
                     neue Rechnung
@@ -44,11 +57,11 @@ const mapStateToProps = state =>{
 
 const mapDispatchToProps = dispatch =>{
     return {
-        fetchInvoices: () => dispatch(invoiceActions.fetchInvoices())
+        fetchInvoices: () => dispatch(invoiceActions.fetchInvoices()),
+        updateFilterDate: (date) => dispatch(invoiceActions.updateInvoiceFilter(date))
     }
 };
 
-InvoiceOverview.propTypes = {
-};
+InvoiceOverview.propTypes = {};
 
 export default connect(mapStateToProps, mapDispatchToProps)(InvoiceOverview);

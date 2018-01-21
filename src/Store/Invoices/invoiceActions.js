@@ -8,6 +8,8 @@ export const START_PATCH_INVOICE = 'START_PATCH_INVOICE';
 export const PATCH_INVOICE_SUCCESS = 'PATCH_INVOICE_SUCCESS';
 export const PATCH_INVOICE_FAILED = 'PATCH_INVOICE_FAILED';
 
+export const UPDATE_INVOICE_FILTER = 'UPDATE_INVOICE_FILTER';
+
 
 export const startFetchInvoices = () => {
     return {
@@ -20,7 +22,7 @@ export const fetchInvoices = () => {
         dispatch(startFetchInvoices());
         invoiceService.fetchInvoices().then((res) => {
             dispatch(fetchInvoicesSuccess(res.data));
-        }).catch((res) => {
+        }).catch(() => {
             dispatch(fetchInvoicesFailed());
         });
     }
@@ -50,7 +52,7 @@ export const patchInvoice = (invoice) => {
         dispatch(startPatchInvoice());
         invoiceService.patchInvoice(invoice).then((res) => {
             dispatch(patchInvoiceSuccess(res.data));
-        }).catch((res) => {
+        }).catch(() => {
             dispatch(patchInvoiceFailed());
         });
     }
@@ -66,5 +68,13 @@ export const patchInvoiceSuccess = (invoice) => {
 export const patchInvoiceFailed = () => {
     return {
         type: PATCH_INVOICE_FAILED
+    }
+};
+
+
+export const updateInvoiceFilter  = (filter) => {
+    return {
+        type: UPDATE_INVOICE_FILTER,
+        payload: filter
     }
 };

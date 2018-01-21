@@ -14,7 +14,7 @@ const InputButton = (props) => (
         </div>
         <div className="control">
             <a onClick={props.triggerOnClick} className={
-                props.isLoading ? 'button is-info is-loading': 'button is-info'
+                props.isLoading ? 'button is-primary is-loading': 'button is-primary'
             }>
                 {props.buttonLabel}
             </a>
@@ -26,7 +26,6 @@ InputButton.propTypes = {
     inputType: PropTypes.string,
     buttonLabel: PropTypes.string,
     placeholder: PropTypes.string,
-    value: PropTypes.string,
     updateValue: PropTypes.func,
     triggerOnClick: PropTypes.func,
     isLoading: PropTypes.bool
