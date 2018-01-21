@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
 import * as userActions from '../../../Store/User/userActions'
 import IfElse from '../../../Components/Ui/IfElse/IfElse';
 
@@ -15,13 +14,8 @@ class UserAuthForm extends Component {
         this.props.checkAuth()
     }
     
-    componentDidUpdate() {
-        console.log(this.props);
-    }
-    
     handleSubmit = (e) =>{
         e.preventDefault();
-        console.log(this.state);
         this.props.doAuth(this.state);
     };
 
@@ -100,7 +94,5 @@ const mapDispatchToProps = dispatch =>{
         logOut: () => dispatch(userActions.logOut()),
     }
 };
-
-UserAuthForm.propTypes = {};
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserAuthForm);
