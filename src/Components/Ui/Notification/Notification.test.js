@@ -7,7 +7,7 @@ configure({
     adapter: new Adapter()
 });
 
-describe('NamedListSelector', () =>{
+describe('Notification', () =>{
 
     let wrapper;
 
