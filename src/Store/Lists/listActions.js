@@ -50,7 +50,6 @@ export const fetchLists = () =>{
             }
             dispatch(initLists(lists))
         }).catch(err =>{
-            console.log(err);
             dispatch(listOperationFailed(err));
         });
 

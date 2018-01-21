@@ -5,6 +5,7 @@ import * as listActions from '../../../Store/Lists/listActions';
 import ListModel from '../../../Store/Lists/listModel';
 import AddItem from '../../../Components/Ui/AddItem/AddItem';
 import NamedListSelector from '../../../Components/Ui/NamedListSelector/NamedListSelector';
+import Notification from '../../../Components/Ui/Notification/Notification';
 
 class ShoppingListContainer extends Component {
 
@@ -49,6 +50,10 @@ class ShoppingListContainer extends Component {
     render() {
         return (
             <div>
+                <Notification
+                    type="is-danger"
+                    message={this.props.ui.errorMessage}
+                />
                 <AddItem
                     isLoading={this.props.ui.isLoading}
                     buttonLabel="anlegen"
