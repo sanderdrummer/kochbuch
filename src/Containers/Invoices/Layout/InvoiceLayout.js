@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {Route} from 'react-router';
-import Aux from '../../../Shared/Layout/Auxiliary/auxiliary';
 import InvoiceOverview from '../Overview/InvoiceOverview';
 import InvoiceAdderContainer from '../Adder/InvoiceAdder';
+import Aux from '../../../Components/Ui/Auxiliary/auxiliary';
 
 class InvoiceLayout extends Component {
 

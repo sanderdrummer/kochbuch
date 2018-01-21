@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import * as invoiceActions from '../../../Store/Invoices/invoiceActions';
 import {InvoiceModel} from '../../../Store/Invoices/invoiceModel';
 import AddItem from '../../../Components/Ui/AddItem/AddItem';
-import IfElse from '../../../Shared/Layout/IfElse/IfElse';
+import IfElse from '../../../Components/Ui/IfElse/IfElse';
 
 class InvoiceAdderContainer extends Component {
 

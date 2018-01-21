@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import * as userActions from '../../../Store/User/userActions'
-import IfElse from '../../../Shared/Layout/IfElse/IfElse';
+import IfElse from '../../../Components/Ui/IfElse/IfElse';
 
 class UserAuthForm extends Component {
 
