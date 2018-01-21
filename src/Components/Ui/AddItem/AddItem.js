@@ -13,7 +13,9 @@ const AddItem = (props) => (
                    placeholder={props.placeholder} />
         </div>
         <div className="control">
-            <a onClick={props.triggerOnClick} className="button is-info">
+            <a onClick={props.triggerOnClick} className={
+                props.isLoading ? 'button is-info is-loading': 'button is-info'
+            }>
                 {props.buttonLabel}
             </a>
         </div>
@@ -26,7 +28,8 @@ AddItem.propTypes = {
     placeholder: PropTypes.string,
     value: PropTypes.string,
     updateValue: PropTypes.func,
-    triggerOnClick: PropTypes.func
+    triggerOnClick: PropTypes.func,
+    isLoading: PropTypes.bool
 };
 
 export default AddItem;

@@ -50,6 +50,7 @@ class ShoppingListContainer extends Component {
         return (
             <div>
                 <AddItem
+                    isLoading={this.props.ui.isLoading}
                     buttonLabel="anlegen"
                     placeholder="neue Liste"
                     value={this.state.newName}
@@ -66,7 +67,8 @@ class ShoppingListContainer extends Component {
 
 const mapStateToProps = state => {
     return {
-        lists: listSelectors.getListsArray(state)
+        lists: listSelectors.getListsArray(state),
+        ui: state.listUi
     };
 };
 

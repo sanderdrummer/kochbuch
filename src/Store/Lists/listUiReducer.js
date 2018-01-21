@@ -13,6 +13,11 @@ const reducer = (state = initialState, action) => {
             isLoading: true,
             errMsg: ''
         };
+        case actions.START_FETCH_LISTS: return {
+            ...state,
+            isLoading: true,
+            errMsg: ''
+        };
         case actions.INIT_LISTS: return {
             ...state,
             isLoading: false,
