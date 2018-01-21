@@ -24,7 +24,7 @@ export const getFilteredProductList = createSelector([getProductList, getFilterS
     return list;
 });
 
-export const getSortedFilteredProductlist = createSelector([getFilteredProductList], (list) => {
+export const getSortedFilteredProductList = createSelector([getFilteredProductList], (list) => {
     return [...list].sort((a,b) => b.popularity - a.popularity);
 });
 

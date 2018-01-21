@@ -56,7 +56,7 @@ class ProductSelector extends Component {
 const mapStateToProps = state =>{
     return {
         ui: productSelectors.getProductUi(state),
-        products: productSelectors.getSortedFilteredProductlist(state)
+        products: productSelectors.getSortedFilteredProductList(state)
     }
 };
 
