@@ -23,6 +23,11 @@ const reducer = (state = initialState, action) => {
             isLoading: false,
             errMsg: ''
         };
+        case actions.LIST_OPERATION_FAILED: return {
+            ...state,
+            isLoading: false,
+            errMsg: action.payload
+        };
         case actions.SELECT_LIST: return {
             ...state,
             selected: action.payload,
