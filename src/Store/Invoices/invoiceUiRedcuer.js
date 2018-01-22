@@ -1,10 +1,11 @@
 import * as actions from './invoiceActions';
+import {dateService} from '../../Services/Date/dateService';
 
 const initialState = {
     isLoading: false,
     errorMessage: '',
     invoiceDone: '',
-    filterDate: Date.now()
+    filterDate: dateService.getDateString(new Date())
 };
 
 const reducer = (state = initialState, action) =>{
