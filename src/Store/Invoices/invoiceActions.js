@@ -17,10 +17,10 @@ export const startFetchInvoices = () => {
     }
 };
 
-export const fetchInvoices = () => {
+export const fetchInvoices = (date) => {
     return dispatch => {
         dispatch(startFetchInvoices());
-        invoiceService.fetchInvoices().then((res) => {
+        invoiceService.fetchInvoices(date).then((res) => {
             dispatch(fetchInvoicesSuccess(res.data));
         }).catch(() => {
             dispatch(fetchInvoicesFailed());

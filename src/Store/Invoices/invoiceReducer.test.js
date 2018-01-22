@@ -13,7 +13,7 @@ describe('invoiceReducer', () => {
             payload: payload
         });
 
-        expect(newState).toEqual(payload)
+        expect(newState).toEqual(payload);
     });
 
     it ('should handle empty list', () => {
@@ -24,10 +24,10 @@ describe('invoiceReducer', () => {
             payload: payload
         });
 
-        expect(newState).toEqual({})
+        expect(newState).toEqual({});
     });
 
-    it ('should not delete old items', () => {
+    it ('should handle empty payload', () => {
         let state = {
             'id': new InvoiceModel({})
         };
@@ -37,6 +37,19 @@ describe('invoiceReducer', () => {
             payload: payload
         });
 
-        expect(newState).toEqual(state)
+        expect(newState).toEqual({});
+    });
+
+    it ('should overwrite old items', () => {
+        let state = {
+            'id': new InvoiceModel({})
+        };
+        let payload = {'id2': new InvoiceModel()};
+        const newState = reducer(state, {
+            type:actions.FETCH_INVOICES_SUCCESS,
+            payload: payload
+        });
+
+        expect(newState).toEqual(payload);
     });
 });

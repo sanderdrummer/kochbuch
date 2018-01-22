@@ -9,7 +9,7 @@ const reducer = (state = [], action) => {
 };
 
 const handleFetchSuccess = (state, payload) => {
-    return {...state, ...payload}
+    return payload ? payload : {};
 };
 
 export default reducer;
