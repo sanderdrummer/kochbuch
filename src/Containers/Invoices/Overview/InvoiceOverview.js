@@ -10,13 +10,18 @@ class InvoiceOverview extends Component {
 
     updateFilterDate = (e) => {
         const date = e.target.value;
-        console.log(date);
         this.props.updateFilterDate(date);
     };
 
+    fetchInvoices = () => {
+        const date = new Date(this.props.ui.filterDate);
+        this.props.fetchInvoices(date);
+
+    };
 
     componentDidMount(){
-        this.props.fetchInvoices();
+        const date = new Date(this.props.ui.filterDate);
+        this.props.fetchInvoices(date);
     }
 
     render(){
@@ -35,6 +40,7 @@ class InvoiceOverview extends Component {
                     value={this.props.ui.filterDate}
                     updateValue={this.updateFilterDate}
                     isLoading={this.props.ui.isLoading}
+                    triggerOnClick={this.fetchInvoices}
                     buttonLabel="Rechnungen filtern"
                 />
                 <Link className={linkButtonClasses}
@@ -57,7 +63,7 @@ const mapStateToProps = state =>{
 
 const mapDispatchToProps = dispatch =>{
     return {
-        fetchInvoices: () => dispatch(invoiceActions.fetchInvoices()),
+        fetchInvoices: (date) => dispatch(invoiceActions.fetchInvoices(date)),
         updateFilterDate: (date) => dispatch(invoiceActions.updateInvoiceFilter(date))
     }
 };
