@@ -11,16 +11,17 @@ const Layout = (props) => (
                 <div className="navbar-tabs">
                     <NavLink activeClassName="is-active"
                              className="navbar-item is-tab"
-                             exact
                              to="/lists">Listen</NavLink>
                     <NavLink activeClassName="is-active"
                              className="navbar-item is-tab"
-                             exact
                              to="/recipies">Rezepte</NavLink>
                     <NavLink activeClassName="is-active"
                              className="navbar-item is-tab"
-                             exact
                              to="/invoices">Rechnungen</NavLink>
+                    <NavLink activeClassName="is-active"
+                             exact
+                             className="navbar-item is-tab"
+                             to="/">Login</NavLink>
                 </div>
             </div>
         </nav>
@@ -28,10 +29,8 @@ const Layout = (props) => (
             <div className="container">
                 <Route path="/lists" component={ShoppingListContainer}/>
                 <Route path="/invoices" component={InvoiceLayout}/>
+                <Route path="/" exact component={UserAuthForm}/>
             </div>
-        </div>
-        <div className="section">
-            <UserAuthForm/>
         </div>
     </div>
 );
