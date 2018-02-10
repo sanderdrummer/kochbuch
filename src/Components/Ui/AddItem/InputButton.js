@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const InputButton = (props) => (
-    <div className="field has-addons">
+    <form onSubmit={(e) => {e.preventDefault();props.triggerOnClick()}} className="field has-addons">
         <div className="control grow">
             <input className="input"
                    required
@@ -13,13 +13,13 @@ const InputButton = (props) => (
                    placeholder={props.placeholder} />
         </div>
         <div className="control">
-            <a onClick={props.triggerOnClick} className={
+            <button onClick={props.triggerOnClick} type="button" className={
                 props.isLoading ? 'button is-primary is-loading': 'button is-primary'
             }>
                 {props.buttonLabel}
-            </a>
+            </button>
         </div>
-    </div>
+    </form>
 );
 
 InputButton.propTypes = {
