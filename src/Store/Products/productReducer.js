@@ -3,9 +3,7 @@ import {addProduct} from './productActions';
 
 function handleAddProduct(state, product){
     if (product && product.name) {
-        const newState = {...state};
-        newState[product.name] = product;
-        return newState;
+        return {...state, [product.name] : product};
     }
 
     return state;
