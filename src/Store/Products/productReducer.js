@@ -1,5 +1,4 @@
 import * as actions from './productActions';
-import {addProduct} from './productActions';
 
 function handleAddProduct(state, product){
     if (product && product.name) {
