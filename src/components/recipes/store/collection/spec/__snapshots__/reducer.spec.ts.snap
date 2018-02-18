@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RecipeCollectionTests should add a new recipe on update if needed 1`] = `
+Object {
+  "recipe1": Object {
+    "description": "",
+    "products": Array [],
+    "title": "recipe1",
+  },
+  "recipe3": Object {
+    "description": "with another description",
+    "products": Array [],
+    "title": "recipe3",
+  },
+}
+`;
+
+exports[`RecipeCollectionTests should init new collections 1`] = `
+Object {
+  "recipe1": Object {
+    "description": "",
+    "products": Array [],
+    "title": "recipe1",
+  },
+  "recipe2": Object {
+    "description": "with description",
+    "products": Array [],
+    "title": "recipe2",
+  },
+}
+`;

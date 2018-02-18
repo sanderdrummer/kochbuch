@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RecipeReducerTests should update a recipe on updateRecipe action 1`] = `
+Object {
+  "description": "",
+  "products": Array [],
+  "title": "updated title",
+}
+`;
