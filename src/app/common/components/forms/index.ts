@@ -1,0 +1,1 @@
+export { SearchFormContainer as SearchForm } from './searchFrom/search-form.container';
