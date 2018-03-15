@@ -1,14 +1,11 @@
 import * as React from 'react';
 
-type Props = {
-  value: string;
-  onChanges(e: React.FormEvent<HTMLInputElement>): void;
-  submit(): void;
-};
+import { Props } from './search-form.container';
 
 const onSubmit = (e: React.FormEvent<HTMLFormElement>, props: Props): void => {
   e.preventDefault();
-  props.submit();
+  props.onSubmit(props.value);
+  props.resetValue();
 };
 
 const SearchForm: React.SFC<Props> = props => (

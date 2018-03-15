@@ -1,27 +1,34 @@
 import * as React from 'react';
+import { connect, Dispatch } from 'react-redux';
+import { AppState } from '../../../store/state';
+import { uiActions } from '../../..';
 import SearchForm from './search-form';
 
-const initialState = {query: ''};
-type State = Readonly<typeof initialState>;
-type Props = {submit(query: string): void};
-
-export class SearchFormContainer extends React.Component<Props, State> {
-        readonly state: State = initialState;
-
-        render() {
-            return (
-                <>
-                    <SearchForm 
-                        value={this.state.query} 
-                        submit={() => this.props.submit(this.state.query)}
-                        onChanges={this.handleUpdate}
-                    />;
-                    
-                </>
-            ); 
-        }
-
-        handleUpdate = (e: React.FormEvent<HTMLInputElement>) => {
-            this.setState({ query: e.currentTarget.value });
-    }
+interface DispatchProps {
+  onChanges(e: React.FormEvent<HTMLInputElement>): void;
+  resetValue(): void;
 }
+
+interface StateProps {
+  value: string;
+}
+
+interface OwnProps {
+  reducerName: string;
+  onSubmit(title: string): void; 
+}
+
+export interface Props extends DispatchProps, StateProps, OwnProps {
+}
+
+const mapStateToProps = (state: AppState): StateProps => ({
+  value: state.products.ui.query
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<AppState>, props: OwnProps): DispatchProps => ({
+  onChanges: (e: React.FormEvent<HTMLInputElement>) => 
+    dispatch(uiActions.updateQuery(props.reducerName, e.currentTarget.value)),
+  resetValue: () => dispatch(uiActions.updateQuery(props.reducerName, ''))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchForm);
