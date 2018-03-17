@@ -1,10 +1,8 @@
-import { Reducer } from 'redux';
-
-export interface Entry {
+export interface Entry extends Object {
   id: string;
 } 
 
-export type CollectionState<T> = {
+export type CollectionState<T extends Entry> = {
   [key: string]: T
 };
 
@@ -14,13 +12,21 @@ const RESET = 'RESET';
 const UPDATE_ITEM = 'UPDATE_ITEM';
 const DELETE_ITEM = 'DELETE_ITEM';
 
-export function createCollectionReducer<T extends Entry>(namespace: string, childReducer: Reducer<T>) {
+export const types = {
+  ADD_ITEM,
+  SET,
+  RESET,
+  UPDATE_ITEM,
+  DELETE_ITEM
+};
+
+export function createCollectionReducer<T extends Entry>(namespace: string) {
   return function collectionReducer(state: CollectionState<T> = {}, action: CollectionActions<T>) {
     switch (action.type) {
       case namespace + SET: return handleSet(<CollectionState<T>> action.payload);
       case namespace + RESET: return handleReset();
       case namespace + ADD_ITEM: return handleAdd(state, <T> action.payload);
-      case namespace + ADD_ITEM: return handleUpdate(state, <T> action.payload, childReducer);
+      case namespace + UPDATE_ITEM: return handleUpdate(state, <T> action.payload);
       default: return state;
     }
   };
@@ -43,15 +49,15 @@ function handleAdd<T extends Entry>(state: CollectionState<T>, entry: T) {
   };
 }
 
-function handleUpdate<T extends Entry>(state: CollectionState<T>, entry: Entry, childReducer: Reducer<T>) {
+function handleUpdate<T extends Entry>(state: CollectionState<T>, entry: Entry): CollectionState<T> {
   return {
     ...state,
-    [entry.id]: entry
+    [entry.id]: {...Object(state[entry.id]), ...entry}
   };
 }
 
 export const collectionActions = {
-  set<T>(namespace: string, payload: CollectionState<T>) {
+  set<T extends Entry>(namespace: string, payload: CollectionState<T>) {
     return {
       type: namespace + SET,
       payload      
@@ -68,7 +74,7 @@ export const collectionActions = {
       payload
     };
   },
-  updateItem<T>(namespace: string, payload: T) {
+  updateItem<T extends Entry>(namespace: string, payload: T) {
     return {
       type: namespace + UPDATE_ITEM,
       payload
@@ -82,7 +88,7 @@ export const collectionActions = {
   }
 };
 
-export type CollectionActions<T> = 
+export type CollectionActions<T extends Entry> = 
   { type: string, payload: CollectionState<T> } |  
   { type: string, payload: T } |  
   { type: string, payload: string };

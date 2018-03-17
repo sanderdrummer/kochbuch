@@ -1,8 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`Products reducer tests should update for ON_UPDATE action 1`] = `
-Object {
-  "popularity": 0,
-  "title": "test product",
-}
-`;

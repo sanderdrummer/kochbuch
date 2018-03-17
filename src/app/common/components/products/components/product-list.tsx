@@ -10,9 +10,9 @@ const ProductList: React.SFC<Props> = (props) => (
     <div>
         {props.products.map(product => <div 
             onClick={() => props.onSelect(product)} 
-            key={product.title}
+            key={product.id}
         > 
-            {product.title} 
+            {product.id} 
         </div>)}
     </div>
 );
