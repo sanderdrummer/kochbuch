@@ -1,0 +1,11 @@
+.center-grid {
+  display: grid;
+  justify-content: center;
+  align-content: center;
+}
+
+:root {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: lighter;
+  background: #efefef;
+}
