@@ -8,6 +8,7 @@ const initialState: Recipe = {
     description: '',
     products: []
 };
+const Recipe = typeof initialState;
 
 const reducer: Reducer<Recipe> = (state: Recipe | undefined = initialState, action: Actions) => {
     switch (action.type) {

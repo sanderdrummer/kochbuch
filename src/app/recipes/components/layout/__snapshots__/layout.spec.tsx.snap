@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render layout 1`] = `
+<React.Fragment>
+  <Connect(Selection) />
+  &gt;
+  <Connect(Selection) />
+</React.Fragment>
+`;
