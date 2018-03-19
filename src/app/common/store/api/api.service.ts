@@ -1,4 +1,3 @@
-
 export class Api {
   
   static url = 'https://shoppinglist-fab45.firebaseio.com/';
