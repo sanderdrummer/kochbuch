@@ -5,7 +5,11 @@ export class Api {
   static apiKey = 'AIzaSyDKjWfRUP08276cQslfxYP6K7wyq2WxXUA';
 
   static get (path: string) {
-    return fetch(Api.getUrl(path)).then(res => res.json());
+    return fetch(Api.getUrl(path), {
+      method: 'GET',
+      mode: 'cors',
+      headers: new Headers( {'Content-Type': 'application/json'})
+    }).then(res => res.json());
   }
 
   static post (path: string, data: object) {
@@ -17,7 +21,7 @@ export class Api {
   }
 
   private static getUrl(path: string): RequestInfo {
-    return Api.url + path;
+    return Api.url + path + '.json';
   }
 
   private static getRequestInit(data: object, method: string): RequestInit | undefined {
