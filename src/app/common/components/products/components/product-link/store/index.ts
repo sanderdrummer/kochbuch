@@ -1,9 +1,22 @@
 import { combineReducers } from 'redux';
-import { createCollectionReducer } from '../../../../../index';
+import { createCollectionReducer, createUiReducer, UiState, CollectionState } from '../../../../..';
 export const productUiNameSpace = '[ProductLinks] ';
 
-const productLinks = combineReducers({
-  collection: createCollectionReducer(productUiNameSpace)
-});
+export const initialState = {
+  id: '',
+  productId: '',
+  amount: '0',
+  isActive: false
+};
 
-export default productLinks;
+export type ProductLink = typeof initialState;
+
+export type ProductLinkState = {
+  collection: CollectionState<ProductLink>,
+  ui: UiState
+};
+
+export const productLinks = combineReducers({
+  collection: createCollectionReducer(productUiNameSpace),
+  ui: createUiReducer(productUiNameSpace)
+});

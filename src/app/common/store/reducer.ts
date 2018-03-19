@@ -1,11 +1,12 @@
 import { combineReducers, Reducer } from 'redux';
 import { AppState } from './state';
 import recipes from '../../recipes/store/reducer';
-import productModule from '../components/products';
+import productModule, { productLinks } from '../components/products';
 
 const reducer: Reducer<AppState> = combineReducers({
-    recipes,
-    products: productModule.reducer
+  recipes,
+  products: productModule.reducer,
+  productLinks: productLinks
 });
 
 export default reducer;
