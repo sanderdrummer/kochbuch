@@ -8,4 +8,6 @@ export { createCollectionReducer,
   CollectionState,
   collectionActions, CollectionActions, types }  from './store/collection/createCollectionReducer';
 
+export { Api } from './store/api/api.service';
+
 export { AppState } from './store/state';
