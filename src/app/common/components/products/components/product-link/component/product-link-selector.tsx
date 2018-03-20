@@ -6,7 +6,7 @@ import { RouteComponentProps } from 'react-router';
 interface Props extends RouteComponentProps<any>, React.Props<any> { } 
 
 const handleSelection = (product: Product, props: Props) => {
-  props.history.push(product.id);
+  props.history.push(props.match.url + '/' + product.id);
 };
 
 const Selector: React.SFC<Props> = (props) => (
