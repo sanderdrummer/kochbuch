@@ -1,8 +1,8 @@
 import * as React from 'react';
 import ProductList from '../product-list';
-import { default as SearchFormContainer } from '../../../forms/searchFrom/search-form.container';
 import { Product } from '../..';
 import { productUiNameSpace } from '../../store/products';
+import { SearchForm } from '../../../..';
 
 type SelectionProps = {
   products: Product[],
@@ -34,7 +34,7 @@ export default class Selection extends React.Component<SelectionProps, {}> {
       return (
       <div>
           Product List
-          <SearchFormContainer onSubmit={this.handleSubmit} reducerName={productUiNameSpace} />
+          <SearchForm state="products" onSubmit={this.handleSubmit} reducerName={productUiNameSpace} />
           <ProductList onSelect={this.handleSelection} products={this.props.products} />
       </div>);
   }
