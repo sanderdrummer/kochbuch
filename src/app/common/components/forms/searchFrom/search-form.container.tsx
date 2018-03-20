@@ -15,14 +15,15 @@ interface StateProps {
 
 interface OwnProps {
   reducerName: string;
-  onSubmit(title: string): void; 
+  state: string;
+  onSubmit(title: string): void;
 }
 
 export interface Props extends DispatchProps, StateProps, OwnProps {
 }
 
-const mapStateToProps = (state: AppState): StateProps => ({
-  value: state.products.ui.query
+const mapStateToProps = (state: AppState, props: OwnProps): StateProps => ({
+  value: state[props.state].ui.query
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AppState>, props: OwnProps): DispatchProps => ({

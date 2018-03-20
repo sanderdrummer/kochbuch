@@ -8,6 +8,7 @@ it('should render search form', () => {
     const wrapper = shallow((
     <SearchForm
         reducerName="searchUi"
+        state="product"
         value="test"
         // tslint:disable-next-line:no-empty
         onSubmit={(e) => {}}
