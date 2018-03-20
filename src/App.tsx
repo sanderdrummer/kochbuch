@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import store from './app/common/store/store';
 import './app.css';
-import { ProductLinkLayout } from './app/common/components/products';
+import Layout from './app/layout';
 
 class App extends React.Component {
   render() {
@@ -11,7 +11,7 @@ class App extends React.Component {
       <Provider store={store}>
             <BrowserRouter>
                 <div className="center-grid">
-                  <ProductLinkLayout />
+                  <Layout />
                 </div>
             </BrowserRouter>
       </Provider>
