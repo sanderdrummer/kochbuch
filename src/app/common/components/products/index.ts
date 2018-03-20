@@ -6,5 +6,4 @@ export { default as ProductSelectors } from './store/selectors';
 export default {
     reducer,
 };
-export { default as ProductLinkCreator } from './components/product-link/component/productLinkCreator';
 export { default as ProductLinkLayout } from './components/product-link/component/layout';
