@@ -18,6 +18,9 @@ export class Api {
   static patch (path: string, data: object) {
     return fetch(Api.getUrl(path), Api.getRequestInit(data, 'PATCH')).then(res => res.json());    
   }
+  static delete (path: string, data: object) {
+    return fetch(Api.getUrl(path), Api.getRequestInit(data, 'DELETE')).then(res => res.json());    
+  }
 
   private static getUrl(path: string): RequestInfo {
     return Api.url + path + '.json';
