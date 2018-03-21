@@ -19,7 +19,6 @@ const mapDispatchToProps = (dispatch: Dispatch<AppState>) => ({
       },
     }));
   },
-    // tslint:disable-next-line:no-any
   fetchProducts: () => 
     dispatch(collectionActions.fetchAndSet<Product>({
       namespace: productNamespace,

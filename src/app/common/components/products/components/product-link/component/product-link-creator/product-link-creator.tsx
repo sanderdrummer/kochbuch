@@ -1,10 +1,7 @@
 import * as React from 'react';
-import { withRouter } from 'react-router';
 import { productLinkNameSpace } from '../../store';
-import { SearchForm, Card } from '../../../../../..';
-
-// tslint:disable-next-line:no-any
-type Props = any;
+import { SearchForm } from '../../../../../..';
+import { Props } from './product-link-creator.container';
 
 const handleAmountSubmit = (amount: string, props: Props) => {
   props.addProductLink({
@@ -18,14 +15,11 @@ const handleAmountSubmit = (amount: string, props: Props) => {
 };
 
 const ProductLinkCreator: React.SFC<Props> = (props) => (
-  <Card level={0}>
-    {JSON.stringify(props.match.params)}
     <SearchForm 
       state="productLinks" 
       reducerName={productLinkNameSpace} 
       onSubmit={(amount: string) => handleAmountSubmit(amount, props)} 
     />
-  </Card>
 );
 
-export default withRouter(ProductLinkCreator);
+export default ProductLinkCreator;

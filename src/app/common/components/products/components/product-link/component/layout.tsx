@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { Route, withRouter } from 'react-router';
+import { Route, withRouter, RouteComponentProps } from 'react-router';
 import ProductLinkCreator from './product-link-creator/product-link-creator.container';
 import ProductLinkSelector from './product-link-selector';
 
-// tslint:disable-next-line:no-any
-const Layout: React.SFC<any> = (props) => (
+interface Props extends RouteComponentProps<{}> { } 
+const Layout: React.SFC<Props> = (props) => (
   <>
     <Route path={props.match.url} exact={true} component={ProductLinkSelector} />
     <Route path={props.match.url + '/:product'} exact={true} component={ProductLinkCreator}/>
