@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { SFC } from 'react';
-import List from './list';
+import List from './list.container';
 import { ProductLinkLayout } from '../../common';
 import { Switch, Route, withRouter } from 'react-router';
 
