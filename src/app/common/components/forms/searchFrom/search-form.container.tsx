@@ -16,6 +16,8 @@ interface StateProps {
 interface OwnProps {
   reducerName: string;
   state: string;
+  label: string;
+  placeholder: string;
   onSubmit(title: string): void;
 }
 

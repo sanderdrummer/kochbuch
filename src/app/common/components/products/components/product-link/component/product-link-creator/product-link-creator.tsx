@@ -16,6 +16,8 @@ const handleAmountSubmit = (amount: string, props: Props) => {
 
 const ProductLinkCreator: React.SFC<Props> = (props) => (
     <SearchForm 
+      label="add product"
+      placeholder=""
       state="productLinks" 
       reducerName={productLinkNameSpace} 
       onSubmit={(amount: string) => handleAmountSubmit(amount, props)} 

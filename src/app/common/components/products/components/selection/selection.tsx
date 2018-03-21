@@ -34,7 +34,13 @@ export default class Selection extends React.Component<SelectionProps, {}> {
       return (
       <div>
           Product List
-          <SearchForm state="products" onSubmit={this.handleSubmit} reducerName={productUiNameSpace} />
+          <SearchForm 
+            label="add product"
+            placeholder="search products"
+            state="products" 
+            onSubmit={this.handleSubmit} 
+            reducerName={productUiNameSpace} 
+          />
           <ProductList onSelect={this.handleSelection} products={this.props.products} />
       </div>);
   }

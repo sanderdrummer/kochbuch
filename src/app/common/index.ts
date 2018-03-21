@@ -1,3 +1,4 @@
+export { ProductLink } from './components/products/components/product-link/store/index';
 
 export { Shadows } from './styles';
 

@@ -1,11 +1,16 @@
 .center-grid {
   display: grid;
   justify-content: center;
-  align-content: center;
+  align-content: space-evenly;
 }
 
 :root {
   font-family: 'Quicksand', sans-serif;
   font-weight: lighter;
   background: #efefef;
+}
+
+:root,
+body {
+  height: 100%;  
 }

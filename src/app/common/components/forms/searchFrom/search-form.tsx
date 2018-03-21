@@ -10,8 +10,14 @@ const onSubmit = (e: React.FormEvent<HTMLFormElement>, props: Props): void => {
 
 const SearchForm: React.SFC<Props> = props => (
   <form onSubmit={(e) => onSubmit(e, props)}>
-    <input value={props.value} onChange={props.onChanges} type="search" />
-    <button type="submit">search</button>
+    <input 
+      autoFocus={true} 
+      value={props.value} 
+      placeholder={props.placeholder || ''}  
+      onChange={props.onChanges} 
+      type="search" 
+    />
+    <button type="submit">{props.label}</button>
   </form>
 );
 

@@ -7,6 +7,8 @@ import SearchForm from './search-form';
 it('should render search form', () => {
     const wrapper = shallow((
     <SearchForm
+        label="test"
+        placeholder=""
         reducerName="searchUi"
         state="product"
         value="test"
