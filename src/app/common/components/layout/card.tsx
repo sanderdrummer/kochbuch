@@ -10,6 +10,7 @@ const className = style({
   background: '#fff',
   borderRadius: '2px',
   margin: '1rem',
+  padding: '1rem',
   position: 'relative',
   transition: 'all 0.3s cubic-bezier(.25, .8, .25, 1)',
 }); 

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { ADD_ROUTE } from './layout';
 import { Link } from 'react-router-dom';
 import ListProducts from './list-products';
-import { ProductLink } from '../../common';
+import { ProductLink, Card, linkStyle, hoverButton } from '../../common';
 import { Props } from './list.container';
 
 class List extends React.Component<Props, object> {
@@ -23,13 +23,20 @@ class List extends React.Component<Props, object> {
 
   render () {
     return (
-      <div>
-        <Link to={ADD_ROUTE}>+</Link>
-        <ListProducts products={this.props.inActiveProducts} onSelect={this.handleSelect} />
-        <hr/>
-        <ListProducts products={this.props.activeProducts} onSelect={this.handleSelect} />
-        <button onClick={this.clearActiveItems}>clear</button>
-      </div>
+      <>
+        <Card level={2}>
+          <Link className={linkStyle} to={ADD_ROUTE}>Shopping List +</Link>        
+        </Card>
+        <Card level={2}>
+          <p>Add to basket</p>
+          <ListProducts products={this.props.inActiveProducts} onSelect={this.handleSelect} />
+        </Card>
+        <Card level={2}>
+          <p>Already in basket</p>
+          <ListProducts products={this.props.activeProducts} onSelect={this.handleSelect} />
+        </Card>
+        <button className={hoverButton} onClick={this.clearActiveItems}>clear</button>
+      </>
     );
   }
 }

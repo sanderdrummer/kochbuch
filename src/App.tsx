@@ -10,9 +10,7 @@ class App extends React.Component {
     return (
       <Provider store={store}>
             <BrowserRouter>
-                <div className="center-grid">
-                  <Layout />
-                </div>
+              <Layout />
             </BrowserRouter>
       </Provider>
     );

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Product, ProductSelection } from '../../..';
 import { RouteComponentProps } from 'react-router';
+import { hoverButton } from '../../../../..';
 
 interface Props extends RouteComponentProps<{}> { } 
 
@@ -11,7 +12,7 @@ const handleSelection = (product: Product, props: Props) => {
 const Selector: React.SFC<Props> = (props) => (
   <div>
     <ProductSelection handleSelection={(product) => handleSelection(product, props)} />
-    <button onClick={() => props.history.goBack()}>go back</button>
+    <button className={hoverButton} onClick={() => props.history.goBack()}>go back</button>
   </div>
 );
 

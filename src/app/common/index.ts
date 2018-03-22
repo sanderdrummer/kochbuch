@@ -1,9 +1,9 @@
 export { ProductLink } from './components/products/components/product-link/store/index';
 
-export { Shadows } from './styles';
+export { Shadows, Gardients, Colors, buttonStyle, inputStyle, linkStyle, hoverButton } from './styles';
 
 export { SearchForm } from './components/forms';
-export { LayoutSection, Card } from './components/layout';
+export { LayoutSection, Card, SplitLayout } from './components/layout';
 
 export { ProductLinkLayout } from './components/products';
 

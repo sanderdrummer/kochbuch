@@ -30,7 +30,7 @@ const mapStateToProps = (state: AppState, props: OwnProps): StateProps => ({
 
 const mapDispatchToProps = (dispatch: Dispatch<AppState>, props: OwnProps): DispatchProps => ({
   onChanges: (e: React.FormEvent<HTMLInputElement>) => 
-    dispatch(uiActions.updateQuery(props.reducerName, e.currentTarget.value)),
+    dispatch(uiActions.updateQuery(props.reducerName, e.currentTarget.value.toLowerCase())),
   resetValue: () => dispatch(uiActions.updateQuery(props.reducerName, ''))
 });
 

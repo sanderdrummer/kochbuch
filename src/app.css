@@ -14,3 +14,15 @@
 body {
   height: 100%;  
 }
+
+* {
+  box-sizing: border-box;
+}
+
+.grow {
+  flex-grow: 1
+}
+
+.flex {
+  display: flex
+}

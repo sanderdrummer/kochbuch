@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ProductLink } from '../../common';
+import { ProductLink, SplitLayout } from '../../common';
 
 type Props = {
   products: ProductLink[],
@@ -8,13 +8,20 @@ type Props = {
 
 const ListProducts: React.SFC<Props> = ({products, onSelect}) => (
   <>
-    {products.map(product => (
+    {products.length ? products.map(product => (
     <div 
       onClick={() => onSelect(product)} 
       key={product.id}
     >
-      {product.productId} - {product.amount}
-    </div>))}
+      <SplitLayout>
+        <span>
+            {product.productId}
+        </span>
+        <span>
+            {product.amount}
+        </span>
+      </SplitLayout>
+    </div>)) : 'is empty'}
   </>
 );
 

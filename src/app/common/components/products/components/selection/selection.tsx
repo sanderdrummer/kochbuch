@@ -2,7 +2,7 @@ import * as React from 'react';
 import ProductList from '../product-list';
 import { Product } from '../..';
 import { productUiNameSpace } from '../../store/products';
-import { SearchForm } from '../../../..';
+import { SearchForm, Card } from '../../../..';
 
 type SelectionProps = {
   products: Product[],
@@ -21,9 +21,13 @@ export default class Selection extends React.Component<SelectionProps, {}> {
   }
 
   handleSubmit = (query: string) => {
-      if (!this.props.products[query]) {
-          this.props.addProduct(query);
-      }
+    if (!this.props.products[query]) {
+        this.props.addProduct(query).then((product: Product) => {
+        this.props.handleSelection({ id: query, popularity: 0 });
+      });
+    } else {
+      this.props.handleSelection(this.props.products[query]);      
+    }
   }
 
   handleSelection = (product: Product) => {
@@ -32,16 +36,17 @@ export default class Selection extends React.Component<SelectionProps, {}> {
 
   render() {
       return (
-      <div>
-          Product List
-          <SearchForm 
-            label="add product"
-            placeholder="search products"
-            state="products" 
-            onSubmit={this.handleSubmit} 
-            reducerName={productUiNameSpace} 
-          />
+      <>
+        <SearchForm
+          label="add product"
+          placeholder="search products"
+          state="products"
+          onSubmit={this.handleSubmit}
+          reducerName={productUiNameSpace}
+        />
+        <Card level={2}>
           <ProductList onSelect={this.handleSelection} products={this.props.products} />
-      </div>);
+        </Card>
+      </>);
   }
 }

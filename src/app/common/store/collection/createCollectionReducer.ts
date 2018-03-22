@@ -77,7 +77,7 @@ export const collectionActions = {
   }) {
     return (dispatch: Dispatch<AppState>) => {
       dispatch(uiActions.updateIsLoading(config.namespace, true));
-      Api.patch(config.endPoint, { [config.entry.id]: config.entry }).then(
+      return Api.patch(config.endPoint, { [config.entry.id]: config.entry }).then(
         res => {
           dispatch(uiActions.updateIsLoading(config.namespace, false));
           dispatch(collectionActions.addItem(config.namespace, config.entry));
