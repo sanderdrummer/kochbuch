@@ -1,9 +1,18 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import App from './App';
+import React from "react";
+import { render, fireEvent } from "@testing-library/react";
+import App from "./App";
 
-test('renders learn react link', () => {
-  const { getByText } = render(<App />);
-  const linkElement = getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+test("toggle works", () => {
+  const { getByText, queryByText } = render(<App />);
+  const button = getByText(/button/i);
+
+  expect(queryByText("PAPER 2")).not.toBeInTheDocument();
+
+  fireEvent.click(button);
+
+  expect(getByText("PAPER 2")).toBeVisible();
+
+  fireEvent.click(button);
+
+  expect(queryByText("PAPER 2")).not.toBeInTheDocument();
 });
