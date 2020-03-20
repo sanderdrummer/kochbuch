@@ -1,13 +1,8 @@
 import React from "react";
 
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-
 // @ts-ignore
-import { useParams } from "react-router";
-
-import { getRecipes, Recipe, addRecipe } from "../db";
+import { useParams, useNavigate } from "react-router-dom";
+import { Add, Edit } from "@material-ui/icons";
 import {
   Box,
   Card,
@@ -15,41 +10,22 @@ import {
   Typography,
   CardContent,
   TextField,
-  Button
+  Button,
+  List,
+  ListItem,
+  ListItemText,
+  CardActions
 } from "@material-ui/core";
+import { Skeleton } from "@material-ui/lab";
 
-const useRecipes = () => {
-  const [recipes, setRecipes] = React.useState<Recipe[]>([]);
-  const [error, setError] = React.useState("");
-  const [isPending, setIsPending] = React.useState(false);
-  const fetchRecipes = async () => {
-    try {
-      setIsPending(true);
-      setError("");
-
-      const recipes = await getRecipes();
-      setRecipes(recipes);
-      setIsPending(false);
-    } catch {
-      setIsPending(false);
-      setError("failed to fetch recipes");
-    }
-  };
-  React.useEffect(() => {
-    fetchRecipes();
-  }, []);
-
-  return {
-    recipes,
-    error,
-    isPending,
-    fetchRecipes
-  };
-};
+import { BottomRightFab } from "../common";
+import { Recipe, addRecipe, updateRecipe, addListItems } from "../db";
+import { useRecipeByTitle, useRecipes } from "./recipe-hooks";
 
 export const RecipeForm: React.FC<{
-  onComplete: () => void;
-}> = ({ onComplete }) => {
+  onComplete: (recipe: Recipe) => void;
+  recipe?: Recipe;
+}> = ({ onComplete, recipe }) => {
   const [status, setStatus] = React.useState<
     "" | "pending" | "error" | "success"
   >("");
@@ -62,17 +38,20 @@ export const RecipeForm: React.FC<{
           onSubmit={async e => {
             const form = e.currentTarget;
             e.preventDefault();
-            const recipe: Recipe = {
+            const nextRecipe: Recipe = {
               title: form.titleName.value,
-              tags: form.tags.value.split(" "),
+              tags: form.tags.value || "",
               ingredients: form.ingredients.value.split("\n"),
               description: form.description.value
             };
             try {
               setStatus("pending");
-
-              await addRecipe(recipe);
-
+              if (recipe) {
+                await updateRecipe(nextRecipe);
+              } else {
+                await addRecipe(nextRecipe);
+              }
+              onComplete(nextRecipe);
               form.reset();
               setStatus("success");
             } catch (e) {
@@ -84,6 +63,7 @@ export const RecipeForm: React.FC<{
           <TextField
             margin="normal"
             fullWidth
+            defaultValue={recipe?.title}
             required
             label="Rezept Titel"
             name="titleName"
@@ -91,7 +71,7 @@ export const RecipeForm: React.FC<{
           <TextField
             margin="normal"
             fullWidth
-            required
+            defaultValue={recipe?.tags}
             label="Tags"
             name="tags"
           />
@@ -100,6 +80,7 @@ export const RecipeForm: React.FC<{
             multiline
             fullWidth
             required
+            defaultValue={recipe?.ingredients}
             label="Zutaten"
             name="ingredients"
           />
@@ -108,6 +89,7 @@ export const RecipeForm: React.FC<{
             multiline
             fullWidth
             required
+            defaultValue={recipe?.description}
             label="Zubereitung"
             name="description"
           />
@@ -117,7 +99,9 @@ export const RecipeForm: React.FC<{
               color="primary"
               type="submit"
             >
-              neues Rezept speichern
+              {recipe
+                ? `änderung an ${recipe.title} speichern`
+                : "neues Rezept speichern"}
             </Button>
           </Box>
           <Box bgcolor="primary" mt="2">
@@ -131,64 +115,116 @@ export const RecipeForm: React.FC<{
   );
 };
 
-export const RecipeDetails: React.FC = () => {
+export const RecipeEditForm: React.FC = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
-  let recipe: Recipe | undefined = undefined;
+  const title = decodeURIComponent(id);
+  const { status, updateCache } = useRecipeByTitle(title);
 
-  if (!recipe) {
-    return null;
-  }
-
-  return null;
-  // <Card>
-  //   <CardHeader
-  //     title={recipe.title}
-  //     subheader={recipe.tags.join(" | ")}
-  //   ></CardHeader>
-  //   <CardContent>
-  //     {recipe.ingredients.map(ingredient => (
-  //       <Typography key={ingredient}>{ingredient}</Typography>
-  //     ))}
-  //     <Typography style={{ whiteSpace: "pre-wrap" }}>
-  //       {recipe.description}
-  //     </Typography>
-  //   </CardContent>
-  // </Card>
-  // );
-};
-
-export const RecipeList = () => {
-  const { recipes, error, isPending, fetchRecipes } = useRecipes();
-  const [selected, setSelected] = React.useState<Recipe>();
-
-  const handleClearSelection = () => {
-    setSelected(undefined);
-  };
-
-  React.useEffect(() => {
-    window.addEventListener("popstate", handleClearSelection);
-    return () => {
-      window.removeEventListener("popstate", handleClearSelection);
-    };
-  }, []);
-
-  if (error) {
-    return <Box>{error}</Box>;
+  if (status === "" || status === "pending" || status === "error") {
+    return <Skeleton height="12rem" />;
   }
 
   return (
+    <RecipeForm
+      onComplete={recipe => {
+        updateCache(recipe);
+        navigate(`/recipes/${recipe.title}`);
+      }}
+      recipe={status}
+    />
+  );
+};
+
+export const RecipeDetails: React.FC = () => {
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const title = decodeURIComponent(id);
+  const { status } = useRecipeByTitle(title);
+
+  if (status === "" || status === "pending") {
+    return <Skeleton height="12rem" />;
+  }
+
+  if (status === "error") {
+    return <Box>rezpete konnten nicht geladen werden</Box>;
+  }
+
+  return (
+    <Box mt={3}>
+      <Card>
+        <CardHeader title={status.title} subheader={status.tags}></CardHeader>
+        <CardContent>
+          {status.ingredients.map(ingredient => (
+            <Typography key={ingredient}>{ingredient}</Typography>
+          ))}
+          <Typography style={{ whiteSpace: "pre-wrap" }}>
+            {status.description}
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <Button
+            onClick={async () => {
+              await addListItems(status.ingredients);
+              navigate("/list");
+            }}
+          >
+            {status.title} zur Einkaufsliste hinzufügen
+          </Button>
+        </CardActions>
+      </Card>
+      <BottomRightFab
+        onClick={() => navigate("edit")}
+        label="Rezept bearbeiten"
+        children={<Edit />}
+      />
+    </Box>
+  );
+};
+
+export const ListLoader: React.FC = () => {
+  return (
     <>
-      <RecipeForm onComplete={fetchRecipes} />
+      <Skeleton height="4rem" />
+      <Skeleton height="4rem" />
+    </>
+  );
+};
+
+export const RecipeList = () => {
+  const { recipes, status, fetchRecipes, hasMore } = useRecipes();
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    fetchRecipes();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return (
+    <>
       <List>
         {recipes.map(recipe => (
-          <ListItem onClick={() => {}} key={recipe.id}>
-            <ListItemText
-              primary={recipe.title}
-              secondary={recipe.tags.join(" | ")}
-            />
+          <ListItem
+            onClick={() => navigate(`${recipe.title}`)}
+            key={recipe.title}
+          >
+            <ListItemText primary={recipe.title} secondary={recipe.tags} />
           </ListItem>
         ))}
       </List>
+      {hasMore && <Button onClick={fetchRecipes}>Load more</Button>}
+
+      {status === "error" && (
+        <Box>
+          rezpete konnten nicht geladen werden{" "}
+          <Button onClick={fetchRecipes}>nochmal versuchen</Button>
+        </Box>
+      )}
+      <BottomRightFab
+        onClick={() => navigate("add")}
+        label="Rezept hinzufügen"
+        children={<Add />}
+      />
     </>
   );
 };

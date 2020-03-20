@@ -1,17 +1,31 @@
 import React from "react";
 //@ts-ignore
-import { Routes, Route } from "react-router-dom";
-import { RecipeForm, RecipeList, RecipeDetails } from "./recipe-form";
+import { Routes, Route, useNavigate } from "react-router-dom";
+import {
+  RecipeForm,
+  RecipeList,
+  RecipeDetails,
+  RecipeEditForm
+} from "./recipe-form";
 
 export const RecipePage = () => {
+  const navigate = useNavigate();
+
   return (
     <Routes>
-      <Route path="/recipes" element={<RecipeList />} />
+      <Route path="/" element={<RecipeList />} />
       <Route
-        path="/recipes/add"
-        element={<RecipeForm onComplete={() => {}} />}
+        path="/add"
+        element={
+          <RecipeForm
+            onComplete={recipe => {
+              navigate("/recipes/" + recipe.title);
+            }}
+          />
+        }
       />
-      <Route path="recipes/:id" element={<RecipeDetails />} />
+      <Route path="/:id" element={<RecipeDetails />} />
+      <Route path="/:id/edit" element={<RecipeEditForm />} />
     </Routes>
   );
 };
