@@ -1,7 +1,8 @@
 {
-  "name": "the-list",
+  "name": "kochbuch",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://sanderdrummer.github.io/kochbuch",
   "dependencies": {
     "@material-ui/core": "^4.9.3",
     "@material-ui/icons": "^4.9.1",
@@ -22,11 +23,16 @@
     "tesseract.js": "^2.0.2",
     "typescript": "^3.8.3"
   },
+  "devDependencies": {
+    "gh-pages": "^2.2.0"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "yarn run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
