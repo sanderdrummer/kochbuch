@@ -43,7 +43,7 @@ const BottomNav = () => {
   const [value, setValue] = React.useState("recipes");
 
   React.useEffect(() => {
-    navigate(`/${value}`);
+    navigate(`/kochbuch/${value}`);
   }, [navigate, value]);
 
   return (
@@ -91,8 +91,8 @@ function App() {
         <Container>
           <Box mt={2} mb={8}>
             <Routes>
-              <Route path="/recipes/*" element={<RecipePage />}></Route>
-              <Route path="/list/*" element={<ListPage />}></Route>
+              <Route path="kochbuch/recipes/*" element={<RecipePage />}></Route>
+              <Route path="kochbuch/list/*" element={<ListPage />}></Route>
             </Routes>
           </Box>
         </Container>
