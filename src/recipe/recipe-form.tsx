@@ -2,7 +2,7 @@ import React from "react";
 
 // @ts-ignore
 import { useParams, useNavigate } from "react-router-dom";
-import { Add, Edit } from "@material-ui/icons";
+import { Add, Edit, Delete } from "@material-ui/icons";
 import {
   Box,
   Card,
@@ -19,7 +19,13 @@ import {
 import { Skeleton } from "@material-ui/lab";
 
 import { BottomRightFab } from "../common";
-import { Recipe, addRecipe, updateRecipe, addListItems } from "../db";
+import {
+  Recipe,
+  addRecipe,
+  updateRecipe,
+  addListItems,
+  deleteRecipe
+} from "../db";
 import { useRecipeByTitle, useRecipes } from "./recipe-hooks";
 
 export const RecipeForm: React.FC<{
@@ -126,13 +132,29 @@ export const RecipeEditForm: React.FC = () => {
   }
 
   return (
-    <RecipeForm
-      onComplete={recipe => {
-        updateCache(recipe);
-        navigate(`/recipes/${recipe.title}`);
-      }}
-      recipe={status}
-    />
+    <>
+      <RecipeForm
+        onComplete={recipe => {
+          updateCache(recipe);
+          navigate(`/kochbuch/recipes/${recipe.title}`);
+        }}
+        recipe={status}
+      />
+
+      <BottomRightFab
+        label="Rezept löschen"
+        onClick={async () => {
+          try {
+            await deleteRecipe(status.title);
+            navigate("/kochbuch/recipes");
+          } catch (e) {
+            console.log(e);
+          }
+        }}
+      >
+        <Delete />
+      </BottomRightFab>
+    </>
   );
 };
 
@@ -166,7 +188,7 @@ export const RecipeDetails: React.FC = () => {
           <Button
             onClick={async () => {
               await addListItems(status.ingredients);
-              navigate("/list");
+              navigate("/kochbuch/list");
             }}
           >
             {status.title} zur Einkaufsliste hinzufügen

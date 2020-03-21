@@ -49,16 +49,16 @@ export const useRecipeByTitle = (title: string) => {
 
 export const useRecipes = () => {
   const status = "";
-  const [recipes, setRecipes] = React.useState<Recipe[]>(recipeListCache);
+  const [recipes, setRecipes] = React.useState<Recipe[]>([]);
   const [hasMore, setHasMore] = React.useState(false);
-  const offsetRef = React.useRef(recipeListCache.length);
+  const offsetRef = React.useRef(0);
 
   const fetchRecipes = async () => {
     try {
       const result = await getPagedRecipes(offsetRef.current);
       if (result.length) {
         offsetRef.current += DEFAULT_PAGE_SIZE;
-        recipeListCache = [...recipes, ...result];
+        const recipeListCache = [...recipes, ...result];
         setRecipes(recipeListCache);
         const count = await getRecipesCount();
         setHasMore(count !== recipeListCache.length);

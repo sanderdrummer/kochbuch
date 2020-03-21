@@ -19,7 +19,7 @@ export const RecipePage = () => {
         element={
           <RecipeForm
             onComplete={recipe => {
-              navigate("/recipes/" + recipe.title);
+              navigate("/kochbuch/recipes/" + recipe.title);
             }}
           />
         }

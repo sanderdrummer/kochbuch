@@ -12,7 +12,7 @@ export interface Recipe {
   description: string;
 }
 
-export const DEFAULT_PAGE_SIZE = 1;
+export const DEFAULT_PAGE_SIZE = 50;
 
 export class ListDb extends Dexie {
   listItems: Dexie.Table<ListItem, string>;
@@ -58,6 +58,9 @@ export const addRecipe = (recipe: Recipe) => {
 };
 export const updateRecipe = (recipe: Recipe) => {
   return db.recipes.put(recipe);
+};
+export const deleteRecipe = (title: string) => {
+  return db.recipes.delete(title);
 };
 
 export const getList = () => {
