@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "4485c8c250d08a653ea72f2614b494ad",
+    "revision": "09e63f7c01b924a0a7a00f72d3007689",
     "url": "/kochbuch/index.html"
   },
   {
-    "revision": "f19d931fc96e257e5f8e",
+    "revision": "13caecde03cb7b4757ce",
     "url": "/kochbuch/static/css/main.5ecd60fb.chunk.css"
   },
   {
-    "revision": "c508be71c3403d4a6efa",
-    "url": "/kochbuch/static/js/2.752ba4c9.chunk.js"
+    "revision": "dd7d580bdbb8a638762d",
+    "url": "/kochbuch/static/js/2.91842890.chunk.js"
   },
   {
     "revision": "3adc01bea76e7956dc3633ee898f6936",
-    "url": "/kochbuch/static/js/2.752ba4c9.chunk.js.LICENSE.txt"
+    "url": "/kochbuch/static/js/2.91842890.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "f19d931fc96e257e5f8e",
-    "url": "/kochbuch/static/js/main.61efe819.chunk.js"
+    "revision": "13caecde03cb7b4757ce",
+    "url": "/kochbuch/static/js/main.3d419336.chunk.js"
   },
   {
     "revision": "81acce01fca5f9ed2c74",
