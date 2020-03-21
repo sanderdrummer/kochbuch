@@ -62,6 +62,12 @@ export const updateRecipe = (recipe: Recipe) => {
 export const deleteRecipe = (title: string) => {
   return db.recipes.delete(title);
 };
+export const bulkAddRecipes = (recipes: Recipe[]) => {
+  return db.recipes.bulkPut(recipes);
+};
+export const getRecipesForExport = () => {
+  return db.recipes.toArray();
+};
 
 export const getList = () => {
   return db.listItems.toArray();

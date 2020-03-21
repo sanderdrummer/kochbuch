@@ -25,6 +25,7 @@ import {
 
 import { RecipePage } from "./recipe";
 import { ListPage } from "./list";
+import { SettingsPage } from "./settings";
 import { FormatListBulleted, MenuBook, Settings } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -93,6 +94,10 @@ function App() {
             <Routes>
               <Route path="kochbuch/recipes/*" element={<RecipePage />}></Route>
               <Route path="kochbuch/list/*" element={<ListPage />}></Route>
+              <Route
+                path="kochbuch/settings/*"
+                element={<SettingsPage />}
+              ></Route>
             </Routes>
           </Box>
         </Container>
