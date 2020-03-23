@@ -8,7 +8,7 @@ export interface ListItem {
 export interface Recipe {
   title: string;
   tags: string;
-  ingredients: string[];
+  ingredients: string;
   description: string;
 }
 
@@ -18,7 +18,7 @@ export class ListDb extends Dexie {
   listItems: Dexie.Table<ListItem, string>;
   recipes: Dexie.Table<Recipe, string>;
   constructor() {
-    super("ListDB6");
+    super("recipes-db");
     this.version(1).stores({
       listItems: "title",
       recipes: "title,tags"
@@ -77,9 +77,9 @@ export const addListItem = (listItem: ListItem) => {
   return db.listItems.add(listItem);
 };
 
-export const addListItems = (listItems: string[]) => {
+export const addListItems = (listItems: string) => {
   return db.listItems.bulkPut(
-    listItems.map(title => ({
+    listItems.split("\n").map(title => ({
       title,
       inBasket: false
     }))

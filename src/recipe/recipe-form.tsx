@@ -7,6 +7,7 @@ import {
   Box,
   Card,
   CardHeader,
+  Divider,
   Typography,
   CardContent,
   TextField,
@@ -17,8 +18,9 @@ import {
   CardActions
 } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
+import { Form, Field } from "react-final-form";
 
-import { BottomRightFab } from "../common";
+import { BottomRightFab, OcrButton } from "../common";
 import {
   Recipe,
   addRecipe,
@@ -28,94 +30,117 @@ import {
 } from "../db";
 import { useRecipeByTitle, useRecipes } from "./recipe-hooks";
 
+const validateRequired = (value: string) => (value ? undefined : "required");
+
+const addUpdateRecipe = async (recipe: Recipe, isUpdate: boolean) => {
+  if (isUpdate) {
+    await updateRecipe(recipe);
+  } else {
+    await addRecipe(recipe);
+  }
+
+  return recipe;
+};
+
 export const RecipeForm: React.FC<{
   onComplete: (recipe: Recipe) => void;
   recipe?: Recipe;
 }> = ({ onComplete, recipe }) => {
-  const [status, setStatus] = React.useState<
-    "" | "pending" | "error" | "success"
-  >("");
   return (
     <Card>
       <CardHeader title="Neues Rezept" />
       <CardContent>
-        <form
-          autoComplete="off"
-          onSubmit={async e => {
-            const form = e.currentTarget;
-            e.preventDefault();
-            const nextRecipe: Recipe = {
-              title: form.titleName.value,
-              tags: form.tags.value || "",
-              ingredients: form.ingredients.value.split("\n"),
-              description: form.description.value
-            };
-            try {
-              setStatus("pending");
-              if (recipe) {
-                await updateRecipe(nextRecipe);
-              } else {
-                await addRecipe(nextRecipe);
-              }
-              onComplete(nextRecipe);
-              form.reset();
-              setStatus("success");
-            } catch (e) {
-              console.log(e);
-              setStatus("error");
-            }
-          }}
+        <Form<Recipe>
+          initialValues={recipe}
+          onSubmit={value => addUpdateRecipe(value, Boolean(recipe))}
         >
-          <TextField
-            margin="normal"
-            fullWidth
-            defaultValue={recipe?.title}
-            required
-            label="Rezept Titel"
-            name="titleName"
-          />
-          <TextField
-            margin="normal"
-            fullWidth
-            defaultValue={recipe?.tags}
-            label="Tags"
-            name="tags"
-          />
-          <TextField
-            margin="normal"
-            multiline
-            fullWidth
-            required
-            defaultValue={recipe?.ingredients}
-            label="Zutaten"
-            name="ingredients"
-          />
-          <TextField
-            margin="normal"
-            multiline
-            fullWidth
-            required
-            defaultValue={recipe?.description}
-            label="Zubereitung"
-            name="description"
-          />
-          <Box mt={2}>
-            <Button
-              disabled={status === "pending"}
-              color="primary"
-              type="submit"
+          {({ handleSubmit, submitting, invalid, form }) => (
+            <form
+              autoComplete="off"
+              onSubmit={async e => {
+                const recipe = await handleSubmit(e);
+                if (recipe) {
+                  form.reset();
+                  onComplete(recipe as Recipe);
+                }
+              }}
             >
-              {recipe
-                ? `änderung an ${recipe.title} speichern`
-                : "neues Rezept speichern"}
-            </Button>
-          </Box>
-          <Box bgcolor="primary" mt="2">
-            {status === "pending" && "erstelle Rezept"}
-            {status === "error" && "oh oh da ist etwas schief gelaufen"}
-            {status === "success" && "neues Rezept erstellt!"}
-          </Box>
-        </form>
+              <Field name="title" validate={validateRequired}>
+                {props => (
+                  <TextField
+                    margin="normal"
+                    fullWidth
+                    error={props.meta.touched && props.meta.error}
+                    label="Rezept Titel"
+                    {...props.input}
+                  />
+                )}
+              </Field>
+              <Field name="tags">
+                {props => (
+                  <TextField
+                    margin="normal"
+                    fullWidth
+                    label="Tags"
+                    name="tags"
+                    {...props.input}
+                  />
+                )}
+              </Field>
+
+              <Field name="ingredients" validate={validateRequired}>
+                {props => (
+                  <Box mt={2}>
+                    <TextField
+                      margin="normal"
+                      multiline
+                      fullWidth
+                      error={props.meta.touched && props.meta.error}
+                      label="Zutaten"
+                      {...props.input}
+                    />
+                    <OcrButton
+                      onComplete={text => {
+                        props.input.onChange(text);
+                      }}
+                    />
+                  </Box>
+                )}
+              </Field>
+
+              <Field name="description" validate={validateRequired}>
+                {props => (
+                  <Box mt={2}>
+                    <TextField
+                      margin="normal"
+                      multiline
+                      fullWidth
+                      label="Zubereitung"
+                      {...props.input}
+                    />
+                    <OcrButton
+                      onComplete={text => {
+                        props.input.onChange(text);
+                      }}
+                    />
+                  </Box>
+                )}
+              </Field>
+
+              <Box mt={2}>
+                <Button
+                  disabled={invalid || submitting}
+                  color="primary"
+                  type="submit"
+                >
+                  {recipe
+                    ? `änderung an ${recipe.title} speichern`
+                    : "neues Rezept speichern"}
+                </Button>
+              </Box>
+            </form>
+          )}
+        </Form>
       </CardContent>
     </Card>
   );
@@ -177,9 +202,15 @@ export const RecipeDetails: React.FC = () => {
       <Card>
         <CardHeader title={status.title} subheader={status.tags}></CardHeader>
         <CardContent>
-          {status.ingredients.map(ingredient => (
-            <Typography key={ingredient}>{ingredient}</Typography>
-          ))}
+          <Typography gutterBottom variant="h6" component="span">
+            Zutaten:
+          </Typography>
+          <Typography style={{ whiteSpace: "pre-wrap" }}>
+            {status.ingredients}
+          </Typography>
+          <Box mt={4} mb={4}>
+            <Divider />
+          </Box>
           <Typography style={{ whiteSpace: "pre-wrap" }}>
             {status.description}
           </Typography>

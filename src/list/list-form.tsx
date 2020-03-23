@@ -25,10 +25,8 @@ export const ListForm: React.FC<{ onCompleted(): void }> = ({
             onSubmit={async e => {
               e.preventDefault();
               const form = e.currentTarget;
-              const listItems: string[] = form.listItems.value.split("\n");
-              console.log(listItems);
               try {
-                await addListItems(listItems);
+                await addListItems(form.listItems.value);
                 form.reset();
                 onCompleted();
               } catch (e) {
