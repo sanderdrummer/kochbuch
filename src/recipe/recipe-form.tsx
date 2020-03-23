@@ -1,7 +1,7 @@
 import React from "react";
 
 // @ts-ignore
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { Add, Edit, Delete } from "@material-ui/icons";
 import {
   Box,
@@ -29,6 +29,13 @@ import {
   deleteRecipe
 } from "../db";
 import { useRecipeByTitle, useRecipes } from "./recipe-hooks";
+import {
+  getRecipeDetailPath,
+  getRecipeDetailEditPath,
+  ADD_RECIPE_PATH
+} from ".";
+
+import { RECIPES_PATH, LIST_PATH } from "../routes-config";
 
 const validateRequired = (value: string) => (value ? undefined : "required");
 
@@ -147,9 +154,9 @@ export const RecipeForm: React.FC<{
 };
 
 export const RecipeEditForm: React.FC = () => {
-  const navigate = useNavigate();
+  const navigate = useHistory();
   const { id } = useParams();
-  const title = decodeURIComponent(id);
+  const title = decodeURIComponent(id || "");
   const { status, updateCache } = useRecipeByTitle(title);
 
   if (status === "" || status === "pending" || status === "error") {
@@ -161,7 +168,7 @@ export const RecipeEditForm: React.FC = () => {
       <RecipeForm
         onComplete={recipe => {
           updateCache(recipe);
-          navigate(`/kochbuch/recipes/${recipe.title}`);
+          navigate.push(getRecipeDetailPath(recipe.title));
         }}
         recipe={status}
       />
@@ -171,7 +178,7 @@ export const RecipeEditForm: React.FC = () => {
         onClick={async () => {
           try {
             await deleteRecipe(status.title);
-            navigate("/kochbuch/recipes");
+            navigate.push(RECIPES_PATH);
           } catch (e) {
             console.log(e);
           }
@@ -184,9 +191,9 @@ export const RecipeEditForm: React.FC = () => {
 };
 
 export const RecipeDetails: React.FC = () => {
-  const navigate = useNavigate();
+  const navigate = useHistory();
   const { id } = useParams();
-  const title = decodeURIComponent(id);
+  const title = decodeURIComponent(id || "");
   const { status } = useRecipeByTitle(title);
 
   if (status === "" || status === "pending") {
@@ -219,7 +226,7 @@ export const RecipeDetails: React.FC = () => {
           <Button
             onClick={async () => {
               await addListItems(status.ingredients);
-              navigate("/kochbuch/list");
+              navigate.push(LIST_PATH);
             }}
           >
             {status.title} zur Einkaufsliste hinzufügen
@@ -227,7 +234,7 @@ export const RecipeDetails: React.FC = () => {
         </CardActions>
       </Card>
       <BottomRightFab
-        onClick={() => navigate("edit")}
+        onClick={() => navigate.push(getRecipeDetailEditPath(status.title))}
         label="Rezept bearbeiten"
         children={<Edit />}
       />
@@ -246,7 +253,7 @@ export const ListLoader: React.FC = () => {
 
 export const RecipeList = () => {
   const { recipes, status, fetchRecipes, hasMore } = useRecipes();
-  const navigate = useNavigate();
+  const navigate = useHistory();
 
   React.useEffect(() => {
     fetchRecipes();
@@ -258,7 +265,7 @@ export const RecipeList = () => {
       <List>
         {recipes.map(recipe => (
           <ListItem
-            onClick={() => navigate(`${recipe.title}`)}
+            onClick={() => navigate.push(getRecipeDetailPath(recipe.title))}
             key={recipe.title}
           >
             <ListItemText primary={recipe.title} secondary={recipe.tags} />
@@ -274,7 +281,7 @@ export const RecipeList = () => {
         </Box>
       )}
       <BottomRightFab
-        onClick={() => navigate("add")}
+        onClick={() => navigate.push(ADD_RECIPE_PATH)}
         label="Rezept hinzufügen"
         children={<Add />}
       />

@@ -1,6 +1,5 @@
 import React from "react";
-//@ts-ignore
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Switch, Route, useHistory } from "react-router-dom";
 import {
   RecipeForm,
   RecipeList,
@@ -8,24 +7,34 @@ import {
   RecipeEditForm
 } from "./recipe-form";
 
+import { RECIPES_PATH } from "../routes-config";
+
+export const ADD_RECIPE_PATH = RECIPES_PATH + "/neues-rezept";
+export const RECIPE_DETAILS_PATH = RECIPES_PATH + "/:id";
+export const RECIPE_DETAILS_EDIT_PATH = RECIPE_DETAILS_PATH + "/bearbeiten";
+export const getRecipeDetailPath = (title: string) =>
+  RECIPES_PATH + "/" + title;
+export const getRecipeDetailEditPath = (title: string) =>
+  getRecipeDetailPath(title) + "/bearbeiten";
+
 export const RecipePage = () => {
-  const navigate = useNavigate();
+  const history = useHistory();
 
   return (
-    <Routes>
-      <Route path="/" element={<RecipeList />} />
+    <Switch>
+      <Route exact path={RECIPES_PATH} component={RecipeList} />
       <Route
-        path="/add"
-        element={
+        path={ADD_RECIPE_PATH}
+        render={() => (
           <RecipeForm
             onComplete={recipe => {
-              navigate("/kochbuch/recipes/" + recipe.title);
+              history.push(getRecipeDetailPath(recipe.title));
             }}
           />
-        }
+        )}
       />
-      <Route path="/:id" element={<RecipeDetails />} />
-      <Route path="/:id/edit" element={<RecipeEditForm />} />
-    </Routes>
+      <Route exact path={RECIPE_DETAILS_PATH} component={RecipeDetails} />
+      <Route path={RECIPE_DETAILS_EDIT_PATH} component={RecipeEditForm} />
+    </Switch>
   );
 };
