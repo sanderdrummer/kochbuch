@@ -1,16 +1,14 @@
 import React from "react";
 
 import { useParams, useHistory } from "react-router-dom";
-import { Edit } from "@material-ui/icons";
+import { Edit, MenuBook } from "@material-ui/icons";
 import {
   Box,
   Card,
   CardHeader,
-  Divider,
   Typography,
   CardContent,
-  Button,
-  CardActions
+  Button
 } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 
@@ -38,37 +36,47 @@ export const RecipeDetails: React.FC = () => {
   return (
     <Box mt={3}>
       <Card>
-        <CardHeader title={status.title} subheader={status.tags}></CardHeader>
-        <CardContent>
-          <Typography gutterBottom variant="h6" component="span">
-            Zutaten:
-          </Typography>
-          <Typography style={{ whiteSpace: "pre-wrap" }}>
-            {status.ingredients}
-          </Typography>
-          <Box mt={4} mb={4}>
-            <Divider />
-          </Box>
-          <Typography style={{ whiteSpace: "pre-wrap" }}>
-            {status.description}
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <Button
-            onClick={async () => {
-              await addListItems(status.ingredients);
-              navigate.push(LIST_PATH);
-            }}
-          >
-            {status.title} zur Einkaufsliste hinzufügen
-          </Button>
-        </CardActions>
+        <CardHeader
+          title={status.title}
+          subheader={status.tags}
+          action={
+            <Button
+              startIcon={<MenuBook />}
+              onClick={async () => {
+                await addListItems(status.ingredients);
+                navigate.push(LIST_PATH);
+              }}
+            >
+              zur Einkaufsliste
+            </Button>
+          }
+        ></CardHeader>
       </Card>
       <BottomRightFab
         onClick={() => navigate.push(getRecipeDetailEditPath(status.title))}
         label="Rezept bearbeiten"
         children={<Edit />}
       />
+      <Box mt={3}>
+        <Card>
+          <CardHeader subheader="Zutaten"></CardHeader>
+          <CardContent>
+            <Typography style={{ whiteSpace: "pre-wrap" }}>
+              {status.ingredients}
+            </Typography>
+          </CardContent>
+        </Card>
+      </Box>
+      <Box mt={3}>
+        <Card>
+          <CardHeader subheader="Zubereitung"></CardHeader>
+          <CardContent>
+            <Typography style={{ whiteSpace: "pre-wrap" }}>
+              {status.description}
+            </Typography>
+          </CardContent>
+        </Card>
+      </Box>
     </Box>
   );
 };
