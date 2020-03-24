@@ -2,40 +2,24 @@ import React from "react";
 
 // @ts-ignore
 import { useParams, useHistory } from "react-router-dom";
-import { Add, Edit, Delete } from "@material-ui/icons";
+import { Delete } from "@material-ui/icons";
 import {
   Box,
   Card,
   CardHeader,
-  Divider,
-  Typography,
   CardContent,
   TextField,
-  Button,
-  List,
-  ListItem,
-  ListItemText,
-  CardActions
+  Button
 } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 import { Form, Field } from "react-final-form";
 
-import { BottomRightFab, OcrButton, SearchInput } from "../common";
-import {
-  Recipe,
-  addRecipe,
-  updateRecipe,
-  addListItems,
-  deleteRecipe
-} from "../db";
-import { useRecipeByTitle, useRecipes } from "./recipe-hooks";
-import {
-  getRecipeDetailPath,
-  getRecipeDetailEditPath,
-  ADD_RECIPE_PATH
-} from ".";
+import { BottomRightFab, OcrButton } from "../common";
+import { Recipe, addRecipe, updateRecipe, deleteRecipe } from "../db";
+import { useRecipeByTitle } from "./recipe-hooks";
+import { getRecipeDetailPath } from ".";
 
-import { RECIPES_PATH, LIST_PATH } from "../routes-config";
+import { RECIPES_PATH } from "../routes-config";
 
 const validateRequired = (value: string) => (value ? undefined : "required");
 
@@ -186,107 +170,6 @@ export const RecipeEditForm: React.FC = () => {
       >
         <Delete />
       </BottomRightFab>
-    </>
-  );
-};
-
-export const RecipeDetails: React.FC = () => {
-  const navigate = useHistory();
-  const { id } = useParams();
-  const title = decodeURIComponent(id || "");
-  const { status } = useRecipeByTitle(title);
-
-  if (status === "" || status === "pending") {
-    return <Skeleton height="12rem" />;
-  }
-
-  if (status === "error") {
-    return <Box>rezpete konnten nicht geladen werden</Box>;
-  }
-
-  return (
-    <Box mt={3}>
-      <Card>
-        <CardHeader title={status.title} subheader={status.tags}></CardHeader>
-        <CardContent>
-          <Typography gutterBottom variant="h6" component="span">
-            Zutaten:
-          </Typography>
-          <Typography style={{ whiteSpace: "pre-wrap" }}>
-            {status.ingredients}
-          </Typography>
-          <Box mt={4} mb={4}>
-            <Divider />
-          </Box>
-          <Typography style={{ whiteSpace: "pre-wrap" }}>
-            {status.description}
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <Button
-            onClick={async () => {
-              await addListItems(status.ingredients);
-              navigate.push(LIST_PATH);
-            }}
-          >
-            {status.title} zur Einkaufsliste hinzufügen
-          </Button>
-        </CardActions>
-      </Card>
-      <BottomRightFab
-        onClick={() => navigate.push(getRecipeDetailEditPath(status.title))}
-        label="Rezept bearbeiten"
-        children={<Edit />}
-      />
-    </Box>
-  );
-};
-
-export const ListLoader: React.FC = () => {
-  return (
-    <>
-      <Skeleton height="4rem" />
-      <Skeleton height="4rem" />
-    </>
-  );
-};
-
-export const RecipeList = () => {
-  const { recipes, status, fetchRecipes, queryRecipes, hasMore } = useRecipes();
-  const navigate = useHistory();
-
-  React.useEffect(() => {
-    fetchRecipes();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  return (
-    <>
-      <SearchInput label="Rezepte suchen" onSubmit={queryRecipes} />
-      <List>
-        {recipes.map(recipe => (
-          <ListItem
-            button
-            onClick={() => navigate.push(getRecipeDetailPath(recipe.title))}
-            key={recipe.title}
-          >
-            <ListItemText primary={recipe.title} secondary={recipe.tags} />
-          </ListItem>
-        ))}
-      </List>
-      {hasMore && <Button onClick={fetchRecipes}>Load more</Button>}
-
-      {status === "error" && (
-        <Box>
-          rezpete konnten nicht geladen werden{" "}
-          <Button onClick={fetchRecipes}>nochmal versuchen</Button>
-        </Box>
-      )}
-      <BottomRightFab
-        onClick={() => navigate.push(ADD_RECIPE_PATH)}
-        label="Rezept hinzufügen"
-        children={<Add />}
-      />
     </>
   );
 };
