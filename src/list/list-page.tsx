@@ -103,7 +103,7 @@ export const ListPage = () => {
         </Box>
       )}
       <SwipeableDrawer
-        anchor="bottom"
+        anchor="top"
         open={open}
         onOpen={() => setOpen(true)}
         onClose={() => setOpen(false)}

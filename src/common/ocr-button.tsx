@@ -95,7 +95,7 @@ export const OcrButton: React.FC<{ onComplete(text: string): void }> = ({
         <CameraAlt />
       </Button>
       <SwipeableDrawer
-        anchor="bottom"
+        anchor="top"
         open={open}
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
@@ -114,7 +114,7 @@ export const OcrButton: React.FC<{ onComplete(text: string): void }> = ({
             />
             {state.image && (
               <img
-                style={{ maxWidth: "100%" }}
+                style={{ maxWidth: "100%", maxHeight: "40vh" }}
                 ref={imageRef}
                 src={state.image}
                 alt="preview of your upload"
