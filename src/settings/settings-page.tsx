@@ -2,9 +2,6 @@ import React from "react";
 
 import {
   Box,
-  Typography,
-  Divider,
-  Button,
   Card,
   CardHeader,
   CardContent,
@@ -15,15 +12,14 @@ import { ExportRecipes, ImportRecipes } from "./import-export";
 export const SettingsPage = () => {
   return (
     <Box>
-      <Typography>Einstellungen</Typography>
-      <Divider />
       <Card>
-        <CardHeader title="Rezepte"></CardHeader>
+        <CardHeader title="Rezepte exportieren"></CardHeader>
         <CardActions>
           <ExportRecipes />
         </CardActions>
       </Card>
-      <Card>
+      <Card style={{ marginTop: "1rem" }}>
+        <CardHeader title="Rezepte importieren"></CardHeader>
         <CardContent>
           <ImportRecipes />
         </CardContent>
