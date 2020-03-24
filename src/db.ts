@@ -54,6 +54,8 @@ export const queryPagedRecipes = (query = "") => {
   return db.recipes
     .where("title")
     .startsWithIgnoreCase(query)
+    .or("tags")
+    .startsWithAnyOf(query)
     .limit(200)
     .toArray();
 };
