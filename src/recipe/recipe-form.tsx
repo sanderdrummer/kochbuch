@@ -20,7 +20,7 @@ import {
 import { Skeleton } from "@material-ui/lab";
 import { Form, Field } from "react-final-form";
 
-import { BottomRightFab, OcrButton } from "../common";
+import { BottomRightFab, OcrButton, SearchInput } from "../common";
 import {
   Recipe,
   addRecipe,
@@ -252,7 +252,7 @@ export const ListLoader: React.FC = () => {
 };
 
 export const RecipeList = () => {
-  const { recipes, status, fetchRecipes, hasMore } = useRecipes();
+  const { recipes, status, fetchRecipes, queryRecipes, hasMore } = useRecipes();
   const navigate = useHistory();
 
   React.useEffect(() => {
@@ -262,9 +262,11 @@ export const RecipeList = () => {
 
   return (
     <>
+      <SearchInput label="Rezepte suchen" onSubmit={queryRecipes} />
       <List>
         {recipes.map(recipe => (
           <ListItem
+            button
             onClick={() => navigate.push(getRecipeDetailPath(recipe.title))}
             key={recipe.title}
           >

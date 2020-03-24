@@ -5,7 +5,8 @@ import {
   getRecipeByName,
   getPagedRecipes,
   getRecipesCount,
-  DEFAULT_PAGE_SIZE
+  DEFAULT_PAGE_SIZE,
+  queryPagedRecipes
 } from "../db";
 
 export type Status<T = "success"> = "" | "pending" | "error" | T;
@@ -53,17 +54,35 @@ export const useRecipes = () => {
   const [hasMore, setHasMore] = React.useState(false);
   const offsetRef = React.useRef(0);
 
+  const checkHasMore = async () => {
+    const count = await getRecipesCount();
+    setHasMore(count !== recipeListCache.length);
+  };
+
   const fetchRecipes = async () => {
     try {
       const result = await getPagedRecipes(offsetRef.current);
+
       if (result.length) {
         offsetRef.current += DEFAULT_PAGE_SIZE;
-        const recipeListCache = [...recipes, ...result];
+        recipeListCache = [...recipes, ...result];
         setRecipes(recipeListCache);
-        const count = await getRecipesCount();
-        setHasMore(count !== recipeListCache.length);
+        checkHasMore();
       } else {
         setHasMore(false);
+      }
+    } catch {}
+  };
+
+  const queryRecipes = async (query = "") => {
+    try {
+      if (query) {
+        const result = await queryPagedRecipes(query);
+        setRecipes(result);
+        setHasMore(false);
+      } else {
+        setRecipes(recipeListCache);
+        checkHasMore();
       }
     } catch {}
   };
@@ -72,6 +91,7 @@ export const useRecipes = () => {
     status,
     hasMore,
     recipes,
-    fetchRecipes
+    fetchRecipes,
+    queryRecipes
   };
 };

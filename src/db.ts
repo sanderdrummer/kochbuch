@@ -50,6 +50,14 @@ export const getPagedRecipes = (offset = 0) => {
     .toArray();
 };
 
+export const queryPagedRecipes = (query = "") => {
+  return db.recipes
+    .where("title")
+    .startsWithIgnoreCase(query)
+    .limit(200)
+    .toArray();
+};
+
 export const getRecipesCount = () => {
   return db.recipes.count();
 };
