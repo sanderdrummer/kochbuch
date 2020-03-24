@@ -1,7 +1,7 @@
 import React from "react";
 
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Switch,
   Route,
   Redirect,
@@ -37,7 +37,7 @@ const BottomNav = () => {
   const navigate = useHistory();
   const styles = useStyles();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_1, _2, value] = navigate.location.pathname.split("/");
+  const [_1, value] = navigate.location.pathname.split("/");
 
   return (
     <AppBar position="fixed" color="primary" className={styles.nav}>
