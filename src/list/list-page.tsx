@@ -11,14 +11,22 @@ import {
   Dialog,
   DialogTitle,
   DialogActions,
-  Checkbox
+  Checkbox,
+  CardHeader,
+  Card,
+  CardContent
 } from "@material-ui/core";
 import { Add } from "@material-ui/icons";
 
 import { BottomRightFab } from "../common";
 
 import { ListForm } from "./list-form";
-import { clearList, updateListItem } from "../db";
+import {
+  clearList,
+  checkListItem,
+  unCheckListItem,
+  ListItem as ListItemType
+} from "../db";
 
 const ClearListDialog: React.FC<{ onClearList(): void }> = ({
   onClearList
@@ -65,6 +73,41 @@ const ClearListDialog: React.FC<{ onClearList(): void }> = ({
   );
 };
 
+const CardList: React.FC<{
+  items: ListItemType[];
+  onSelect(item: ListItemType): void;
+  isChecked: boolean;
+  headline: string;
+}> = ({ items, onSelect, isChecked, headline }) => {
+  if (items.length === 0) {
+    return null;
+  }
+  return (
+    <Card>
+      <CardHeader subheader={headline}></CardHeader>
+      <CardContent>
+        {items.map(item => (
+          <ListItem
+            button
+            onClick={() => {
+              onSelect(item);
+            }}
+            key={item.title}
+          >
+            <ListItemText>{item.title}</ListItemText>
+            <Checkbox
+              checked={isChecked}
+              inputProps={{
+                "aria-label": `${item.title} ist im Einkaufswagen`
+              }}
+            />
+          </ListItem>
+        ))}
+      </CardContent>
+    </Card>
+  );
+};
+
 export const ListPage = () => {
   const { list, fetchList } = useListItems();
   const [open, setOpen] = React.useState(false);
@@ -76,32 +119,29 @@ export const ListPage = () => {
 
   return (
     <>
-      <List>
-        {list.map(item => (
-          <ListItem
-            button
-            onClick={async () => {
-              await updateListItem({ ...item, inBasket: !item.inBasket });
-              fetchList();
-            }}
-            key={item.title}
-          >
-            <ListItemText>{item.title}</ListItemText>
-            <Checkbox
-              checked={item.inBasket}
-              inputProps={{
-                "aria-label": `${item.title} ist im Einkaufswagen`
-              }}
-            />
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      {list.length > 0 && (
-        <Box mt={4}>
-          <ClearListDialog onClearList={fetchList} />
-        </Box>
-      )}
+      <CardList
+        items={list.list}
+        isChecked={false}
+        headline="In den Einkaufswagen"
+        onSelect={async item => {
+          await checkListItem(item);
+          fetchList();
+        }}
+      />
+      <Box mt={3} mb={3}></Box>
+      <CardList
+        items={list.basket}
+        isChecked={true}
+        headline="Schon dabei"
+        onSelect={async item => {
+          await unCheckListItem(item);
+          fetchList();
+        }}
+      />
+
+      <Box mt={4}>
+        <ClearListDialog onClearList={fetchList} />
+      </Box>
       <SwipeableDrawer
         anchor="top"
         open={open}

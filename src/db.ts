@@ -2,7 +2,6 @@ import Dexie from "dexie";
 
 export interface ListItem {
   title: string;
-  inBasket: boolean;
 }
 
 export interface Recipe {
@@ -16,14 +15,17 @@ export const DEFAULT_PAGE_SIZE = 50;
 
 export class ListDb extends Dexie {
   listItems: Dexie.Table<ListItem, string>;
+  basketItems: Dexie.Table<ListItem, string>;
   recipes: Dexie.Table<Recipe, string>;
   constructor() {
-    super("recipes-db");
+    super("recipes-db-1");
     this.version(1).stores({
+      basketItems: "title",
       listItems: "title",
       recipes: "title,tags"
     });
     this.listItems = this.table("listItems");
+    this.basketItems = this.table("basketItems");
     this.recipes = this.table("recipes");
   }
 }
@@ -79,12 +81,24 @@ export const getRecipesForExport = () => {
   return db.recipes.toArray();
 };
 
-export const getList = () => {
-  return db.listItems.toArray();
+export const getList = async () => {
+  const basket = await db.basketItems.toArray();
+  const list = await db.listItems.toArray();
+  return { basket, list };
 };
 
 export const addListItem = (listItem: ListItem) => {
   return db.listItems.add(listItem);
+};
+
+export const checkListItem = async (listItem: ListItem) => {
+  db.basketItems.add(listItem);
+  db.listItems.delete(listItem.title);
+};
+
+export const unCheckListItem = async (listItem: ListItem) => {
+  db.basketItems.delete(listItem.title);
+  db.listItems.add(listItem);
 };
 
 export const addListItems = (listItems: string) => {
@@ -96,10 +110,6 @@ export const addListItems = (listItems: string) => {
   );
 };
 
-export const updateListItem = (listItem: ListItem) => {
-  return db.listItems.put(listItem);
-};
-
 export const clearList = () => {
-  return db.listItems.clear();
+  return db.basketItems.clear();
 };
