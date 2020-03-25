@@ -15,6 +15,12 @@ function App() {
     () =>
       createMuiTheme({
         palette: {
+          primary: {
+            main: "#00acc1"
+          },
+          secondary: {
+            main: "#00bfa5"
+          },
           type: prefersDarkMode ? "dark" : "light"
         }
       }),
