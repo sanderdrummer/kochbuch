@@ -14,7 +14,7 @@ import {
 import { Skeleton } from "@material-ui/lab";
 import { Form, Field } from "react-final-form";
 
-import { BottomRightFab, OcrButton } from "../common";
+import { BottomRightFab } from "../common";
 import { Recipe, addRecipe, updateRecipe, deleteRecipe } from "../db";
 import { useRecipeByTitle } from "./recipe-hooks";
 import { getRecipeDetailPath } from ".";
@@ -90,11 +90,6 @@ export const RecipeForm: React.FC<{
                       label="Zutaten"
                       {...props.input}
                     />
-                    <OcrButton
-                      onComplete={text => {
-                        props.input.onChange(text);
-                      }}
-                    />
                   </Box>
                 )}
               </Field>
@@ -106,13 +101,9 @@ export const RecipeForm: React.FC<{
                       margin="normal"
                       multiline
                       fullWidth
+                      error={props.meta.touched && props.meta.error}
                       label="Zubereitung"
                       {...props.input}
-                    />
-                    <OcrButton
-                      onComplete={text => {
-                        props.input.onChange(text);
-                      }}
                     />
                   </Box>
                 )}
