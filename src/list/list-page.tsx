@@ -4,8 +4,6 @@ import {
   ListItem,
   ListItemText,
   SwipeableDrawer,
-  List,
-  Divider,
   Box,
   Button,
   Dialog,
@@ -119,6 +117,11 @@ export const ListPage = () => {
 
   return (
     <>
+      {list.list.length === 0 && list.basket.length === 0 && (
+        <Box display="flex" alignContent="center" justifyContent="center">
+          Du hast noch nichts auf der Einkaufsliste
+        </Box>
+      )}
       <CardList
         items={list.list}
         isChecked={false}

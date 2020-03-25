@@ -16,6 +16,7 @@ import { addListItems } from "../db";
 export const ListForm: React.FC<{ onCompleted(): void }> = ({
   onCompleted
 }) => {
+  const [value, setValue] = React.useState("");
   return (
     <Box>
       <Card>
@@ -24,10 +25,9 @@ export const ListForm: React.FC<{ onCompleted(): void }> = ({
           <form
             onSubmit={async e => {
               e.preventDefault();
-              const form = e.currentTarget;
               try {
-                await addListItems(form.listItems.value);
-                form.reset();
+                await addListItems(value);
+                setValue("");
                 onCompleted();
               } catch (e) {
                 console.log(e);
@@ -35,6 +35,8 @@ export const ListForm: React.FC<{ onCompleted(): void }> = ({
             }}
           >
             <TextField
+              value={value}
+              onChange={e => setValue(e.target.value)}
               multiline
               fullWidth
               name="listItems"
