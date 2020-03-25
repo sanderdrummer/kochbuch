@@ -139,9 +139,11 @@ export const ListPage = () => {
         }}
       />
 
-      <Box mt={4}>
-        <ClearListDialog onClearList={fetchList} />
-      </Box>
+      {list.basket.length > 0 && (
+        <Box mt={4}>
+          <ClearListDialog onClearList={fetchList} />
+        </Box>
+      )}
       <SwipeableDrawer
         anchor="top"
         open={open}
