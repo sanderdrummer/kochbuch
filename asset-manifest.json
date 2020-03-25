@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/kochbuch/static/css/main.5ecd60fb.chunk.css",
-    "main.js": "/kochbuch/static/js/main.db4ef82d.chunk.js",
-    "main.js.map": "/kochbuch/static/js/main.db4ef82d.chunk.js.map",
+    "main.js": "/kochbuch/static/js/main.39d0652e.chunk.js",
+    "main.js.map": "/kochbuch/static/js/main.39d0652e.chunk.js.map",
     "runtime-main.js": "/kochbuch/static/js/runtime-main.acd4d810.js",
     "runtime-main.js.map": "/kochbuch/static/js/runtime-main.acd4d810.js.map",
-    "static/js/2.d4eed5c8.chunk.js": "/kochbuch/static/js/2.d4eed5c8.chunk.js",
-    "static/js/2.d4eed5c8.chunk.js.map": "/kochbuch/static/js/2.d4eed5c8.chunk.js.map",
+    "static/js/2.8b8f36ab.chunk.js": "/kochbuch/static/js/2.8b8f36ab.chunk.js",
+    "static/js/2.8b8f36ab.chunk.js.map": "/kochbuch/static/js/2.8b8f36ab.chunk.js.map",
     "index.html": "/kochbuch/index.html",
-    "precache-manifest.a95a8e04b00b4967f500e7f2ea45a149.js": "/kochbuch/precache-manifest.a95a8e04b00b4967f500e7f2ea45a149.js",
+    "precache-manifest.c6f2193d2cb4b181241b6fdc746c8f0e.js": "/kochbuch/precache-manifest.c6f2193d2cb4b181241b6fdc746c8f0e.js",
     "service-worker.js": "/kochbuch/service-worker.js",
     "static/css/main.5ecd60fb.chunk.css.map": "/kochbuch/static/css/main.5ecd60fb.chunk.css.map",
-    "static/js/2.d4eed5c8.chunk.js.LICENSE.txt": "/kochbuch/static/js/2.d4eed5c8.chunk.js.LICENSE.txt"
+    "static/js/2.8b8f36ab.chunk.js.LICENSE.txt": "/kochbuch/static/js/2.8b8f36ab.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.acd4d810.js",
-    "static/js/2.d4eed5c8.chunk.js",
+    "static/js/2.8b8f36ab.chunk.js",
     "static/css/main.5ecd60fb.chunk.css",
-    "static/js/main.db4ef82d.chunk.js"
+    "static/js/main.39d0652e.chunk.js"
   ]
 }
