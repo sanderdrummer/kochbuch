@@ -46,8 +46,8 @@
   "display": "standalone",
 
   "name": "Kochbuch",
-  "short_name": "KB",
-  "theme_color": "#567893",
+  "short_name": "Kochbuch",
+  "theme_color": "#00acc1",
   "background_color": "#a2a6aa",
   "orientation": "portrait"
 }
