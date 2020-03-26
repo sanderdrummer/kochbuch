@@ -10,7 +10,6 @@ export const ImportRecipes = () => {
   const [status, setStatus] = React.useState<"pending" | "error" | "success">();
   const handleImportRecipes = (event: any) => {
     const onReaderLoad = (event: any) => {
-      console.log(event.target.result);
       const recipes = JSON.parse(event.target.result);
       setRecipes(recipes);
     };
@@ -76,7 +75,7 @@ export const ExportRecipes = () => {
   }
 
   return (
-    <Button download="recipes.json" href={href}>
+    <Button download="recipes" href={href}>
       exportieren
     </Button>
   );
