@@ -3,7 +3,7 @@ import { useListItems } from "./list-hooks";
 import {
   ListItem,
   ListItemText,
-  SwipeableDrawer,
+  Drawer,
   Box,
   Button,
   Dialog,
@@ -12,7 +12,7 @@ import {
   Checkbox,
   CardHeader,
   Card,
-  CardContent
+  CardContent,
 } from "@material-ui/core";
 import { Add } from "@material-ui/icons";
 
@@ -23,11 +23,11 @@ import {
   clearList,
   checkListItem,
   unCheckListItem,
-  ListItem as ListItemType
+  ListItem as ListItemType,
 } from "../db";
 
 const ClearListDialog: React.FC<{ onClearList(): void }> = ({
-  onClearList
+  onClearList,
 }) => {
   const [open, setOpen] = React.useState(false);
 
@@ -84,7 +84,7 @@ const CardList: React.FC<{
     <Card>
       <CardHeader subheader={headline}></CardHeader>
       <CardContent>
-        {items.map(item => (
+        {items.map((item) => (
           <ListItem
             button
             onClick={() => {
@@ -96,7 +96,7 @@ const CardList: React.FC<{
             <Checkbox
               checked={isChecked}
               inputProps={{
-                "aria-label": `${item.title} ist im Einkaufswagen`
+                "aria-label": `${item.title} ist im Einkaufswagen`,
               }}
             />
           </ListItem>
@@ -126,7 +126,7 @@ export const ListPage = () => {
         items={list.list}
         isChecked={false}
         headline="In den Einkaufswagen"
-        onSelect={async item => {
+        onSelect={async (item) => {
           await checkListItem(item);
           fetchList();
         }}
@@ -136,7 +136,7 @@ export const ListPage = () => {
         items={list.basket}
         isChecked={true}
         headline="Schon dabei"
-        onSelect={async item => {
+        onSelect={async (item) => {
           await unCheckListItem(item);
           fetchList();
         }}
@@ -147,19 +147,14 @@ export const ListPage = () => {
           <ClearListDialog onClearList={fetchList} />
         </Box>
       )}
-      <SwipeableDrawer
-        anchor="top"
-        open={open}
-        onOpen={() => setOpen(true)}
-        onClose={() => setOpen(false)}
-      >
+      <Drawer anchor="top" open={open} onClose={() => setOpen(false)}>
         <ListForm
           onCompleted={() => {
             setOpen(false);
             fetchList();
           }}
         />
-      </SwipeableDrawer>
+      </Drawer>
       <BottomRightFab onClick={() => setOpen(true)} label="brauche sachen">
         <Add></Add>
       </BottomRightFab>
