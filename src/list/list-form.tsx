@@ -8,22 +8,38 @@ import {
   CardHeader,
   CardContent,
   TextField,
-  Button
+  Button,
 } from "@material-ui/core";
 
 import { addListItems } from "../db";
-
+const key = "shoppingList";
 export const ListForm: React.FC<{ onCompleted(): void }> = ({
-  onCompleted
+  onCompleted,
 }) => {
   const [value, setValue] = React.useState("");
+  React.useEffect(() => {
+    const list = window.localStorage.getItem(key) || "";
+    if (typeof list === "string") {
+      setValue(list);
+    }
+  }, []);
+
+  React.useEffect(() => {
+    const id = setTimeout(() => {
+      window.localStorage.setItem(key, value);
+    }, 100);
+    return () => {
+      clearTimeout(id);
+    };
+  }, [value]);
+
   return (
     <Box>
       <Card>
         <CardHeader title="Einkaufsliste erweitern" />
         <CardContent>
           <form
-            onSubmit={async e => {
+            onSubmit={async (e) => {
               e.preventDefault();
               try {
                 await addListItems(value);
@@ -36,7 +52,7 @@ export const ListForm: React.FC<{ onCompleted(): void }> = ({
           >
             <TextField
               value={value}
-              onChange={e => setValue(e.target.value)}
+              onChange={(e) => setValue(e.target.value)}
               multiline
               fullWidth
               name="listItems"
