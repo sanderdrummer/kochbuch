@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/kochbuch/static/css/main.5ecd60fb.chunk.css",
-    "main.js": "/kochbuch/static/js/main.36432810.chunk.js",
-    "main.js.map": "/kochbuch/static/js/main.36432810.chunk.js.map",
+    "main.js": "/kochbuch/static/js/main.ada88962.chunk.js",
+    "main.js.map": "/kochbuch/static/js/main.ada88962.chunk.js.map",
     "runtime-main.js": "/kochbuch/static/js/runtime-main.acd4d810.js",
     "runtime-main.js.map": "/kochbuch/static/js/runtime-main.acd4d810.js.map",
-    "static/js/2.8b8f36ab.chunk.js": "/kochbuch/static/js/2.8b8f36ab.chunk.js",
-    "static/js/2.8b8f36ab.chunk.js.map": "/kochbuch/static/js/2.8b8f36ab.chunk.js.map",
+    "static/js/2.cd4027b3.chunk.js": "/kochbuch/static/js/2.cd4027b3.chunk.js",
+    "static/js/2.cd4027b3.chunk.js.map": "/kochbuch/static/js/2.cd4027b3.chunk.js.map",
     "index.html": "/kochbuch/index.html",
-    "precache-manifest.aec0b06e3e9f9f6ac8804174ac2f29f6.js": "/kochbuch/precache-manifest.aec0b06e3e9f9f6ac8804174ac2f29f6.js",
+    "precache-manifest.fa8376525c8a5faa0c222db189f8a558.js": "/kochbuch/precache-manifest.fa8376525c8a5faa0c222db189f8a558.js",
     "service-worker.js": "/kochbuch/service-worker.js",
     "static/css/main.5ecd60fb.chunk.css.map": "/kochbuch/static/css/main.5ecd60fb.chunk.css.map",
-    "static/js/2.8b8f36ab.chunk.js.LICENSE.txt": "/kochbuch/static/js/2.8b8f36ab.chunk.js.LICENSE.txt"
+    "static/js/2.cd4027b3.chunk.js.LICENSE.txt": "/kochbuch/static/js/2.cd4027b3.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.acd4d810.js",
-    "static/js/2.8b8f36ab.chunk.js",
+    "static/js/2.cd4027b3.chunk.js",
     "static/css/main.5ecd60fb.chunk.css",
-    "static/js/main.36432810.chunk.js"
+    "static/js/main.ada88962.chunk.js"
   ]
 }
