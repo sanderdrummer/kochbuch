@@ -8,42 +8,38 @@ import {
   CardHeader,
   Typography,
   CardContent,
-  Button
+  Button,
 } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 
 import { BottomRightFab } from "../common";
 import { addListItems } from "../db";
-import { useRecipeByTitle } from "./recipe-hooks";
 import { getRecipeDetailEditPath } from ".";
 
 import { LIST_PATH } from "../routes-config";
+import { useRecipeByTitle } from "./recipe-resource";
 
 export const RecipeDetails: React.FC = () => {
   const navigate = useHistory();
   const { id } = useParams();
   const title = decodeURIComponent(id || "");
-  const { status } = useRecipeByTitle(title);
+  const recipe = useRecipeByTitle(title);
 
-  if (status === "" || status === "pending") {
+  if (!recipe) {
     return <Skeleton height="12rem" />;
-  }
-
-  if (status === "error") {
-    return <Box>rezpete konnten nicht geladen werden</Box>;
   }
 
   return (
     <Box mt={3}>
       <Card>
         <CardHeader
-          title={status.title}
-          subheader={status.tags}
+          title={recipe.title}
+          subheader={recipe.tags}
           action={
             <Button
               startIcon={<MenuBook />}
               onClick={async () => {
-                await addListItems(status.ingredients);
+                await addListItems(recipe.ingredients);
                 navigate.push(LIST_PATH);
               }}
             >
@@ -53,7 +49,7 @@ export const RecipeDetails: React.FC = () => {
         ></CardHeader>
       </Card>
       <BottomRightFab
-        onClick={() => navigate.push(getRecipeDetailEditPath(status.title))}
+        onClick={() => navigate.push(getRecipeDetailEditPath(recipe.title))}
         label="Rezept bearbeiten"
         children={<Edit />}
       />
@@ -62,7 +58,7 @@ export const RecipeDetails: React.FC = () => {
           <CardHeader subheader="Zutaten"></CardHeader>
           <CardContent>
             <Typography style={{ whiteSpace: "pre-wrap" }}>
-              {status.ingredients}
+              {recipe.ingredients}
             </Typography>
           </CardContent>
         </Card>
@@ -72,7 +68,7 @@ export const RecipeDetails: React.FC = () => {
           <CardHeader subheader="Zubereitung"></CardHeader>
           <CardContent>
             <Typography style={{ whiteSpace: "pre-wrap" }}>
-              {status.description}
+              {recipe.description}
             </Typography>
           </CardContent>
         </Card>

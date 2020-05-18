@@ -1,12 +1,11 @@
 import React from "react";
-
 import {
   Recipe,
   getRecipeByName,
   getPagedRecipes,
   getRecipesCount,
   DEFAULT_PAGE_SIZE,
-  queryPagedRecipes
+  queryPagedRecipes,
 } from "../db";
 
 export type Status<T = "success"> = "" | "pending" | "error" | T;
@@ -44,7 +43,7 @@ export const useRecipeByTitle = (title: string) => {
   return {
     status,
     retry: fetchRecipe,
-    updateCache
+    updateCache,
   };
 };
 
@@ -92,6 +91,6 @@ export const useRecipes = () => {
     hasMore,
     recipes,
     fetchRecipes,
-    queryRecipes
+    queryRecipes,
   };
 };

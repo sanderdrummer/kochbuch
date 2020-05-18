@@ -5,9 +5,10 @@ import {
   Card,
   CardHeader,
   CardContent,
-  CardActions
+  CardActions,
 } from "@material-ui/core";
 import { ExportRecipes, ImportRecipes } from "./import-export";
+import { ApiUrlSetting } from "./api-url";
 
 export const SettingsPage = () => {
   return (
@@ -24,6 +25,7 @@ export const SettingsPage = () => {
           <ImportRecipes />
         </CardContent>
       </Card>
+      <ApiUrlSetting />
     </Box>
   );
 };

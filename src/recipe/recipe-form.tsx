@@ -9,46 +9,53 @@ import {
   CardHeader,
   CardContent,
   TextField,
-  Button
+  Button,
 } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 import { Form, Field } from "react-final-form";
 
-import { BottomRightFab } from "../common";
-import { Recipe, addRecipe, updateRecipe, deleteRecipe } from "../db";
-import { useRecipeByTitle } from "./recipe-hooks";
+import { BottomRightFab, Toast } from "../common";
 import { getRecipeDetailPath } from ".";
 
 import { RECIPES_PATH } from "../routes-config";
+import {
+  Recipe,
+  updateRecipe,
+  useRecipeDispatch,
+  deleteRecipe,
+  useRecipeByTitle,
+} from "./recipe-resource";
 
 const validateRequired = (value: string) => (value ? undefined : "required");
-
-const addUpdateRecipe = async (recipe: Recipe, isUpdate: boolean) => {
-  if (isUpdate) {
-    await updateRecipe(recipe);
-  } else {
-    await addRecipe(recipe);
-  }
-
-  return recipe;
-};
 
 export const RecipeForm: React.FC<{
   onComplete: (recipe: Recipe) => void;
   recipe?: Recipe;
 }> = ({ onComplete, recipe }) => {
+  const dispatch = useRecipeDispatch();
+  const [state, setState] = React.useState<"" | "loading" | "error">("");
   return (
     <Card>
       <CardHeader title="Neues Rezept" />
       <CardContent>
         <Form<Recipe>
           initialValues={recipe}
-          onSubmit={value => addUpdateRecipe(value, Boolean(recipe))}
+          onSubmit={async (recipe) => {
+            setState("loading");
+            try {
+              await updateRecipe(dispatch, recipe);
+              setState("");
+              return recipe;
+            } catch {
+              setState("error");
+            }
+            return undefined;
+          }}
         >
           {({ handleSubmit, submitting, invalid, form }) => (
             <form
               autoComplete="off"
-              onSubmit={async e => {
+              onSubmit={async (e) => {
                 const recipe = await handleSubmit(e);
                 if (recipe) {
                   form.reset();
@@ -57,7 +64,7 @@ export const RecipeForm: React.FC<{
               }}
             >
               <Field name="title" validate={validateRequired}>
-                {props => (
+                {(props) => (
                   <TextField
                     margin="normal"
                     fullWidth
@@ -68,7 +75,7 @@ export const RecipeForm: React.FC<{
                 )}
               </Field>
               <Field name="tags">
-                {props => (
+                {(props) => (
                   <TextField
                     margin="normal"
                     fullWidth
@@ -80,7 +87,7 @@ export const RecipeForm: React.FC<{
               </Field>
 
               <Field name="ingredients" validate={validateRequired}>
-                {props => (
+                {(props) => (
                   <Box mt={2}>
                     <TextField
                       margin="normal"
@@ -95,7 +102,7 @@ export const RecipeForm: React.FC<{
               </Field>
 
               <Field name="description" validate={validateRequired}>
-                {props => (
+                {(props) => (
                   <Box mt={2}>
                     <TextField
                       margin="normal"
@@ -124,6 +131,13 @@ export const RecipeForm: React.FC<{
           )}
         </Form>
       </CardContent>
+      <Toast
+        open={state === "error"}
+        severity="error"
+        onClose={() => setState("")}
+      >
+        Das hat leider nicht geklappt
+      </Toast>
     </Card>
   );
 };
@@ -132,35 +146,51 @@ export const RecipeEditForm: React.FC = () => {
   const navigate = useHistory();
   const { id } = useParams();
   const title = decodeURIComponent(id || "");
-  const { status, updateCache } = useRecipeByTitle(title);
-
-  if (status === "" || status === "pending" || status === "error") {
+  const recipe = useRecipeByTitle(title);
+  const dispatch = useRecipeDispatch();
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [hasError, setHasError] = React.useState(false);
+  if (!recipe) {
     return <Skeleton height="12rem" />;
   }
 
   return (
     <>
       <RecipeForm
-        onComplete={recipe => {
-          updateCache(recipe);
+        onComplete={(recipe) => {
+          updateRecipe(dispatch, recipe);
+
           navigate.push(getRecipeDetailPath(recipe.title));
         }}
-        recipe={status}
+        recipe={recipe}
       />
 
       <BottomRightFab
         label="Rezept löschen"
+        isLoading={isLoading}
         onClick={async () => {
+          setHasError(false);
+          setIsLoading(true);
           try {
-            await deleteRecipe(status.title);
+            await deleteRecipe(recipe);
+            dispatch({ type: "REMOVE_RECIPE", recipe });
             navigate.push(RECIPES_PATH);
           } catch (e) {
             console.log(e);
+            setHasError(true);
           }
+          setIsLoading(false);
         }}
       >
         <Delete />
       </BottomRightFab>
+      <Toast
+        severity="error"
+        open={hasError}
+        onClose={() => setHasError(false)}
+      >
+        Das hat leider nicht geklappt
+      </Toast>
     </>
   );
 };
