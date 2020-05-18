@@ -11,6 +11,7 @@ import {
   useRecipeDispatch,
   useRecipeState,
   fetchRecipes,
+  Recipe,
 } from "./recipe-resource";
 
 export const ListLoader: React.FC = () => {
@@ -22,15 +23,39 @@ export const ListLoader: React.FC = () => {
   );
 };
 
+const filterRecipes = (
+  recipes: Recipe[] = [],
+  query: string = ""
+): Recipe[] => {
+  if (!query) {
+    return recipes || [];
+  }
+  return recipes.filter((recipe) => {
+    return (
+      recipe.title.toLowerCase().includes(query) ||
+      recipe.tags.toLowerCase().includes(query)
+    );
+  });
+};
+
 export const RecipeList = () => {
   const navigate = useHistory();
   const { recipes, hasError, isLoading } = useRecipeState();
+  const [query, setQuery] = React.useState("");
+  const [filtered, setFiltered] = React.useState<Recipe[]>(
+    Object.values(recipes)
+  );
+  React.useEffect(() => {
+    setFiltered(filterRecipes(Object.values(recipes), query));
+  }, [query, recipes]);
+
   const dispatch = useRecipeDispatch();
 
   return (
     <>
+      <SearchInput label="was kochen ?" onSubmit={setQuery} />
       <List>
-        {Object.values(recipes).map((recipe) => (
+        {filtered.map((recipe) => (
           <ListItem
             button
             onClick={() => navigate.push(getRecipeDetailPath(recipe.title))}

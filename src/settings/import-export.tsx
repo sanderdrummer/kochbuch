@@ -3,11 +3,27 @@ import React from "react";
 import { Button, Snackbar } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 
-import { getRecipesForExport, bulkAddRecipes, Recipe } from "../db";
-
+import { getRecipesForExport } from "../db";
+import {
+  updateRecipe,
+  Recipe,
+  useRecipeDispatch,
+} from "../recipe/recipe-resource";
+const throttledUpdate = (dispatch: any, recipes: Recipe[]) => {
+  recipes.forEach((recipe, index) => {
+    setTimeout(async () => {
+      try {
+        updateRecipe(dispatch, recipe);
+      } catch (e) {
+        console.log(recipe, e);
+      }
+    }, 1500 * index);
+  });
+};
 export const ImportRecipes = () => {
   const [recipes, setRecipes] = React.useState<Recipe[] | null>(null);
   const [status, setStatus] = React.useState<"pending" | "error" | "success">();
+  const dispatch = useRecipeDispatch();
   const handleImportRecipes = (event: any) => {
     const onReaderLoad = (event: any) => {
       const recipes = JSON.parse(event.target.result);
@@ -26,7 +42,7 @@ export const ImportRecipes = () => {
         onClick={async () => {
           setStatus("pending");
           try {
-            await bulkAddRecipes(recipes || []);
+            throttledUpdate(dispatch, recipes || []);
             setStatus("success");
           } catch {
             setStatus("error");
@@ -47,8 +63,9 @@ export const ImportRecipes = () => {
         anchorOrigin={{ vertical: "top", horizontal: "left" }}
         open={status === "success"}
         onClose={() => setStatus(undefined)}
-        message={`Import erfolgreich ${recipes?.length ||
-          0} Rezepte hinzugefügt oder
+        message={`Import erfolgreich ${
+          recipes?.length || 0
+        } Rezepte hinzugefügt oder
         aktualisiert`}
       ></Snackbar>
     </>
