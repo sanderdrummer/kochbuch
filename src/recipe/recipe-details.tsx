@@ -13,11 +13,11 @@ import {
 import { Skeleton } from "@material-ui/lab";
 
 import { BottomRightFab } from "../common";
-import { addListItems } from "../db";
 import { getRecipeDetailEditPath } from ".";
 
 import { LIST_PATH } from "../routes-config";
 import { useRecipeByTitle } from "./recipe-resource";
+import { addListItems } from "../list/list-hooks";
 
 export const RecipeDetails: React.FC = () => {
   const navigate = useHistory();
@@ -39,7 +39,7 @@ export const RecipeDetails: React.FC = () => {
             <Button
               startIcon={<MenuBook />}
               onClick={async () => {
-                await addListItems(recipe.ingredients);
+                addListItems(recipe.ingredients);
                 navigate.push(LIST_PATH);
               }}
             >

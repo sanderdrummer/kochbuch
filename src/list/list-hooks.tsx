@@ -1,16 +1,67 @@
 import React from "react";
 
-import { ListItem, getList } from "../db";
+type ListItems = {
+  list: string[];
+  basket: string[];
+};
+const LIST_KEY = "LIST_KEY";
+const getLocalStorageJson = (key: string) => {
+  const json = localStorage.getItem(key);
+  if (json) {
+    return JSON.parse(json);
+  }
+  return undefined;
+};
+const saveLocalStorageJson = (key: string, item: any) => {
+  localStorage.setItem(key, JSON.stringify(item));
+};
+
+export const getList = (): ListItems => {
+  const list = getLocalStorageJson(LIST_KEY);
+  return list ? list : { basket: [], list: [] };
+};
+
+export const addListItem = (item: string) => {
+  const listItems = getList();
+  listItems.list.push(item);
+  saveLocalStorageJson(LIST_KEY, listItems);
+};
+
+export const checkListItem = async (item: string) => {
+  const listItems = getList();
+  listItems.list = listItems.list.filter((listItem) => listItem !== item);
+  listItems.basket.push(item);
+  saveLocalStorageJson(LIST_KEY, listItems);
+};
+
+export const unCheckListItem = (item: string) => {
+  const listItems = getList();
+  listItems.basket = listItems.basket.filter((listItem) => listItem !== item);
+  listItems.list.push(item);
+  saveLocalStorageJson(LIST_KEY, listItems);
+};
+
+export const addListItems = (bulkList: string) => {
+  const listItems = getList();
+  listItems.list = [...listItems.list, ...bulkList.split("\n")];
+  saveLocalStorageJson(LIST_KEY, listItems);
+};
+
+export const clearList = () => {
+  const listItems = getList();
+  listItems.basket = [];
+  saveLocalStorageJson(LIST_KEY, listItems);
+};
 
 let listItemsCache: {
-  list: ListItem[];
-  basket: ListItem[];
+  list: string[];
+  basket: string[];
 } = { list: [], basket: [] };
 
 export const useListItems = () => {
   const [list, setList] = React.useState<{
-    list: ListItem[];
-    basket: ListItem[];
+    list: string[];
+    basket: string[];
   }>(listItemsCache);
 
   const fetchList = async () => {
@@ -23,6 +74,6 @@ export const useListItems = () => {
 
   return {
     list,
-    fetchList
+    fetchList,
   };
 };

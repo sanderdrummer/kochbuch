@@ -30,10 +30,11 @@ const filterRecipes = (
   if (!query) {
     return recipes || [];
   }
+  const lowerCaseQuery = query.toLowerCase();
   return recipes.filter((recipe) => {
     return (
-      recipe.title.toLowerCase().includes(query) ||
-      recipe.tags.toLowerCase().includes(query)
+      recipe.title.toLowerCase().includes(lowerCaseQuery) ||
+      recipe.tags.toLowerCase().includes(lowerCaseQuery)
     );
   });
 };

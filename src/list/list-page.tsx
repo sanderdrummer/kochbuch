@@ -1,5 +1,10 @@
 import React from "react";
-import { useListItems } from "./list-hooks";
+import {
+  useListItems,
+  clearList,
+  checkListItem,
+  unCheckListItem,
+} from "./list-hooks";
 import {
   ListItem,
   ListItemText,
@@ -19,12 +24,6 @@ import { Add } from "@material-ui/icons";
 import { BottomRightFab } from "../common";
 
 import { ListForm } from "./list-form";
-import {
-  clearList,
-  checkListItem,
-  unCheckListItem,
-  ListItem as ListItemType,
-} from "../db";
 
 const ClearListDialog: React.FC<{ onClearList(): void }> = ({
   onClearList,
@@ -53,7 +52,7 @@ const ClearListDialog: React.FC<{ onClearList(): void }> = ({
           <Button
             onClick={async () => {
               try {
-                await clearList();
+                clearList();
                 onClearList();
                 handleClose();
               } catch (e) {
@@ -72,8 +71,8 @@ const ClearListDialog: React.FC<{ onClearList(): void }> = ({
 };
 
 const CardList: React.FC<{
-  items: ListItemType[];
-  onSelect(item: ListItemType): void;
+  items: string[];
+  onSelect(item: string): void;
   isChecked: boolean;
   headline: string;
 }> = ({ items, onSelect, isChecked, headline }) => {
@@ -90,13 +89,13 @@ const CardList: React.FC<{
             onClick={() => {
               onSelect(item);
             }}
-            key={item.title}
+            key={item}
           >
-            <ListItemText>{item.title}</ListItemText>
+            <ListItemText>{item}</ListItemText>
             <Checkbox
               checked={isChecked}
               inputProps={{
-                "aria-label": `${item.title} ist im Einkaufswagen`,
+                "aria-label": `${item} ist im Einkaufswagen`,
               }}
             />
           </ListItem>
@@ -127,7 +126,7 @@ export const ListPage = () => {
         isChecked={false}
         headline="In den Einkaufswagen"
         onSelect={async (item) => {
-          await checkListItem(item);
+          checkListItem(item);
           fetchList();
         }}
       />
@@ -137,7 +136,7 @@ export const ListPage = () => {
         isChecked={true}
         headline="Schon dabei"
         onSelect={async (item) => {
-          await unCheckListItem(item);
+          unCheckListItem(item);
           fetchList();
         }}
       />

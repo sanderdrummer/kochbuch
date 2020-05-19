@@ -3,11 +3,11 @@ import React from "react";
 import { Button, Snackbar } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 
-import { getRecipesForExport } from "../db";
 import {
   updateRecipe,
   Recipe,
   useRecipeDispatch,
+  useRecipeState,
 } from "../recipe/recipe-resource";
 const throttledUpdate = (dispatch: any, recipes: Recipe[]) => {
   recipes.forEach((recipe, index) => {
@@ -74,18 +74,16 @@ export const ImportRecipes = () => {
 
 export const ExportRecipes = () => {
   const [href, updateHref] = React.useState("");
-
-  const getData = async () => {
-    const recipes = await getRecipesForExport();
-    const data =
-      "data:text/json;charset=utf-8," +
-      encodeURIComponent(JSON.stringify(recipes));
-    updateHref(data);
-  };
+  const { recipes } = useRecipeState();
 
   React.useEffect(() => {
-    getData();
-  }, []);
+    if (recipes) {
+      const data =
+        "data:text/json;charset=utf-8," +
+        encodeURIComponent(JSON.stringify(Object.values(recipes)));
+      updateHref(data);
+    }
+  }, [recipes]);
 
   if (!href) {
     return <Skeleton></Skeleton>;
