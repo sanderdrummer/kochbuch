@@ -5,7 +5,8 @@ import {
   Switch,
   Route,
   Redirect,
-  useHistory
+  useLocation,
+  useHistory,
 } from "react-router-dom";
 
 import { RecipePage } from "./recipe";
@@ -19,7 +20,7 @@ import {
   createStyles,
   AppBar,
   BottomNavigation,
-  BottomNavigationAction
+  BottomNavigationAction,
 } from "@material-ui/core";
 import { RECIPES_PATH, LIST_PATH, SETTINGS_PATH } from "./routes-config";
 
@@ -28,35 +29,34 @@ const useStyles = makeStyles((theme: Theme) =>
     nav: {
       marginTop: theme.spacing(8),
       bottom: 0,
-      top: "auto"
-    }
+      top: "auto",
+    },
   })
 );
 
 const BottomNav = () => {
   const navigate = useHistory();
   const styles = useStyles();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_1, value] = navigate.location.pathname.split("/");
+  const location = useLocation();
 
   return (
     <AppBar position="fixed" color="primary" className={styles.nav}>
-      <BottomNavigation value={value} showLabels>
+      <BottomNavigation value={location.pathname} showLabels>
         <BottomNavigationAction
           onClick={() => navigate.push(RECIPES_PATH)}
-          value="rezepte"
+          value={RECIPES_PATH}
           label="Rezepte"
           icon={<FormatListBulleted />}
         />
         <BottomNavigationAction
           onClick={() => navigate.push(LIST_PATH)}
-          value="einkaufliste"
+          value={LIST_PATH}
           label="Liste"
           icon={<MenuBook />}
         />
         <BottomNavigationAction
           onClick={() => navigate.push(SETTINGS_PATH)}
-          value="einstellungen"
+          value={SETTINGS_PATH}
           label="Einstellungen"
           icon={<Settings />}
         />

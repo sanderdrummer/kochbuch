@@ -80,7 +80,6 @@ export const RecipeForm: React.FC<{
                     margin="normal"
                     fullWidth
                     label="Tags"
-                    name="tags"
                     {...props.input}
                   />
                 )}
