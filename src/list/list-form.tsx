@@ -10,8 +10,8 @@ import {
   TextField,
   Button,
 } from "@material-ui/core";
+import { addListItems } from "./list-hooks";
 
-import { addListItems } from "../db";
 const key = "shoppingList";
 export const ListForm: React.FC<{ onCompleted(): void }> = ({
   onCompleted,
@@ -42,7 +42,7 @@ export const ListForm: React.FC<{ onCompleted(): void }> = ({
             onSubmit={async (e) => {
               e.preventDefault();
               try {
-                await addListItems(value);
+                addListItems(value);
                 setValue("");
                 onCompleted();
               } catch (e) {

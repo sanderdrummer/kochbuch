@@ -7,19 +7,21 @@ const fabStyles = makeStyles((theme: Theme) =>
       position: "fixed",
       bottom: theme.spacing(8),
 
-      right: theme.spacing(2)
-    }
+      right: theme.spacing(2),
+    },
   })
 );
 
 export const BottomRightFab: React.FC<{
   onClick: (e: any) => void;
   label: string;
-}> = ({ onClick, label, children }) => {
+  isLoading?: boolean;
+}> = ({ onClick, label, children, isLoading }) => {
   const styles = fabStyles();
   return (
     <Fab
       onClick={onClick}
+      disabled={isLoading}
       className={styles.fab}
       color="primary"
       aria-label={label}

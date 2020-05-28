@@ -12,19 +12,19 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       padding: "2px 4px",
       display: "flex",
-      alignItems: "center"
+      alignItems: "center",
     },
     input: {
       marginLeft: theme.spacing(1),
-      flex: 1
+      flex: 1,
     },
     iconButton: {
-      padding: 10
+      padding: 10,
     },
     divider: {
       height: 28,
-      margin: 4
-    }
+      margin: 4,
+    },
   })
 );
 
@@ -38,9 +38,12 @@ export const SearchInput: React.FC<{
     setQuery("");
     onSubmit("");
   };
+  React.useEffect(() => {
+    onSubmit(query);
+  }, [onSubmit, query]);
   return (
     <Paper
-      onSubmit={e => {
+      onSubmit={(e) => {
         e.preventDefault();
         onSubmit(query);
       }}
@@ -49,7 +52,7 @@ export const SearchInput: React.FC<{
     >
       <InputBase
         value={query}
-        onChange={e => setQuery(e.target.value)}
+        onChange={(e) => setQuery(e.target.value)}
         className={classes.input}
         placeholder={label}
         inputProps={{ "aria-label": label }}

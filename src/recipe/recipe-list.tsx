@@ -7,7 +7,12 @@ import { List, ListItem, ListItemText, Button, Box } from "@material-ui/core";
 
 import { SearchInput, BottomRightFab } from "../common";
 import { getRecipeDetailPath, ADD_RECIPE_PATH } from ".";
-import { useRecipes } from "./recipe-hooks";
+import {
+  useRecipeDispatch,
+  useRecipeState,
+  fetchRecipes,
+  Recipe,
+} from "./recipe-resource";
 
 export const ListLoader: React.FC = () => {
   return (
@@ -18,20 +23,40 @@ export const ListLoader: React.FC = () => {
   );
 };
 
-export const RecipeList = () => {
-  const { recipes, status, fetchRecipes, queryRecipes, hasMore } = useRecipes();
-  const navigate = useHistory();
+const filterRecipes = (
+  recipes: Recipe[] = [],
+  query: string = ""
+): Recipe[] => {
+  if (!query) {
+    return recipes || [];
+  }
+  const lowerCaseQuery = query.toLowerCase();
+  return recipes.filter((recipe) => {
+    return (
+      recipe.title.toLowerCase().includes(lowerCaseQuery) ||
+      recipe.tags.toLowerCase().includes(lowerCaseQuery)
+    );
+  });
+};
 
+export const RecipeList = () => {
+  const navigate = useHistory();
+  const { recipes, hasError, isLoading } = useRecipeState();
+  const [query, setQuery] = React.useState("");
+  const [filtered, setFiltered] = React.useState<Recipe[]>(
+    Object.values(recipes)
+  );
   React.useEffect(() => {
-    fetchRecipes();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    setFiltered(filterRecipes(Object.values(recipes), query));
+  }, [query, recipes]);
+
+  const dispatch = useRecipeDispatch();
 
   return (
     <>
-      <SearchInput label="Rezepte suchen" onSubmit={queryRecipes} />
+      <SearchInput label="was kochen ?" onSubmit={setQuery} />
       <List>
-        {recipes.map(recipe => (
+        {filtered.map((recipe) => (
           <ListItem
             button
             onClick={() => navigate.push(getRecipeDetailPath(recipe.title))}
@@ -41,12 +66,13 @@ export const RecipeList = () => {
           </ListItem>
         ))}
       </List>
-      {hasMore && <Button onClick={fetchRecipes}>Load more</Button>}
-
-      {status === "error" && (
+      {isLoading && <Skeleton />}
+      {hasError && (
         <Box>
           rezpete konnten nicht geladen werden{" "}
-          <Button onClick={fetchRecipes}>nochmal versuchen</Button>
+          <Button onClick={() => fetchRecipes(dispatch)}>
+            nochmal versuchen
+          </Button>
         </Box>
       )}
       <BottomRightFab

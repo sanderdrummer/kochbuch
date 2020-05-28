@@ -26,7 +26,7 @@ export const RecipePage = () => {
         path={ADD_RECIPE_PATH}
         render={() => (
           <RecipeForm
-            onComplete={recipe => {
+            onComplete={(recipe) => {
               history.push(getRecipeDetailPath(recipe.title));
             }}
           />
