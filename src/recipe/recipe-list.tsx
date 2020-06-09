@@ -66,10 +66,10 @@ export const RecipeList = () => {
           </ListItem>
         ))}
       </List>
-      {isLoading && <Skeleton />}
+      {isLoading && <Skeleton aria-label="loading" data-testid="loader" />}
       {hasError && (
         <Box>
-          rezpete konnten nicht geladen werden{" "}
+          rezepte konnten nicht geladen werden
           <Button onClick={() => fetchRecipes(dispatch)}>
             nochmal versuchen
           </Button>
