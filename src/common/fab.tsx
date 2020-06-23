@@ -16,6 +16,7 @@ export const BottomRightFab: React.FC<{
   onClick: (e: any) => void;
   label: string;
   isLoading?: boolean;
+  children: any;
 }> = ({ onClick, label, children, isLoading }) => {
   const styles = fabStyles();
   return (
