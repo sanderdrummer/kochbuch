@@ -2,11 +2,10 @@ import React from "react";
 import { useHistory } from "react-router";
 
 import { Skeleton } from "@material-ui/lab";
-import { Add } from "@material-ui/icons";
 import { List, ListItem, ListItemText, Button, Box } from "@material-ui/core";
 
-import { SearchInput, BottomRightFab } from "../common";
-import { getRecipeDetailPath, ADD_RECIPE_PATH } from ".";
+import { SearchInput } from "../common";
+import { getRecipeDetailPath } from ".";
 import {
   useRecipeDispatch,
   useRecipeState,
@@ -72,11 +71,6 @@ export const RecipeList = () => {
           </Button>
         </Box>
       )}
-      <BottomRightFab
-        onClick={() => navigate.push(ADD_RECIPE_PATH)}
-        label="Rezept hinzufügen"
-        children={<Add />}
-      />
     </>
   );
 };
