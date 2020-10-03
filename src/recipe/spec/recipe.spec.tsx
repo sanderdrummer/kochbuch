@@ -18,14 +18,17 @@ describe("RecipeList", () => {
     const loader = await screen.findByLabelText("loading");
     expect(loader).toBeVisible();
 
-    const recipe = await screen.findByText("Spargel Bruschetta");
+    const recipe = await screen.findByText("Bavette mit Zucchini Carbonara");
     expect(recipe).toBeVisible();
   });
   it("handles server errors", async () => {
     server.use(
-      rest.get("*/recipe", (req, res, ctx) => {
-        return res(ctx.status(500));
-      })
+      rest.get(
+        "https://raw.githubusercontent.com/sanderdrummer/recipes-md/master/parsed-recipes.json",
+        (req, res, ctx) => {
+          return res(ctx.status(500));
+        }
+      )
     );
     render(
       <RecipeProvider>

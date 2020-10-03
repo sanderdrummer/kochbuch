@@ -42,7 +42,7 @@ export const ListForm: React.FC<{ onCompleted(): void }> = ({
             onSubmit={async (e) => {
               e.preventDefault();
               try {
-                addListItems(value);
+                addListItems([value]);
                 setValue("");
                 onCompleted();
               } catch (e) {

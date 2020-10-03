@@ -41,9 +41,9 @@ export const unCheckListItem = (item: string) => {
   saveLocalStorageJson(LIST_KEY, listItems);
 };
 
-export const addListItems = (bulkList: string) => {
+export const addListItems = (bulkList: string[]) => {
   const listItems = getList();
-  listItems.list = [...listItems.list, ...bulkList.split("\n")];
+  listItems.list = [...listItems.list, ...bulkList];
   saveLocalStorageJson(LIST_KEY, listItems);
 };
 

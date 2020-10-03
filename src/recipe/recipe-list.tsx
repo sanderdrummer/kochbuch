@@ -32,10 +32,7 @@ const filterRecipes = (
   }
   const lowerCaseQuery = query.toLowerCase();
   return recipes.filter((recipe) => {
-    return (
-      recipe.title.toLowerCase().includes(lowerCaseQuery) ||
-      recipe.tags.toLowerCase().includes(lowerCaseQuery)
-    );
+    return recipe.title.toLowerCase().includes(lowerCaseQuery);
   });
 };
 
@@ -62,7 +59,7 @@ export const RecipeList = () => {
             onClick={() => navigate.push(getRecipeDetailPath(recipe.title))}
             key={recipe.title}
           >
-            <ListItemText primary={recipe.title} secondary={recipe.tags} />
+            <ListItemText primary={recipe.title} />
           </ListItem>
         ))}
       </List>

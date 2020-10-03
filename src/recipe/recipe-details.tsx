@@ -1,7 +1,7 @@
 import React from "react";
 
 import { useParams, useHistory } from "react-router-dom";
-import { Edit, MenuBook } from "@material-ui/icons";
+import { MenuBook } from "@material-ui/icons";
 import {
   Box,
   Card,
@@ -12,16 +12,13 @@ import {
 } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 
-import { BottomRightFab } from "../common";
-import { getRecipeDetailEditPath } from ".";
-
 import { LIST_PATH } from "../routes-config";
 import { useRecipeByTitle } from "./recipe-resource";
 import { addListItems } from "../list/list-hooks";
 
 export const RecipeDetails: React.FC = () => {
   const navigate = useHistory();
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const title = decodeURIComponent(id || "");
   const recipe = useRecipeByTitle(title);
 
@@ -34,7 +31,6 @@ export const RecipeDetails: React.FC = () => {
       <Card>
         <CardHeader
           title={recipe.title}
-          subheader={recipe.tags}
           action={
             <Button
               startIcon={<MenuBook />}
@@ -48,11 +44,7 @@ export const RecipeDetails: React.FC = () => {
           }
         ></CardHeader>
       </Card>
-      <BottomRightFab
-        onClick={() => navigate.push(getRecipeDetailEditPath(recipe.title))}
-        label="Rezept bearbeiten"
-        children={<Edit />}
-      />
+
       <Box mt={3}>
         <Card>
           <CardHeader subheader="Zutaten"></CardHeader>

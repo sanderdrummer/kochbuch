@@ -11,7 +11,6 @@ import {
 
 import { RecipePage } from "./recipe";
 import { ListPage } from "./list";
-import { SettingsPage } from "./settings";
 
 import { FormatListBulleted, MenuBook, Settings } from "@material-ui/icons";
 import {
@@ -22,7 +21,7 @@ import {
   BottomNavigation,
   BottomNavigationAction,
 } from "@material-ui/core";
-import { RECIPES_PATH, LIST_PATH, SETTINGS_PATH } from "./routes-config";
+import { RECIPES_PATH, LIST_PATH } from "./routes-config";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -54,12 +53,6 @@ const BottomNav = () => {
           label="Liste"
           icon={<MenuBook />}
         />
-        <BottomNavigationAction
-          onClick={() => navigate.push(SETTINGS_PATH)}
-          value={SETTINGS_PATH}
-          label="Einstellungen"
-          icon={<Settings />}
-        />
       </BottomNavigation>
     </AppBar>
   );
@@ -71,7 +64,6 @@ export const RootRoutes = () => {
       <Switch>
         <Route path={RECIPES_PATH} component={RecipePage} />
         <Route path={LIST_PATH} component={ListPage} />
-        <Route path={SETTINGS_PATH} component={SettingsPage} />
         <Redirect from="/" to={RECIPES_PATH} />
       </Switch>
       <BottomNav />

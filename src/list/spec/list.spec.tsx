@@ -13,7 +13,7 @@ describe("ListPage", () => {
       getByText,
       getByRole,
       findByText,
-      queryByText
+      queryByText,
     } = render(<ListPage />);
 
     // open up list-form
@@ -23,8 +23,7 @@ describe("ListPage", () => {
 
     // type items
     const input = getByRole("textbox");
-    const items = `item1
-    item2`;
+    const items = `item1`;
     fireEvent.change(input, { target: { value: items } });
 
     //submit form
@@ -32,13 +31,11 @@ describe("ListPage", () => {
 
     // form should be closed and items are displayed in the list
     await findByText("item1");
-    await findByText("item2");
     expect(queryByText(/In den Einkaufswagen/i)).toBeVisible();
     expect(queryByText(/Schon dabei/i)).toBeNull();
 
     // move items to basket
     fireEvent.click(getByText("item1"));
-    fireEvent.click(getByText("item2"));
     await findByText("Schon dabei");
     expect(queryByText(/In den Einkaufswagen/i)).toBeNull();
 

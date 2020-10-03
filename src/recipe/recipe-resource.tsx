@@ -1,30 +1,20 @@
 import React from "react";
-import { get, post } from "../api";
+import { get } from "../api";
 
-export const mockResponse = {
-  recipes: [
-    {
-      title: "recipe2",
-      tags: "tag1",
-      ingredients: "in1 in2 in3",
-      description: "describe",
-      image: "",
-    },
-  ],
-  tags: ["tag1"],
-};
+export const mockResponse: RecipeResponse = [
+  {
+    title: "recipe2",
+    ingredients: ["flour"],
+    description: "describe",
+  },
+];
 
-type RecipeResponse = {
-  recipes: Recipe[];
-  tags: string[];
-};
+type RecipeResponse = Recipe[];
 
 export type Recipe = {
   title: string;
-  tags: string;
-  ingredients: string;
+  ingredients: string[];
   description: string;
-  image: string;
 };
 
 export type RecipeState = {
@@ -47,10 +37,10 @@ const initialState: RecipeState = {
 };
 const normalizeResponse = (
   state: RecipeState,
-  data: RecipeResponse
+  recipeResponse: RecipeResponse
 ): RecipeState => {
   const initialValue: Record<string, Recipe> = {};
-  const recipes = data.recipes.reduce((recipes, recipe) => {
+  const recipes = recipeResponse.reduce((recipes, recipe) => {
     return { ...recipes, [recipe.title]: recipe };
   }, initialValue);
   const allRecipes = { ...state.recipes, ...recipes };
@@ -58,7 +48,6 @@ const normalizeResponse = (
     ...state,
     isLoading: false,
     hasError: false,
-    tags: data.tags,
     recipes: allRecipes,
   };
 };
@@ -108,26 +97,13 @@ export const useRecipeState = () => {
 export const fetchRecipes = async (dispatch: RecipeDispatch) => {
   dispatch({ type: "START_LOADING" });
   try {
-    const data = await get("recipe");
+    const data = await get(
+      "https://raw.githubusercontent.com/sanderdrummer/recipes-md/master/parsed-recipes.json"
+    );
     dispatch({ type: "DATA_FETCHED", data });
   } catch {
     dispatch({ type: "HAS_ERROR" });
   }
-};
-
-export const updateRecipe = async (
-  dispatch: RecipeDispatch,
-  recipe: Recipe
-) => {
-  await post("recipe", recipe);
-  dispatch({
-    type: "DATA_FETCHED",
-    data: { recipes: [recipe], tags: recipe.tags.split(" ") },
-  });
-};
-
-export const deleteRecipe = async (recipe: Recipe) => {
-  return await post("delete-recipe", recipe);
 };
 
 export const useRecipeByTitle = (title: string) => {

@@ -1,7 +1,6 @@
 import React from "react";
-import { Switch, Route, useHistory } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 
-import { RecipeForm, RecipeEditForm } from "./recipe-form";
 import { RecipeList } from "./recipe-list";
 import { RecipeDetails } from "./recipe-details";
 
@@ -13,27 +12,13 @@ export const RECIPE_DETAILS_EDIT_PATH = RECIPE_DETAILS_PATH + "/bearbeiten";
 
 export const getRecipeDetailPath = (title: string) =>
   RECIPES_PATH + "/" + title;
-export const getRecipeDetailEditPath = (title: string) =>
-  getRecipeDetailPath(title) + "/bearbeiten";
 
 export const RecipePage = () => {
-  const history = useHistory();
-
   return (
     <Switch>
       <Route exact path={RECIPES_PATH} component={RecipeList} />
-      <Route
-        path={ADD_RECIPE_PATH}
-        render={() => (
-          <RecipeForm
-            onComplete={(recipe) => {
-              history.push(getRecipeDetailPath(recipe.title));
-            }}
-          />
-        )}
-      />
+
       <Route exact path={RECIPE_DETAILS_PATH} component={RecipeDetails} />
-      <Route path={RECIPE_DETAILS_EDIT_PATH} component={RecipeEditForm} />
     </Switch>
   );
 };
