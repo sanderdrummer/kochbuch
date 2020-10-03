@@ -9,6 +9,8 @@ import {
   Typography,
   CardContent,
   Button,
+  List,
+  ListItem,
 } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 
@@ -48,11 +50,11 @@ export const RecipeDetails: React.FC = () => {
       <Box mt={3}>
         <Card>
           <CardHeader subheader="Zutaten"></CardHeader>
-          <CardContent>
-            <Typography style={{ whiteSpace: "pre-wrap" }}>
-              {recipe.ingredients}
-            </Typography>
-          </CardContent>
+          <List>
+            {recipe.ingredients.map((ingredient) => (
+              <ListItem key={ingredient}>{ingredient}</ListItem>
+            ))}
+          </List>
         </Card>
       </Box>
       <Box mt={3}>
