@@ -64,12 +64,10 @@ export const useListItems = () => {
     basket: string[];
   }>(listItemsCache);
 
-  const fetchList = async () => {
-    try {
-      const result = await getList();
-      listItemsCache = result;
-      setList(result);
-    } catch {}
+  const fetchList = () => {
+    const result = getList();
+    listItemsCache = result;
+    setList(result);
   };
 
   return {
