@@ -12,7 +12,7 @@ import {
 import { RecipePage } from "./recipe";
 import { ListPage } from "./list";
 
-import { FormatListBulleted, MenuBook, Settings } from "@material-ui/icons";
+import { FormatListBulleted, MenuBook } from "@material-ui/icons";
 import {
   makeStyles,
   Theme,
