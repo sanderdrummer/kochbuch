@@ -32,13 +32,13 @@ export const RecipeDetails: React.FC = () => {
     <Box mt={3}>
       <Card>
         <CardHeader
-          title={recipe.title}
+          title={recipe?.title}
           action={
             <Button
               startIcon={<MenuBook />}
               onClick={async () => {
                 addListItems(
-                  recipe.ingredients.map(
+                  recipe?.ingredients.map(
                     ({ amount, name }) => `${amount} ${name}`
                   )
                 );
@@ -55,7 +55,7 @@ export const RecipeDetails: React.FC = () => {
         <Card>
           <CardHeader subheader="Zutaten"></CardHeader>
           <List>
-            {recipe.ingredients.map((ingredient) => (
+            {recipe?.ingredients.map((ingredient) => (
               <ListItem key={ingredient.name}>
                 {ingredient.amount} {ingredient.name}
               </ListItem>
@@ -68,7 +68,7 @@ export const RecipeDetails: React.FC = () => {
           <CardHeader subheader="Zubereitung"></CardHeader>
           <CardContent>
             <Typography style={{ whiteSpace: "pre-wrap" }}>
-              {recipe.description}
+              {recipe?.description}
             </Typography>
           </CardContent>
         </Card>

@@ -6,12 +6,7 @@ import { List, ListItem, ListItemText, Button, Box } from "@material-ui/core";
 
 import { SearchInput } from "../common";
 import { getRecipeDetailPath } from ".";
-import {
-  useRecipeDispatch,
-  useRecipeState,
-  fetchRecipes,
-  Recipe,
-} from "./recipe-resource";
+import { Recipe, useRecipes } from "./recipe-resource";
 
 export const ListLoader: React.FC = () => {
   return (
@@ -37,16 +32,20 @@ const filterRecipes = (
 
 export const RecipeList = () => {
   const navigate = useHistory();
-  const { recipes, hasError, isLoading } = useRecipeState();
-  const [query, setQuery] = React.useState("");
-  const [filtered, setFiltered] = React.useState<Recipe[]>(
-    Object.values(recipes)
-  );
-  React.useEffect(() => {
-    setFiltered(filterRecipes(Object.values(recipes), query));
-  }, [query, recipes]);
+  const {
+    data: recipes,
+    isLoading,
+    isError,
+    error,
+    isLoadingError,
+    refetch,
+  } = useRecipes();
 
-  const dispatch = useRecipeDispatch();
+  const [query, setQuery] = React.useState("");
+  const [filtered, setFiltered] = React.useState<Recipe[]>(recipes ?? []);
+  React.useEffect(() => {
+    setFiltered(filterRecipes(recipes, query));
+  }, [query, recipes]);
 
   return (
     <>
@@ -63,12 +62,10 @@ export const RecipeList = () => {
         ))}
       </List>
       {isLoading && <Skeleton aria-label="loading" data-testid="loader" />}
-      {hasError && (
+      {isError && (
         <Box>
           rezepte konnten nicht geladen werden
-          <Button onClick={() => fetchRecipes(dispatch)}>
-            nochmal versuchen
-          </Button>
+          <Button onClick={() => refetch()}>nochmal versuchen</Button>
         </Box>
       )}
     </>

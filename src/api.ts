@@ -13,7 +13,7 @@ export async function get<T = any>(endpoint: string): Promise<T> {
   const options: RequestInit = {
     method: "GET",
   };
-  return fetch(endpoint, options).then(async (res) => {
+  return fetch(endpoint, options).then((res) => {
     return res.json();
   });
 }
