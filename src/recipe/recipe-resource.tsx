@@ -4,7 +4,12 @@ import { get } from "../api";
 export const mockResponse: RecipeResponse = [
   {
     title: "recipe2",
-    ingredients: ["flour"],
+    ingredients: [
+      {
+        name: "flour",
+        amount: "2",
+      },
+    ],
     description: "describe",
   },
 ];
@@ -13,9 +18,14 @@ type RecipeResponse = Recipe[];
 
 export type Recipe = {
   title: string;
-  ingredients: string[];
+  ingredients: Ingredient[];
   description: string;
 };
+
+interface Ingredient {
+  amount: string;
+  name: string;
+}
 
 export type RecipeState = {
   isLoading: boolean;

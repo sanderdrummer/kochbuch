@@ -37,7 +37,11 @@ export const RecipeDetails: React.FC = () => {
             <Button
               startIcon={<MenuBook />}
               onClick={async () => {
-                addListItems(recipe.ingredients);
+                addListItems(
+                  recipe.ingredients.map(
+                    ({ amount, name }) => `${amount} ${name}`
+                  )
+                );
                 navigate.push(LIST_PATH);
               }}
             >
@@ -52,7 +56,9 @@ export const RecipeDetails: React.FC = () => {
           <CardHeader subheader="Zutaten"></CardHeader>
           <List>
             {recipe.ingredients.map((ingredient) => (
-              <ListItem key={ingredient}>{ingredient}</ListItem>
+              <ListItem key={ingredient.name}>
+                {ingredient.amount} {ingredient.name}
+              </ListItem>
             ))}
           </List>
         </Card>
