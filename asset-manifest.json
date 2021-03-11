@@ -1,22 +1,20 @@
 {
   "files": {
-    "main.css": "/kochbuch/static/css/main.5ecd60fb.chunk.css",
-    "main.js": "/kochbuch/static/js/main.45843122.chunk.js",
-    "main.js.map": "/kochbuch/static/js/main.45843122.chunk.js.map",
-    "runtime-main.js": "/kochbuch/static/js/runtime-main.649f6af9.js",
-    "runtime-main.js.map": "/kochbuch/static/js/runtime-main.649f6af9.js.map",
-    "static/js/2.b5c901b6.chunk.js": "/kochbuch/static/js/2.b5c901b6.chunk.js",
-    "static/js/2.b5c901b6.chunk.js.map": "/kochbuch/static/js/2.b5c901b6.chunk.js.map",
+    "main.css": "/kochbuch/static/css/main.6dea0f05.chunk.css",
+    "main.js": "/kochbuch/static/js/main.4a459d81.chunk.js",
+    "main.js.map": "/kochbuch/static/js/main.4a459d81.chunk.js.map",
+    "runtime-main.js": "/kochbuch/static/js/runtime-main.a830ac0e.js",
+    "runtime-main.js.map": "/kochbuch/static/js/runtime-main.a830ac0e.js.map",
+    "static/js/2.1aa9dd8a.chunk.js": "/kochbuch/static/js/2.1aa9dd8a.chunk.js",
+    "static/js/2.1aa9dd8a.chunk.js.map": "/kochbuch/static/js/2.1aa9dd8a.chunk.js.map",
     "index.html": "/kochbuch/index.html",
-    "precache-manifest.a6695e849ad2f06ee512689d02e08ca5.js": "/kochbuch/precache-manifest.a6695e849ad2f06ee512689d02e08ca5.js",
-    "service-worker.js": "/kochbuch/service-worker.js",
-    "static/css/main.5ecd60fb.chunk.css.map": "/kochbuch/static/css/main.5ecd60fb.chunk.css.map",
-    "static/js/2.b5c901b6.chunk.js.LICENSE.txt": "/kochbuch/static/js/2.b5c901b6.chunk.js.LICENSE.txt"
+    "static/css/main.6dea0f05.chunk.css.map": "/kochbuch/static/css/main.6dea0f05.chunk.css.map",
+    "static/js/2.1aa9dd8a.chunk.js.LICENSE.txt": "/kochbuch/static/js/2.1aa9dd8a.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.649f6af9.js",
-    "static/js/2.b5c901b6.chunk.js",
-    "static/css/main.5ecd60fb.chunk.css",
-    "static/js/main.45843122.chunk.js"
+    "static/js/runtime-main.a830ac0e.js",
+    "static/js/2.1aa9dd8a.chunk.js",
+    "static/css/main.6dea0f05.chunk.css",
+    "static/js/main.4a459d81.chunk.js"
   ]
 }
