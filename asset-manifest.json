@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/kochbuch/static/css/main.6dea0f05.chunk.css",
-    "main.js": "/kochbuch/static/js/main.85cd371a.chunk.js",
-    "main.js.map": "/kochbuch/static/js/main.85cd371a.chunk.js.map",
+    "main.js": "/kochbuch/static/js/main.f2a8429b.chunk.js",
+    "main.js.map": "/kochbuch/static/js/main.f2a8429b.chunk.js.map",
     "runtime-main.js": "/kochbuch/static/js/runtime-main.a830ac0e.js",
     "runtime-main.js.map": "/kochbuch/static/js/runtime-main.a830ac0e.js.map",
     "static/js/2.fa096bf4.chunk.js": "/kochbuch/static/js/2.fa096bf4.chunk.js",
@@ -15,6 +15,6 @@
     "static/js/runtime-main.a830ac0e.js",
     "static/js/2.fa096bf4.chunk.js",
     "static/css/main.6dea0f05.chunk.css",
-    "static/js/main.85cd371a.chunk.js"
+    "static/js/main.f2a8429b.chunk.js"
   ]
 }
