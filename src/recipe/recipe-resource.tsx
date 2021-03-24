@@ -29,12 +29,6 @@ interface Ingredient {
   name: string;
 }
 
-export const useRecipeByTitle = (title: string) => {
-  const { data: recipes } = useRecipes();
-  const recipe = recipes?.find((recipe) => recipe.title === title);
-  return recipe;
-};
-
 export const useRecipes = () => {
   return useQuery<RecipeResponse>("recipes", async () => {
     const data = await get(

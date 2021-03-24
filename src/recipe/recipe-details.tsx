@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useParams, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { MenuBook } from "@material-ui/icons";
 import {
   Box,
@@ -11,68 +11,77 @@ import {
   Button,
   List,
   ListItem,
+  ListItemText,
+  Divider,
+  Grow,
 } from "@material-ui/core";
-import { Skeleton } from "@material-ui/lab";
 
 import { LIST_PATH } from "../routes-config";
-import { useRecipeByTitle } from "./recipe-resource";
 import { addListItems } from "../list/list-hooks";
+import { Recipe } from "./recipe-resource";
 
-export const RecipeDetails: React.FC = () => {
+export const RecipeDetails: React.FC<{ recipe: Recipe }> = ({ recipe }) => {
   const navigate = useHistory();
-  const { id } = useParams<{ id: string }>();
-  const title = decodeURIComponent(id || "");
-  const recipe = useRecipeByTitle(title);
-
-  if (!recipe) {
-    return <Skeleton height="12rem" />;
-  }
+  const [unfold, setUnfold] = React.useState(false);
 
   return (
-    <Box mt={3}>
-      <Card>
-        <CardHeader
-          title={recipe?.title}
-          action={
-            <Button
-              startIcon={<MenuBook />}
-              onClick={async () => {
-                addListItems(
-                  recipe?.ingredients.map(
-                    ({ amount, name }) => `${amount} ${name}`
-                  )
-                );
-                navigate.push(LIST_PATH);
-              }}
-            >
-              zur Einkaufsliste
-            </Button>
-          }
-        ></CardHeader>
-      </Card>
+    <>
+      <ListItem
+        selected={unfold}
+        button
+        onClick={() => setUnfold((unfold) => !unfold)}
+        key={recipe.title}
+      >
+        <ListItemText primary={recipe.title} />
+      </ListItem>
+      <Divider />
+      <Grow in={unfold} mountOnEnter unmountOnExit>
+        <Box mt={3}>
+          <Card>
+            <CardHeader
+              title={recipe?.title}
+              action={
+                <Button
+                  startIcon={<MenuBook />}
+                  onClick={async () => {
+                    addListItems(
+                      recipe?.ingredients.map(
+                        ({ amount, name }) => `${amount} ${name}`
+                      )
+                    );
+                    navigate.push(LIST_PATH);
+                  }}
+                >
+                  zur Einkaufsliste
+                </Button>
+              }
+            ></CardHeader>
+          </Card>
 
-      <Box mt={3}>
-        <Card>
-          <CardHeader subheader="Zutaten"></CardHeader>
-          <List>
-            {recipe?.ingredients.map((ingredient) => (
-              <ListItem key={ingredient.name}>
-                {ingredient.amount} {ingredient.name}
-              </ListItem>
-            ))}
-          </List>
-        </Card>
-      </Box>
-      <Box mt={3}>
-        <Card>
-          <CardHeader subheader="Zubereitung"></CardHeader>
-          <CardContent>
-            <Typography style={{ whiteSpace: "pre-wrap" }}>
-              {recipe?.description}
-            </Typography>
-          </CardContent>
-        </Card>
-      </Box>
-    </Box>
+          <Box mt={3}>
+            <Card>
+              <CardHeader subheader="Zutaten"></CardHeader>
+              <List>
+                {recipe?.ingredients.map((ingredient) => (
+                  <ListItem key={ingredient.name}>
+                    {ingredient.amount} {ingredient.name}
+                  </ListItem>
+                ))}
+              </List>
+            </Card>
+          </Box>
+          <Box mt={3}>
+            <Card>
+              <CardHeader subheader="Zubereitung"></CardHeader>
+              <CardContent>
+                <Typography style={{ whiteSpace: "pre-wrap" }}>
+                  {recipe?.description}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Box>
+        </Box>
+      </Grow>
+    </>
   );
 };

@@ -1,12 +1,11 @@
 import React from "react";
-import { useHistory } from "react-router";
 
 import { Skeleton } from "@material-ui/lab";
-import { List, ListItem, ListItemText, Button, Box } from "@material-ui/core";
+import { List, Button, Box } from "@material-ui/core";
 
 import { SearchInput } from "../common";
-import { getRecipeDetailPath } from ".";
 import { Recipe, useRecipes } from "./recipe-resource";
+import { RecipeDetails } from "./recipe-details";
 
 export const ListLoader: React.FC = () => {
   return (
@@ -31,15 +30,7 @@ const filterRecipes = (
 };
 
 export const RecipeList = () => {
-  const navigate = useHistory();
-  const {
-    data: recipes,
-    isLoading,
-    isError,
-    error,
-    isLoadingError,
-    refetch,
-  } = useRecipes();
+  const { data: recipes, isLoading, isError, refetch } = useRecipes();
 
   const [query, setQuery] = React.useState("");
   const [filtered, setFiltered] = React.useState<Recipe[]>(recipes ?? []);
@@ -52,13 +43,7 @@ export const RecipeList = () => {
       <SearchInput label="was kochen ?" onSubmit={setQuery} />
       <List>
         {filtered.map((recipe) => (
-          <ListItem
-            button
-            onClick={() => navigate.push(getRecipeDetailPath(recipe.title))}
-            key={recipe.title}
-          >
-            <ListItemText primary={recipe.title} />
-          </ListItem>
+          <RecipeDetails key={recipe.title} recipe={recipe} />
         ))}
       </List>
       {isLoading && <Skeleton aria-label="loading" data-testid="loader" />}
