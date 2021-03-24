@@ -1,20 +1,20 @@
 {
   "files": {
     "main.css": "/kochbuch/static/css/main.6dea0f05.chunk.css",
-    "main.js": "/kochbuch/static/js/main.4a459d81.chunk.js",
-    "main.js.map": "/kochbuch/static/js/main.4a459d81.chunk.js.map",
+    "main.js": "/kochbuch/static/js/main.85cd371a.chunk.js",
+    "main.js.map": "/kochbuch/static/js/main.85cd371a.chunk.js.map",
     "runtime-main.js": "/kochbuch/static/js/runtime-main.a830ac0e.js",
     "runtime-main.js.map": "/kochbuch/static/js/runtime-main.a830ac0e.js.map",
-    "static/js/2.1aa9dd8a.chunk.js": "/kochbuch/static/js/2.1aa9dd8a.chunk.js",
-    "static/js/2.1aa9dd8a.chunk.js.map": "/kochbuch/static/js/2.1aa9dd8a.chunk.js.map",
+    "static/js/2.fa096bf4.chunk.js": "/kochbuch/static/js/2.fa096bf4.chunk.js",
+    "static/js/2.fa096bf4.chunk.js.map": "/kochbuch/static/js/2.fa096bf4.chunk.js.map",
     "index.html": "/kochbuch/index.html",
     "static/css/main.6dea0f05.chunk.css.map": "/kochbuch/static/css/main.6dea0f05.chunk.css.map",
-    "static/js/2.1aa9dd8a.chunk.js.LICENSE.txt": "/kochbuch/static/js/2.1aa9dd8a.chunk.js.LICENSE.txt"
+    "static/js/2.fa096bf4.chunk.js.LICENSE.txt": "/kochbuch/static/js/2.fa096bf4.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.a830ac0e.js",
-    "static/js/2.1aa9dd8a.chunk.js",
+    "static/js/2.fa096bf4.chunk.js",
     "static/css/main.6dea0f05.chunk.css",
-    "static/js/main.4a459d81.chunk.js"
+    "static/js/main.85cd371a.chunk.js"
   ]
 }
