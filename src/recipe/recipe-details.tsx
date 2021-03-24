@@ -1,14 +1,11 @@
 import React from "react";
 
-import { useHistory } from "react-router-dom";
-import { MenuBook } from "@material-ui/icons";
 import {
   Box,
   Card,
   CardHeader,
   Typography,
   CardContent,
-  Button,
   List,
   ListItem,
   ListItemText,
@@ -16,12 +13,12 @@ import {
   Grow,
 } from "@material-ui/core";
 
-import { LIST_PATH } from "../routes-config";
-import { addListItems } from "../list/list-hooks";
 import { Recipe } from "./recipe-resource";
 
-export const RecipeDetails: React.FC<{ recipe: Recipe }> = ({ recipe }) => {
-  const navigate = useHistory();
+export const RecipeDetails: React.FC<{
+  recipe: Recipe;
+  action?: React.ReactNode;
+}> = ({ recipe, action }) => {
   const [unfold, setUnfold] = React.useState(false);
 
   return (
@@ -38,24 +35,7 @@ export const RecipeDetails: React.FC<{ recipe: Recipe }> = ({ recipe }) => {
       <Grow in={unfold} mountOnEnter unmountOnExit>
         <Box mt={3}>
           <Card>
-            <CardHeader
-              title={recipe?.title}
-              action={
-                <Button
-                  startIcon={<MenuBook />}
-                  onClick={async () => {
-                    addListItems(
-                      recipe?.ingredients.map(
-                        ({ amount, name }) => `${amount} ${name}`
-                      )
-                    );
-                    navigate.push(LIST_PATH);
-                  }}
-                >
-                  zur Einkaufsliste
-                </Button>
-              }
-            ></CardHeader>
+            <CardHeader title={recipe?.title} action={action}></CardHeader>
           </Card>
 
           <Box mt={3}>

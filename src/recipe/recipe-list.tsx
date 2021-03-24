@@ -6,6 +6,7 @@ import { List, Button, Box } from "@material-ui/core";
 import { SearchInput } from "../common";
 import { Recipe, useRecipes } from "./recipe-resource";
 import { RecipeDetails } from "./recipe-details";
+import { usePlans } from "../plan/plan";
 
 export const ListLoader: React.FC = () => {
   return (
@@ -37,13 +38,20 @@ export const RecipeList = () => {
   React.useEffect(() => {
     setFiltered(filterRecipes(recipes, query));
   }, [query, recipes]);
+  const { addRecipe } = usePlans();
 
   return (
     <>
       <SearchInput label="was kochen ?" onSubmit={setQuery} />
       <List>
         {filtered.map((recipe) => (
-          <RecipeDetails key={recipe.title} recipe={recipe} />
+          <RecipeDetails
+            key={recipe.title}
+            recipe={recipe}
+            action={
+              <Button onClick={() => addRecipe(recipe)}>zum Koch Plan</Button>
+            }
+          />
         ))}
       </List>
       {isLoading && <Skeleton aria-label="loading" data-testid="loader" />}
