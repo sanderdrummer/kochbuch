@@ -7,7 +7,6 @@ import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import { Container, Box } from "@material-ui/core";
 import { RootRoutes } from "./routes";
 import { queryClient } from "./recipe/recipe-resource";
-import { QueryClientProvider } from "react-query";
 
 function App() {
   const theme = createMuiTheme({
@@ -25,13 +24,11 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <QueryClientProvider client={queryClient}>
-        <Container>
-          <Box mt={2} mb={8}>
-            <RootRoutes />
-          </Box>
-        </Container>
-      </QueryClientProvider>
+      <Container>
+        <Box mt={2} mb={8}>
+          <RootRoutes />
+        </Box>
+      </Container>
     </ThemeProvider>
   );
 }
