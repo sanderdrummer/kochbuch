@@ -59,7 +59,7 @@ const BottomNav = () => {
 
 export const RootRoutes = () => {
   return (
-    <Router>
+    <Router base="/kochbuch">
       <Switch>
         <Route path={RECIPES_PATH} component={RecipeList} />
         <Route path={LIST_PATH} component={ListPage} />
