@@ -1,12 +1,12 @@
 import React from "react";
-import { useHistory } from "react-router";
 
 import { Skeleton } from "@material-ui/lab";
-import { List, ListItem, ListItemText, Button, Box } from "@material-ui/core";
+import { List, Button, Box } from "@material-ui/core";
 
 import { SearchInput } from "../common";
-import { getRecipeDetailPath } from ".";
 import { Recipe, useRecipes } from "./recipe-resource";
+import { RecipeDetails } from "./recipe-details";
+import { usePlans } from "../plan/plan";
 
 export const ListLoader: React.FC = () => {
   return (
@@ -31,38 +31,33 @@ const filterRecipes = (
 };
 
 export const RecipeList = () => {
-  const navigate = useHistory();
-  const {
-    data: recipes,
-    isLoading,
-    isError,
-    error,
-    isLoadingError,
-    refetch,
-  } = useRecipes();
+  const { data: recipes, status, refetch } = useRecipes();
 
   const [query, setQuery] = React.useState("");
   const [filtered, setFiltered] = React.useState<Recipe[]>(recipes ?? []);
   React.useEffect(() => {
     setFiltered(filterRecipes(recipes, query));
   }, [query, recipes]);
+  const { addRecipe } = usePlans();
 
   return (
     <>
       <SearchInput label="was kochen ?" onSubmit={setQuery} />
       <List>
         {filtered.map((recipe) => (
-          <ListItem
-            button
-            onClick={() => navigate.push(getRecipeDetailPath(recipe.title))}
+          <RecipeDetails
             key={recipe.title}
-          >
-            <ListItemText primary={recipe.title} />
-          </ListItem>
+            recipe={recipe}
+            action={
+              <Button onClick={() => addRecipe(recipe)}>zum Koch Plan</Button>
+            }
+          />
         ))}
       </List>
-      {isLoading && <Skeleton aria-label="loading" data-testid="loader" />}
-      {isError && (
+      {status === "fetching" && (
+        <Skeleton aria-label="loading" data-testid="loader" />
+      )}
+      {status === "error" && (
         <Box>
           rezepte konnten nicht geladen werden
           <Button onClick={() => refetch()}>nochmal versuchen</Button>

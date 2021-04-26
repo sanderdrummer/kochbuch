@@ -2,23 +2,16 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import { RecipeList } from "../recipe-list";
 import { server, rest } from "../../mockServer";
-import { QueryClientProvider } from "react-query";
-import { queryClient } from "../recipe-resource";
 
 beforeAll(() => server.listen());
 afterAll(() => server.close());
 afterEach(() => {
   server.resetHandlers();
-  queryClient.clear();
 });
 
 describe("RecipeList", () => {
   it("loads and shows recipes", async () => {
-    render(
-      <QueryClientProvider client={queryClient}>
-        <RecipeList />
-      </QueryClientProvider>
-    );
+    render(<RecipeList />);
     const loader = await screen.findByLabelText("loading");
     expect(loader).toBeVisible();
 
@@ -34,11 +27,7 @@ describe("RecipeList", () => {
         }
       )
     );
-    render(
-      <QueryClientProvider client={queryClient}>
-        <RecipeList />
-      </QueryClientProvider>
-    );
+    render(<RecipeList />);
     const errorScreen = await screen.findByText(
       "rezepte konnten nicht geladen werden"
     );

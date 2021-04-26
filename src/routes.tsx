@@ -1,18 +1,10 @@
 import React from "react";
 
-import {
-  HashRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-  useLocation,
-  useHistory,
-} from "react-router-dom";
+import { Router, Route, Switch, useLocation, Redirect } from "wouter";
 
-import { RecipePage } from "./recipe";
 import { ListPage } from "./list";
 
-import { FormatListBulleted, MenuBook } from "@material-ui/icons";
+import { MenuBook, List, PlaylistAddCheck } from "@material-ui/icons";
 import {
   makeStyles,
   Theme,
@@ -21,7 +13,9 @@ import {
   BottomNavigation,
   BottomNavigationAction,
 } from "@material-ui/core";
-import { RECIPES_PATH, LIST_PATH } from "./routes-config";
+import { RECIPES_PATH, LIST_PATH, PLAN_PATH } from "./routes-config";
+import { PlanView } from "./plan/plan";
+import { RecipeList } from "./recipe/recipe-list";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -34,24 +28,29 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const BottomNav = () => {
-  const navigate = useHistory();
   const styles = useStyles();
-  const location = useLocation();
+  const [location, navigate] = useLocation();
 
   return (
     <AppBar position="fixed" color="primary" className={styles.nav}>
-      <BottomNavigation value={location.pathname} showLabels>
+      <BottomNavigation value={location} showLabels>
         <BottomNavigationAction
-          onClick={() => navigate.push(RECIPES_PATH)}
+          onClick={() => navigate(RECIPES_PATH)}
           value={RECIPES_PATH}
           label="Rezepte"
-          icon={<FormatListBulleted />}
+          icon={<MenuBook />}
         />
         <BottomNavigationAction
-          onClick={() => navigate.push(LIST_PATH)}
+          onClick={() => navigate(PLAN_PATH)}
+          value={PLAN_PATH}
+          label="Plan"
+          icon={<PlaylistAddCheck />}
+        />
+        <BottomNavigationAction
+          onClick={() => navigate(LIST_PATH)}
           value={LIST_PATH}
           label="Liste"
-          icon={<MenuBook />}
+          icon={<List />}
         />
       </BottomNavigation>
     </AppBar>
@@ -60,11 +59,12 @@ const BottomNav = () => {
 
 export const RootRoutes = () => {
   return (
-    <Router>
+    <Router base="/kochbuch">
       <Switch>
-        <Route path={RECIPES_PATH} component={RecipePage} />
+        <Route path={RECIPES_PATH} component={RecipeList} />
         <Route path={LIST_PATH} component={ListPage} />
-        <Redirect from="/" to={RECIPES_PATH} />
+        <Route path={PLAN_PATH} component={PlanView} />
+        <Redirect to={RECIPES_PATH} />
       </Switch>
       <BottomNav />
     </Router>

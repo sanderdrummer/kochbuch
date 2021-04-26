@@ -1,78 +1,90 @@
 import React from "react";
 
-import { useParams, useHistory } from "react-router-dom";
-import { MenuBook } from "@material-ui/icons";
 import {
   Box,
   Card,
   CardHeader,
   Typography,
   CardContent,
-  Button,
   List,
   ListItem,
+  ListItemText,
+  Divider,
+  TextField,
 } from "@material-ui/core";
-import { Skeleton } from "@material-ui/lab";
 
-import { LIST_PATH } from "../routes-config";
-import { useRecipeByTitle } from "./recipe-resource";
-import { addListItems } from "../list/list-hooks";
+import { Recipe } from "./recipe-resource";
 
-export const RecipeDetails: React.FC = () => {
-  const navigate = useHistory();
-  const { id } = useParams<{ id: string }>();
-  const title = decodeURIComponent(id || "");
-  const recipe = useRecipeByTitle(title);
+const getAmount = (amount: string, modifier = 1) => {
+  if (modifier === 1) return amount;
 
-  if (!recipe) {
-    return <Skeleton height="12rem" />;
-  }
+  const [digit = 0] = amount.match(/[0-9.]+/g) ?? [];
+  const [scale = ""] = amount.match(/[a-zA-Z]+/g) ?? [];
+  return `${Number(digit) * modifier}${scale}`;
+};
+
+export const RecipeDetails: React.FC<{
+  recipe: Recipe;
+  action?: React.ReactNode;
+}> = ({ recipe, action }) => {
+  const [unfold, setUnfold] = React.useState(false);
+  const [modifier, setModifier] = React.useState(1);
 
   return (
-    <Box mt={3}>
-      <Card>
-        <CardHeader
-          title={recipe?.title}
-          action={
-            <Button
-              startIcon={<MenuBook />}
-              onClick={async () => {
-                addListItems(
-                  recipe?.ingredients.map(
-                    ({ amount, name }) => `${amount} ${name}`
-                  )
-                );
-                navigate.push(LIST_PATH);
-              }}
-            >
-              zur Einkaufsliste
-            </Button>
-          }
-        ></CardHeader>
-      </Card>
+    <>
+      <ListItem
+        selected={unfold}
+        button
+        onClick={() => setUnfold((unfold) => !unfold)}
+        key={recipe.title}
+      >
+        <ListItemText primary={recipe.title} />
+      </ListItem>
+      <Divider />
+      {unfold && (
+        <Box mt={3}>
+          <Card>
+            <CardHeader title={recipe?.title} action={action}></CardHeader>
+          </Card>
+          <>
+            <Box mt={3}>
+              <Card>
+                <CardHeader
+                  subheader="Zutaten"
+                  action={
+                    <TextField
+                      type="number"
+                      value={modifier}
+                      inputProps={{
+                        step: 0.25,
+                      }}
+                      onChange={(e) => setModifier(Number(e.target.value))}
+                    />
+                  }
+                ></CardHeader>
 
-      <Box mt={3}>
-        <Card>
-          <CardHeader subheader="Zutaten"></CardHeader>
-          <List>
-            {recipe?.ingredients.map((ingredient) => (
-              <ListItem key={ingredient.name}>
-                {ingredient.amount} {ingredient.name}
-              </ListItem>
-            ))}
-          </List>
-        </Card>
-      </Box>
-      <Box mt={3}>
-        <Card>
-          <CardHeader subheader="Zubereitung"></CardHeader>
-          <CardContent>
-            <Typography style={{ whiteSpace: "pre-wrap" }}>
-              {recipe?.description}
-            </Typography>
-          </CardContent>
-        </Card>
-      </Box>
-    </Box>
+                <List>
+                  {recipe?.ingredients.map((ingredient) => (
+                    <ListItem key={ingredient.name}>
+                      {getAmount(ingredient.amount, modifier)} {ingredient.name}
+                    </ListItem>
+                  ))}
+                </List>
+              </Card>
+            </Box>
+            <Box mt={3}>
+              <Card>
+                <CardHeader subheader="Zubereitung"></CardHeader>
+                <CardContent>
+                  <Typography style={{ whiteSpace: "pre-wrap" }}>
+                    {recipe?.description}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Box>
+          </>
+        </Box>
+      )}
+    </>
   );
 };

@@ -1,5 +1,6 @@
 import React from "react";
-import { createStyles, makeStyles, Fab, Theme } from "@material-ui/core";
+import { Fab, Theme } from "@material-ui/core";
+import { createStyles, makeStyles } from "@material-ui/core/styles";
 
 const fabStyles = makeStyles((theme: Theme) =>
   createStyles({

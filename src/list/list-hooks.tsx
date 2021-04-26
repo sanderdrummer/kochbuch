@@ -1,20 +1,14 @@
 import React from "react";
+import {
+  getLocalStorageJson,
+  saveLocalStorageJson,
+} from "../common/useLocalStorage";
 
 type ListItems = {
   list: string[];
   basket: string[];
 };
 const LIST_KEY = "LIST_KEY";
-const getLocalStorageJson = (key: string) => {
-  const json = localStorage.getItem(key);
-  if (json) {
-    return JSON.parse(json);
-  }
-  return undefined;
-};
-const saveLocalStorageJson = (key: string, item: any) => {
-  localStorage.setItem(key, JSON.stringify(item));
-};
 
 export const getList = (): ListItems => {
   const list = getLocalStorageJson(LIST_KEY);

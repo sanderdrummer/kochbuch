@@ -10,9 +10,13 @@ import Clear from "@material-ui/icons/Clear";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
+      background: theme.palette.background.paper,
       padding: "2px 4px",
       display: "flex",
       alignItems: "center",
+      position: "sticky",
+      top: theme.spacing(1),
+      zIndex: 1,
     },
     input: {
       marginLeft: theme.spacing(1),
