@@ -31,7 +31,7 @@ const filterRecipes = (
 };
 
 export const RecipeList = () => {
-  const { data: recipes, isLoading, isError, refetch } = useRecipes();
+  const { data: recipes, status, refetch } = useRecipes();
 
   const [query, setQuery] = React.useState("");
   const [filtered, setFiltered] = React.useState<Recipe[]>(recipes ?? []);
@@ -54,8 +54,10 @@ export const RecipeList = () => {
           />
         ))}
       </List>
-      {isLoading && <Skeleton aria-label="loading" data-testid="loader" />}
-      {isError && (
+      {status === "fetching" && (
+        <Skeleton aria-label="loading" data-testid="loader" />
+      )}
+      {status === "error" && (
         <Box>
           rezepte konnten nicht geladen werden
           <Button onClick={() => refetch()}>nochmal versuchen</Button>

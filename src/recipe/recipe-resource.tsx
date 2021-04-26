@@ -1,7 +1,6 @@
-import { useQuery, QueryClient } from "react-query";
+import { useEffect, useState } from "react";
 import { get } from "../api";
-
-export const queryClient = new QueryClient();
+import { useLocalStorage } from "../common/useLocalStorage";
 
 export const mockResponse: RecipeResponse = [
   {
@@ -29,11 +28,30 @@ interface Ingredient {
   name: string;
 }
 
+const fetchRecipes = () => {
+  return get<RecipeResponse>(
+    "https://raw.githubusercontent.com/sanderdrummer/recipes-md/master/parsed-recipes.json"
+  );
+};
+
+export type FetchStatus = "idle" | "done" | "fetching" | "error";
 export const useRecipes = () => {
-  return useQuery<RecipeResponse>("recipes", async () => {
-    const data = await get(
-      "https://raw.githubusercontent.com/sanderdrummer/recipes-md/master/parsed-recipes.json"
-    );
-    return data ?? [];
-  });
+  const [status, setStatus] = useState<FetchStatus>("idle");
+  const [data, setData] = useLocalStorage<Recipe[]>("recipes-storage", []);
+  const handleFetchRecipe = async () => {
+    setStatus("fetching");
+    try {
+      const data = await fetchRecipes();
+      setData(data);
+      setStatus("done");
+    } catch {
+      setStatus("error");
+    }
+  };
+
+  useEffect(() => {
+    handleFetchRecipe();
+  }, []);
+
+  return { status, data, refetch: handleFetchRecipe };
 };
