@@ -6,7 +6,6 @@ import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 
 import { Container, Box } from "@material-ui/core";
 import { RootRoutes } from "./routes";
-import { queryClient } from "./recipe/recipe-resource";
 
 function App() {
   const theme = createMuiTheme({
