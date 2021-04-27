@@ -53,13 +53,15 @@ export const RecipeDetails: React.FC<{
                   subheader="Zutaten"
                   action={
                     <TextField
-                      type="number"
+                      select
                       value={modifier}
-                      inputProps={{
-                        step: 0.25,
-                      }}
+                      SelectProps={{ native: true }}
                       onChange={(e) => setModifier(Number(e.target.value))}
-                    />
+                    >
+                      {[0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2].map((item) => (
+                        <option value={item}>{item}</option>
+                      ))}
+                    </TextField>
                   }
                 ></CardHeader>
 
