@@ -11,6 +11,7 @@ import {
   ListItemText,
   Divider,
   TextField,
+  Button,
 } from "@material-ui/core";
 
 import { Recipe } from "./recipe-resource";
@@ -32,19 +33,30 @@ export const RecipeDetails: React.FC<{
 
   return (
     <>
-      <ListItem
-        selected={unfold}
-        button
-        onClick={() => setUnfold((unfold) => !unfold)}
-        key={recipe.title}
-      >
-        <ListItemText primary={recipe.title} />
-      </ListItem>
-      <Divider />
+      {!unfold && (
+        <>
+          <ListItem
+            selected={unfold}
+            button
+            onClick={() => setUnfold((unfold) => !unfold)}
+            key={recipe.title}
+          >
+            <ListItemText primary={recipe.title} />
+          </ListItem>
+          <Divider />
+        </>
+      )}
       {unfold && (
         <Box mt={3}>
           <Card>
-            <CardHeader title={recipe?.title} action={action}></CardHeader>
+            <CardHeader
+              title={
+                <Button onClick={() => setUnfold(false)}>
+                  {recipe?.title}
+                </Button>
+              }
+              action={action}
+            ></CardHeader>
           </Card>
           <>
             <Box mt={3}>
@@ -74,7 +86,7 @@ export const RecipeDetails: React.FC<{
                 </List>
               </Card>
             </Box>
-            <Box mt={3}>
+            <Box mb={3} mt={3}>
               <Card>
                 <CardHeader subheader="Zubereitung"></CardHeader>
                 <CardContent>
