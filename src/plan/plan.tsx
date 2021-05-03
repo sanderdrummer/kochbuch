@@ -53,6 +53,7 @@ export const PlanView = () => {
   return (
     <>
       <Typography variant="h5">Wir kochen</Typography>
+      <Box p={1} />
       {openPlans.length === 0 && <Typography>Noch nichts :/</Typography>}
       {openPlans.map((plan) => (
         <>
@@ -73,7 +74,10 @@ export const PlanView = () => {
       ))}
       <Box p={2} />
       {completedPlans.length > 0 && (
-        <Typography variant="h5">Schon gekocht</Typography>
+        <>
+          <Typography variant="h5">Schon gekocht</Typography>
+          <Box p={1} />
+        </>
       )}
       {completedPlans.map((plan) => (
         <>
