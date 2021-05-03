@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Button, Typography } from "@material-ui/core";
+import { Box, Button, Divider, Typography } from "@material-ui/core";
 import { useLocalStorage } from "../common/useLocalStorage";
 import { addListItems } from "../list/list-hooks";
 import { RecipeDetails } from "../recipe/recipe-details";
@@ -27,7 +27,11 @@ export const usePlans = () => {
   };
 
   const clearPlans = () => {
-    setPlans({});
+    setPlans(
+      openPlans.reduce((plans, plan) => {
+        return { ...plans, [plan.recipe.title]: plan };
+      }, {} as Record<string, Plan>)
+    );
   };
 
   const addRecipe = (recipe: Recipe) => {
@@ -49,6 +53,7 @@ export const PlanView = () => {
   return (
     <>
       <Typography variant="h5">Wir kochen</Typography>
+      {openPlans.length === 0 && <Typography>Noch nichts :/</Typography>}
       {openPlans.map((plan) => (
         <>
           <RecipeDetails
@@ -66,7 +71,7 @@ export const PlanView = () => {
           ></RecipeDetails>
         </>
       ))}
-
+      <Box p={2} />
       {completedPlans.length > 0 && (
         <Typography variant="h5">Schon gekocht</Typography>
       )}
@@ -79,7 +84,8 @@ export const PlanView = () => {
         </>
       ))}
 
-      <Box mt="3" display="flex" justifyContent="space-between">
+      <Box p={2} />
+      <Box display="flex" justifyContent="space-between">
         <Button
           onClick={() => {
             const items = openPlans.reduce<Recipe["ingredients"]>(
