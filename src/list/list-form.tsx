@@ -11,27 +11,13 @@ import {
   Button,
 } from "@material-ui/core";
 import { addListItems } from "./list-hooks";
+import { useLocalStorage } from "../common/useLocalStorage";
 
 const key = "shoppingList";
 export const ListForm: React.FC<{ onCompleted(): void }> = ({
   onCompleted,
 }) => {
-  const [value, setValue] = React.useState("");
-  React.useEffect(() => {
-    const list = window.localStorage.getItem(key) || "";
-    if (typeof list === "string") {
-      setValue(list);
-    }
-  }, []);
-
-  React.useEffect(() => {
-    const id = setTimeout(() => {
-      window.localStorage.setItem(key, value);
-    }, 100);
-    return () => {
-      clearTimeout(id);
-    };
-  }, [value]);
+  const [value, setValue] = useLocalStorage(key, "");
 
   return (
     <Box>
@@ -41,16 +27,13 @@ export const ListForm: React.FC<{ onCompleted(): void }> = ({
           <form
             onSubmit={async (e) => {
               e.preventDefault();
-              try {
-                addListItems([value]);
-                setValue("");
-                onCompleted();
-              } catch (e) {
-                console.log(e);
-              }
+              addListItems(value.split("\n"));
+              setValue("");
+              onCompleted();
             }}
           >
             <TextField
+              autoFocus
               value={value}
               onChange={(e) => setValue(e.target.value)}
               multiline
