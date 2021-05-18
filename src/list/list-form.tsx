@@ -1,6 +1,5 @@
 import React from "react";
 
-// @ts-ignore
 import { Save } from "@material-ui/icons";
 import {
   Box,

@@ -17,10 +17,7 @@ export const ListLoader: React.FC = () => {
   );
 };
 
-const filterRecipes = (
-  recipes: Recipe[] = [],
-  query: string = ""
-): Recipe[] => {
+const filterRecipes = (recipes: Recipe[] = [], query = ""): Recipe[] => {
   if (!query) {
     return recipes || [];
   }

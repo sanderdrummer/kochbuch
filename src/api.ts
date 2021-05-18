@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export async function post<T = any>(endpoint: string, params: any): Promise<T> {
   const options: RequestInit = {
     method: "POST",

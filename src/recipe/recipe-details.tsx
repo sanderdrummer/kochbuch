@@ -71,7 +71,9 @@ export const RecipeDetails: React.FC<{
                       onChange={(e) => setModifier(Number(e.target.value))}
                     >
                       {[0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2].map((item) => (
-                        <option value={item}>{item}</option>
+                        <option key={item} value={item}>
+                          {item}
+                        </option>
                       ))}
                     </TextField>
                   }
@@ -96,6 +98,16 @@ export const RecipeDetails: React.FC<{
                 </CardContent>
               </Card>
             </Box>
+            <Button
+              onClick={async () => {
+                await navigator.share({
+                  title: recipe.title,
+                  text: recipe.description,
+                });
+              }}
+            >
+              teilen{" "}
+            </Button>
           </>
         </Box>
       )}

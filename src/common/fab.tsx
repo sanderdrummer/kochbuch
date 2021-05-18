@@ -1,5 +1,5 @@
 import React from "react";
-import { Fab, Theme } from "@material-ui/core";
+import { Fab, FabProps, Theme } from "@material-ui/core";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 
 const fabStyles = makeStyles((theme: Theme) =>
@@ -13,12 +13,15 @@ const fabStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export const BottomRightFab: React.FC<{
-  onClick: (e: any) => void;
-  label: string;
+export const BottomRightFab = ({
+  onClick,
+  label,
+  children,
+  isLoading,
+}: Pick<FabProps, "onClick" | "children"> & {
   isLoading?: boolean;
-  children: any;
-}> = ({ onClick, label, children, isLoading }) => {
+  label?: string;
+}) => {
   const styles = fabStyles();
   return (
     <Fab

@@ -105,13 +105,13 @@ const CardList: React.FC<{
   );
 };
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const ListPage = () => {
   const { list, fetchList } = useListItems();
   const [open, setOpen] = React.useState(false);
 
   React.useEffect(() => {
     fetchList();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

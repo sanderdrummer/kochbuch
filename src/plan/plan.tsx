@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Button, Divider, Typography } from "@material-ui/core";
+import { Box, Button, Typography } from "@material-ui/core";
 import { useLocalStorage } from "../common/useLocalStorage";
 import { addListItems } from "../list/list-hooks";
 import { RecipeDetails } from "../recipe/recipe-details";
