@@ -21,7 +21,7 @@ import {
 } from "@material-ui/core";
 import { Add } from "@material-ui/icons";
 
-import { BottomRightFab } from "../common";
+import { BottomRightFab } from "../common/fab";
 
 import { ListForm } from "./list-form";
 

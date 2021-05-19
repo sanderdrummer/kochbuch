@@ -3,10 +3,9 @@ import React from "react";
 import { Skeleton } from "@material-ui/lab";
 import { List, Button, Box } from "@material-ui/core";
 
-import { SearchInput } from "../common";
-import { Recipe, useRecipes } from "./recipe-resource";
 import { RecipeDetails } from "./recipe-details";
 import { usePlans } from "../plan/plan";
+import { RecipeFilter, useFilteredRecipes } from "./recipe-filter";
 
 export const ListLoader: React.FC = () => {
   return (
@@ -17,31 +16,15 @@ export const ListLoader: React.FC = () => {
   );
 };
 
-const filterRecipes = (recipes: Recipe[] = [], query = ""): Recipe[] => {
-  if (!query) {
-    return recipes || [];
-  }
-  const lowerCaseQuery = query.toLowerCase();
-  return recipes.filter((recipe) => {
-    return recipe.title.toLowerCase().includes(lowerCaseQuery);
-  });
-};
-
 export const RecipeList = () => {
-  const { data: recipes, status, refetch } = useRecipes();
-
-  const [query, setQuery] = React.useState("");
-  const [filtered, setFiltered] = React.useState<Recipe[]>(recipes ?? []);
-  React.useEffect(() => {
-    setFiltered(filterRecipes(recipes, query));
-  }, [query, recipes]);
   const { addRecipe } = usePlans();
+  const { recipes, status, refetch, ...filterProps } = useFilteredRecipes();
 
   return (
     <>
-      <SearchInput label="was kochen ?" onSubmit={setQuery} />
+      <RecipeFilter {...filterProps} />
       <List>
-        {filtered.map((recipe) => (
+        {recipes.map((recipe) => (
           <RecipeDetails
             key={recipe.title}
             recipe={recipe}

@@ -18,7 +18,7 @@ describe("RecipeList", () => {
     const recipe = await screen.findByText("Bavette mit Zucchini Carbonara");
     expect(recipe).toBeVisible();
   });
-  it.skip("handles server errors", async () => {
+  it("handles server errors", async () => {
     server.use(
       rest.get(
         "https://raw.githubusercontent.com/sanderdrummer/recipes-md/master/parsed-recipes.json",

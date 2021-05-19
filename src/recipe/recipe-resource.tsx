@@ -12,6 +12,7 @@ export const mockResponse: RecipeResponse = [
       },
     ],
     description: "describe",
+    tags: [],
   },
 ];
 
@@ -21,6 +22,7 @@ export type Recipe = {
   title: string;
   ingredients: Ingredient[];
   description: string;
+  tags: string[];
 };
 
 interface Ingredient {
