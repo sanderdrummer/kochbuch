@@ -8,8 +8,9 @@ import {
   Divider,
   Drawer,
   Chip,
+  Fade,
 } from "@material-ui/core";
-import { Clear, Search } from "@material-ui/icons";
+import { Clear, ArrowDownward, ArrowUpward } from "@material-ui/icons";
 import React, { useEffect, useState } from "react";
 import { Recipe, useRecipes } from "./recipe-resource";
 
@@ -84,13 +85,19 @@ export type FilterProps = Omit<
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
+      position: "sticky",
+      top: theme.spacing(1),
+      zIndex: 1,
+    },
+    scrollWrapper: {
+      maxHeight: "60vh",
+      overflow: "auto",
+    },
+    inputWrapper: {
       background: theme.palette.background.paper,
       padding: "2px 4px",
       display: "flex",
       alignItems: "center",
-      position: "sticky",
-      top: theme.spacing(1),
-      zIndex: 1,
     },
     input: {
       marginLeft: theme.spacing(1),
@@ -119,14 +126,8 @@ export const RecipeFilter = ({
   };
   const [open, setOpen] = useState(false);
   return (
-    <>
-      <Paper
-        onSubmit={(e) => {
-          e.preventDefault();
-        }}
-        component="form"
-        className={classes.root}
-      >
+    <Paper className={classes.root}>
+      <div className={classes.inputWrapper}>
         <InputBase
           value={query}
           onChange={(e) => setQuery(e.target.value)}
@@ -146,19 +147,32 @@ export const RecipeFilter = ({
           type="button"
           color="primary"
           className={classes.iconButton}
-          onClick={() => setOpen(true)}
+          onClick={() => setOpen((open) => !open)}
         >
-          <Search />
+          {open ? <ArrowUpward /> : <ArrowDownward />}
         </IconButton>
-      </Paper>
-      <Drawer anchor="bottom" open={open} onClose={() => setOpen(false)}>
-        <RecipeTagFilter
-          tags={tags}
-          filterTags={filterTags}
-          setFilterTags={setFilterTags}
-        />
-      </Drawer>
-    </>
+      </div>
+      <Fade in={open} mountOnEnter unmountOnExit>
+        <div className={classes.scrollWrapper}>
+          <RecipeTagFilter
+            tags={tags}
+            filterTags={filterTags}
+            setFilterTags={setFilterTags}
+          >
+            <IconButton
+              type="button"
+              aria-label="tags zurücksetzen"
+              onClick={() => {
+                setOpen(false);
+                setFilterTags([]);
+              }}
+            >
+              <Clear />
+            </IconButton>
+          </RecipeTagFilter>
+        </div>
+      </Fade>
+    </Paper>
   );
 };
 
@@ -168,7 +182,6 @@ const useTagFilterStyles = makeStyles((theme) => ({
     alignContent: "center",
     alignItems: "center",
     padding: theme.spacing(2),
-    marginBottom: theme.spacing(4),
     gap: theme.spacing(2),
     flexWrap: "wrap",
   },
@@ -178,7 +191,10 @@ export const RecipeTagFilter = ({
   filterTags,
   setFilterTags,
   tags,
-}: Pick<FilterProps, "setFilterTags" | "filterTags" | "tags">) => {
+  children,
+}: Pick<FilterProps, "setFilterTags" | "filterTags" | "tags"> & {
+  children?: React.ReactNode;
+}) => {
   const classes = useTagFilterStyles();
   return (
     <div className={classes.grid}>
@@ -202,15 +218,7 @@ export const RecipeTagFilter = ({
           />
         );
       })}
-      <IconButton
-        type="button"
-        aria-label="tags zurücksetzen"
-        onClick={() => {
-          setFilterTags([]);
-        }}
-      >
-        <Clear />
-      </IconButton>
+      {children}
     </div>
   );
 };
