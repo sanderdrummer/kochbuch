@@ -6,7 +6,6 @@ import {
   InputBase,
   IconButton,
   Divider,
-  Drawer,
   Chip,
   Fade,
 } from "@material-ui/core";
