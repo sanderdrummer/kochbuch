@@ -1,59 +1,54 @@
-import React from "react";
-
 import { Router, Route, Switch, useLocation, Redirect } from "wouter";
 
 import { ListPage } from "./list";
 
-import { MenuBook, List, PlaylistAddCheck } from "@material-ui/icons";
-import {
-  makeStyles,
-  Theme,
-  createStyles,
-  AppBar,
-  BottomNavigation,
-  BottomNavigationAction,
-} from "@material-ui/core";
 import { RECIPES_PATH, LIST_PATH, PLAN_PATH } from "./routes-config";
 import { PlanView } from "./plan/plan";
 import { RecipeList } from "./recipe/recipe-list";
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    nav: {
-      marginTop: theme.spacing(8),
-      bottom: 0,
-      top: "auto",
-    },
-  })
-);
+import { TextButton } from "./common/inputs";
 
 const BottomNav = () => {
-  const styles = useStyles();
   const [location, navigate] = useLocation();
+  console.log(location);
 
   return (
-    <AppBar position="fixed" color="primary" className={styles.nav}>
-      <BottomNavigation value={location} showLabels>
-        <BottomNavigationAction
+    <div
+      css={{
+        position: "fixed",
+        bottom: 0,
+        left: 0,
+        width: "100%",
+      }}
+    >
+      <div
+        css={{
+          background: "var(--headerBackground)",
+          padding: "1rem",
+          display: "grid",
+          gridGap: "1rem",
+          gridAutoFlow: "column",
+        }}
+      >
+        <TextButton
+          color={location === RECIPES_PATH ? "primary" : undefined}
           onClick={() => navigate(RECIPES_PATH)}
-          value={RECIPES_PATH}
-          label="Rezepte"
-          icon={<MenuBook />}
-        />
-        <BottomNavigationAction
+        >
+          Rezepte
+        </TextButton>
+        <TextButton
+          color={location === PLAN_PATH ? "primary" : undefined}
           onClick={() => navigate(PLAN_PATH)}
-          value={PLAN_PATH}
-          label="Plan"
-          icon={<PlaylistAddCheck />}
-        />
-        <BottomNavigationAction
+        >
+          Plan
+        </TextButton>
+        <TextButton
+          color={location === LIST_PATH ? "primary" : undefined}
           onClick={() => navigate(LIST_PATH)}
-          value={LIST_PATH}
-          label="Liste"
-          icon={<List />}
-        />
-      </BottomNavigation>
-    </AppBar>
+        >
+          Liste
+        </TextButton>
+      </div>
+    </div>
   );
 };
 

@@ -1,5 +1,4 @@
 import React from "react";
-import { Box, Button, Typography } from "@material-ui/core";
 import { useLocalStorage } from "../common/useLocalStorage";
 import { addListItems } from "../list/list-hooks";
 import { RecipeDetails } from "../recipe/recipe-details";
@@ -52,31 +51,30 @@ export const PlanView = () => {
   const { openPlans, completedPlans, clearPlans, togglePlan } = usePlans();
   return (
     <>
-      <Typography variant="h5">Wir kochen</Typography>
-      <Box p={1} />
-      {openPlans.length === 0 && <Typography>Noch nichts :/</Typography>}
+      <h5 variant="h5">Wir kochen</h5>
+      <div p={1} />
+      {openPlans.length === 0 && <h5>Noch nichts :/</h5>}
       {openPlans.map((plan) => (
         <>
           <RecipeDetails
             key={plan.recipe.title}
             recipe={plan.recipe}
             action={
-              <Button
+              <button
                 onClick={() => {
                   togglePlan(plan);
                 }}
               >
                 Fertig gekocht
-              </Button>
+              </button>
             }
           ></RecipeDetails>
         </>
       ))}
-      <Box p={2} />
+      <div p={2} />
       {completedPlans.length > 0 && (
         <>
-          <Typography variant="h5">Schon gekocht</Typography>
-          <Box p={1} />
+          <p variant="h5">Schon gekocht</p>
         </>
       )}
       {completedPlans.map((plan) => (
@@ -88,9 +86,9 @@ export const PlanView = () => {
         </>
       ))}
 
-      <Box p={2} />
-      <Box display="flex" justifyContent="space-between">
-        <Button
+      <div p={2} />
+      <div display="flex" justifyContent="space-between">
+        <button
           onClick={() => {
             const items = openPlans.reduce<Recipe["ingredients"]>(
               (items, plan) => {
@@ -103,9 +101,9 @@ export const PlanView = () => {
           color="primary"
         >
           Plan zur Einkaufsliste
-        </Button>
-        <Button onClick={clearPlans}>Plan löschen</Button>
-      </Box>
+        </button>
+        <button onClick={clearPlans}>Plan löschen</button>
+      </div>
     </>
   );
 };

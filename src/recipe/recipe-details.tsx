@@ -1,19 +1,5 @@
 import React from "react";
 
-import {
-  Box,
-  Card,
-  CardHeader,
-  Typography,
-  CardContent,
-  List,
-  ListItem,
-  ListItemText,
-  Divider,
-  TextField,
-  Button,
-} from "@material-ui/core";
-
 import { Recipe } from "./recipe-resource";
 
 const getAmount = (amount: string, modifier = 1) => {
@@ -35,36 +21,31 @@ export const RecipeDetails: React.FC<{
     <>
       {!unfold && (
         <>
-          <ListItem
+          <li
             selected={unfold}
             button
             onClick={() => setUnfold((unfold) => !unfold)}
             key={recipe.title}
-          >
-            <ListItemText primary={recipe.title} />
-          </ListItem>
-          <Divider />
+          ></li>
         </>
       )}
       {unfold && (
-        <Box mt={3}>
-          <Card>
-            <CardHeader
+        <div mt={3}>
+          <div>
+            <div
               title={
-                <Button onClick={() => setUnfold(false)}>
-                  {recipe?.title}
-                </Button>
+                <div onClick={() => setUnfold(false)}>{recipe?.title}</div>
               }
               action={action}
-            ></CardHeader>
-          </Card>
+            ></div>
+          </div>
           <>
-            <Box mt={3}>
-              <Card>
-                <CardHeader
+            <div mt={3}>
+              <div>
+                <div
                   subheader="Zutaten"
                   action={
-                    <TextField
+                    <div
                       select
                       value={modifier}
                       SelectProps={{ native: true }}
@@ -75,30 +56,30 @@ export const RecipeDetails: React.FC<{
                           {item}
                         </option>
                       ))}
-                    </TextField>
+                    </div>
                   }
-                ></CardHeader>
+                ></div>
 
-                <List>
+                <div>
                   {recipe?.ingredients.map((ingredient) => (
-                    <ListItem key={ingredient.name}>
+                    <div key={ingredient.name}>
                       {getAmount(ingredient.amount, modifier)} {ingredient.name}
-                    </ListItem>
+                    </div>
                   ))}
-                </List>
-              </Card>
-            </Box>
-            <Box mb={3} mt={3}>
-              <Card>
-                <CardHeader subheader="Zubereitung"></CardHeader>
-                <CardContent>
-                  <Typography style={{ whiteSpace: "pre-wrap" }}>
+                </div>
+              </div>
+            </div>
+            <div mb={3} mt={3}>
+              <div>
+                <div subheader="Zubereitung"></div>
+                <div>
+                  <div style={{ whiteSpace: "pre-wrap" }}>
                     {recipe?.description}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Box>
-            <Button
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
               onClick={async () => {
                 await navigator.share({
                   title: recipe.title,
@@ -107,9 +88,9 @@ export const RecipeDetails: React.FC<{
               }}
             >
               teilen{" "}
-            </Button>
+            </div>
           </>
-        </Box>
+        </div>
       )}
     </>
   );

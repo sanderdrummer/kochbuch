@@ -1,25 +1,23 @@
 import { defineConfig } from "vite";
-import reactRefresh from "@vitejs/plugin-react-refresh";
+import reactRefresh from "@vitejs/plugin-react";
 
 // https://vitejs.dev/config/
 export default defineConfig({
   base: "/kochbuch/",
-  plugins: [reactRefresh()],
-  resolve: {
-    alias: [
-      // https://github.com/vitejs/vite/issues/1853#issuecomment-805605644
-      {
-        find: /^@material-ui\/icons\/(.*)/,
-        replacement: "@material-ui/icons/esm/$1",
-      },
-      {
-        find: /^@material-ui\/core\/(.+)/,
-        replacement: "@material-ui/core/es/$1",
-      },
-      {
-        find: /^@material-ui\/core$/,
-        replacement: "@material-ui/core/es",
-      },
-    ],
+  esbuild: {
+    jsxFactory: "jsx",
+    // https://github.com/vitejs/vite/pull/8674/files
+    logOverride: {
+      "this-is-undefined-in-esm": "silent",
+    },
+    jsxInject: `import { jsx } from '@emotion/react'`,
   },
+  plugins: [
+    reactRefresh({
+      jsxImportSource: "@emotion/react",
+      babel: {
+        plugins: ["@emotion/babel-plugin"],
+      },
+    }),
+  ],
 });

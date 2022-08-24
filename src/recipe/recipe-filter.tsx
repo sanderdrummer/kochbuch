@@ -1,16 +1,5 @@
-import {
-  makeStyles,
-  Theme,
-  createStyles,
-  Paper,
-  InputBase,
-  IconButton,
-  Divider,
-  Chip,
-  Fade,
-} from "@material-ui/core";
-import { Clear, ArrowDownward, ArrowUpward } from "@material-ui/icons";
 import React, { useEffect, useState } from "react";
+import { TextButton, TextInput } from "../common/inputs";
 import { Recipe, useRecipes } from "./recipe-resource";
 
 export const getTags = (recipes: Recipe[]): string[] => {
@@ -81,110 +70,28 @@ export type FilterProps = Omit<
   "status" | "recipes" | "refetch"
 >;
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      position: "sticky",
-      top: theme.spacing(1),
-      zIndex: 1,
-    },
-    scrollWrapper: {
-      maxHeight: "60vh",
-      overflow: "auto",
-    },
-    inputWrapper: {
-      background: theme.palette.background.paper,
-      padding: "2px 4px",
-      display: "flex",
-      alignItems: "center",
-    },
-    input: {
-      marginLeft: theme.spacing(1),
-      flex: 1,
-    },
-    iconButton: {
-      padding: 10,
-    },
-    divider: {
-      height: 28,
-      margin: 4,
-    },
-  })
-);
-
-export const RecipeFilter = ({
-  query,
-  setQuery,
-  tags,
-  filterTags,
-  setFilterTags,
-}: FilterProps) => {
-  const classes = useStyles();
+export const RecipeFilter = ({ query, setQuery }: FilterProps) => {
   const reset = () => {
     setQuery("");
   };
-  const [open, setOpen] = useState(false);
   return (
-    <Paper className={classes.root}>
-      <div className={classes.inputWrapper}>
-        <InputBase
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          className={classes.input}
-          placeholder="was kochen ?"
-        />
-        <IconButton
-          type="button"
-          className={classes.iconButton}
-          aria-label="Suche löschen"
-          onClick={reset}
-        >
-          <Clear />
-        </IconButton>
-        <Divider className={classes.divider} orientation="vertical" />
-        <IconButton
-          type="button"
-          color="primary"
-          className={classes.iconButton}
-          onClick={() => setOpen((open) => !open)}
-        >
-          {open ? <ArrowUpward /> : <ArrowDownward />}
-        </IconButton>
-      </div>
-      <Fade in={open} mountOnEnter unmountOnExit>
-        <div className={classes.scrollWrapper}>
-          <RecipeTagFilter
-            tags={tags}
-            filterTags={filterTags}
-            setFilterTags={setFilterTags}
-          >
-            <IconButton
-              type="button"
-              aria-label="tags zurücksetzen"
-              onClick={() => {
-                setOpen(false);
-                setFilterTags([]);
-              }}
-            >
-              <Clear />
-            </IconButton>
-          </RecipeTagFilter>
-        </div>
-      </Fade>
-    </Paper>
+    <div
+      css={{
+        display: "grid",
+        padding: "1rem",
+        gridGap: "1rem",
+        gridTemplateColumns: "1fr min-content",
+      }}
+    >
+      <TextInput
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        label="Was Kochen?"
+      />
+      <TextButton onClick={reset}>Neue Suche</TextButton>
+    </div>
   );
 };
-
-const useTagFilterStyles = makeStyles((theme) => ({
-  grid: {
-    display: "inline-flex",
-    alignContent: "center",
-    alignItems: "center",
-    padding: theme.spacing(2),
-    gap: theme.spacing(2),
-    flexWrap: "wrap",
-  },
-}));
 
 export const RecipeTagFilter = ({
   filterTags,
@@ -194,13 +101,12 @@ export const RecipeTagFilter = ({
 }: Pick<FilterProps, "setFilterTags" | "filterTags" | "tags"> & {
   children?: React.ReactNode;
 }) => {
-  const classes = useTagFilterStyles();
   return (
-    <div className={classes.grid}>
+    <div>
       {tags.sort().map((tag) => {
         const isActive = filterTags.includes(tag);
         return (
-          <Chip
+          <div
             key={tag}
             color="primary"
             variant={isActive ? "default" : "outlined"}

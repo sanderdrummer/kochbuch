@@ -1,14 +1,5 @@
 import React from "react";
 
-import { Save } from "@material-ui/icons";
-import {
-  Box,
-  Card,
-  CardHeader,
-  CardContent,
-  TextField,
-  Button,
-} from "@material-ui/core";
 import { addListItems } from "./list-hooks";
 import { useLocalStorage } from "../common/useLocalStorage";
 
@@ -19,10 +10,10 @@ export const ListForm: React.FC<{ onCompleted(): void }> = ({
   const [value, setValue] = useLocalStorage(key, "");
 
   return (
-    <Box>
-      <Card>
-        <CardHeader title="Einkaufsliste erweitern" />
-        <CardContent>
+    <div>
+      <div>
+        <div title="Einkaufsliste erweitern" />
+        <div>
           <form
             onSubmit={async (e) => {
               e.preventDefault();
@@ -31,7 +22,7 @@ export const ListForm: React.FC<{ onCompleted(): void }> = ({
               onCompleted();
             }}
           >
-            <TextField
+            <input
               autoFocus
               value={value}
               onChange={(e) => setValue(e.target.value)}
@@ -41,12 +32,12 @@ export const ListForm: React.FC<{ onCompleted(): void }> = ({
               label="Einkaufsliste"
               required
             />
-            <Button type="submit" startIcon={<Save />}>
+            <button type="submit" startIcon={<Save />}>
               speichern
-            </Button>
+            </button>
           </form>
-        </CardContent>
-      </Card>
-    </Box>
+        </div>
+      </div>
+    </div>
   );
 };

@@ -1,18 +1,43 @@
 import React from "react";
 
-import { Skeleton } from "@material-ui/lab";
-import { List, Button, Box } from "@material-ui/core";
-
 import { RecipeDetails } from "./recipe-details";
 import { usePlans } from "../plan/plan";
 import { RecipeFilter, useFilteredRecipes } from "./recipe-filter";
+import { TextButton } from "../common/inputs";
 
 export const ListLoader: React.FC = () => {
+  return <></>;
+};
+
+export const RecipeListItem = ({
+  title,
+  handleAction,
+}: {
+  title: string;
+  handleAction: VoidFunction;
+}) => {
   return (
-    <>
-      <Skeleton height="4rem" />
-      <Skeleton height="4rem" />
-    </>
+    <li
+      css={{
+        padding: "1rem",
+        display: "grid",
+        gridTemplateColumns: "1fr min-content",
+        alignItems: "center",
+        borderBottom: "solid 1px var(--border)",
+        transition: "background 0.5s",
+        "&:hover": {
+          background: "var(--componentBackgroundDark)",
+        },
+      }}
+    >
+      {title}
+      <TextButton
+        css={{ fontSize: "1.5rem", fontWeight: "lighter" }}
+        onClick={handleAction}
+      >
+        +
+      </TextButton>
+    </li>
   );
 };
 
@@ -23,25 +48,22 @@ export const RecipeList = () => {
   return (
     <>
       <RecipeFilter {...filterProps} />
-      <List>
+      <ul css={{ padding: 0, marginBottom: "4rem" }}>
         {recipes.map((recipe) => (
-          <RecipeDetails
+          <RecipeListItem
             key={recipe.title}
-            recipe={recipe}
-            action={
-              <Button onClick={() => addRecipe(recipe)}>zum Koch Plan</Button>
-            }
+            title={recipe.title}
+            handleAction={() => {
+              addRecipe(recipe);
+            }}
           />
         ))}
-      </List>
-      {status === "fetching" && (
-        <Skeleton aria-label="loading" data-testid="loader" />
-      )}
+      </ul>
       {status === "error" && (
-        <Box>
+        <>
           rezepte konnten nicht geladen werden
-          <Button onClick={() => refetch()}>nochmal versuchen</Button>
-        </Box>
+          <button onClick={() => refetch()}>nochmal versuchen</button>
+        </>
       )}
     </>
   );

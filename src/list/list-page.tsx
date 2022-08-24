@@ -5,22 +5,6 @@ import {
   checkListItem,
   unCheckListItem,
 } from "./list-hooks";
-import {
-  ListItem,
-  ListItemText,
-  Drawer,
-  Box,
-  Button,
-  Dialog,
-  DialogTitle,
-  DialogActions,
-  Checkbox,
-  CardHeader,
-  Card,
-  CardContent,
-} from "@material-ui/core";
-import { Add } from "@material-ui/icons";
-
 import { BottomRightFab } from "../common/fab";
 
 import { ListForm } from "./list-form";
@@ -35,21 +19,19 @@ const ClearListDialog: React.FC<{ onClearList(): void }> = ({
 
   return (
     <>
-      <Button onClick={handleOpen}>Liste löschen</Button>
-      <Dialog
+      <button onClick={handleOpen}>Liste löschen</button>
+      <div
         open={open}
         onClose={handleClose}
         aria-labelledby="clear-list-dialog-title"
       >
-        <DialogTitle id="clear-list-dialog-title">
-          Die Einkaufsliste leeren ?
-        </DialogTitle>
+        <div id="clear-list-dialog-title">Die Einkaufsliste leeren ?</div>
 
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
+        <div>
+          <div onClick={handleClose} color="primary">
             nein
-          </Button>
-          <Button
+          </div>
+          <div
             onClick={async () => {
               try {
                 clearList();
@@ -63,9 +45,9 @@ const ClearListDialog: React.FC<{ onClearList(): void }> = ({
             autoFocus
           >
             ja
-          </Button>
-        </DialogActions>
-      </Dialog>
+          </div>
+        </div>
+      </div>
     </>
   );
 };
@@ -80,28 +62,22 @@ const CardList: React.FC<{
     return null;
   }
   return (
-    <Card>
-      <CardHeader subheader={headline}></CardHeader>
-      <CardContent>
+    <div>
+      <div title={headline}></div>
+      <div>
         {items.map((item) => (
-          <ListItem
-            button
+          <div
             onClick={() => {
               onSelect(item);
             }}
             key={item}
           >
-            <ListItemText>{item}</ListItemText>
-            <Checkbox
-              checked={isChecked}
-              inputProps={{
-                "aria-label": `${item} ist im Einkaufswagen`,
-              }}
-            />
-          </ListItem>
+            <div>{item}</div>
+            <input checked={isChecked} />
+          </div>
         ))}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 
@@ -117,11 +93,11 @@ export const ListPage = () => {
   return (
     <>
       {list.list.length === 0 && list.basket.length === 0 && (
-        <Box display="flex" alignContent="center" justifyContent="center">
+        <div display="flex" alignContent="center" justifyContent="center">
           Du hast noch nichts auf der Einkaufsliste
-        </Box>
+        </div>
       )}
-      <CardList
+      <div
         items={list.list}
         isChecked={false}
         headline="In den Einkaufswagen"
@@ -130,8 +106,8 @@ export const ListPage = () => {
           fetchList();
         }}
       />
-      <Box mt={3} mb={3}></Box>
-      <CardList
+      <div mt={3} mb={3}></div>
+      <div
         items={list.basket}
         isChecked={true}
         headline="Schon dabei"
@@ -142,21 +118,21 @@ export const ListPage = () => {
       />
 
       {list.basket.length > 0 && (
-        <Box mt={4}>
-          <ClearListDialog onClearList={fetchList} />
-        </Box>
+        <div mt={4}>
+          <div onClearList={fetchList} />
+        </div>
       )}
-      <Drawer anchor="top" open={open} onClose={() => setOpen(false)}>
-        <ListForm
+      <div anchor="top" open={open} onClose={() => setOpen(false)}>
+        <div
           onCompleted={() => {
             setOpen(false);
             fetchList();
           }}
         />
-      </Drawer>
-      <BottomRightFab onClick={() => setOpen(true)} label="brauche sachen">
-        <Add></Add>
-      </BottomRightFab>
+      </div>
+      <div onClick={() => setOpen(true)} label="brauche sachen">
+        <div></div>
+      </div>
     </>
   );
 };

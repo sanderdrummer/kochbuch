@@ -8,13 +8,8 @@ describe("ListPage", () => {
     expect(queryByText(/Schon dabei/i)).toBeNull();
   });
   it("add items form works", async () => {
-    const {
-      getByLabelText,
-      getByText,
-      getByRole,
-      findByText,
-      queryByText,
-    } = render(<ListPage />);
+    const { getByLabelText, getByText, getByRole, findByText, queryByText } =
+      render(<ListPage />);
 
     // open up list-form
     const toggleButton = getByLabelText(/brauche sachen/i);
