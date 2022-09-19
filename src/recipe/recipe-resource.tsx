@@ -36,6 +36,7 @@ const fetchRecipes = () => {
   );
 };
 
+let cache:Recipe[] | undefined= undefined
 export type FetchStatus = "idle" | "done" | "fetching" | "error";
 export const useRecipes = () => {
   const [status, setStatus] = useState<FetchStatus>("idle");
@@ -45,6 +46,7 @@ export const useRecipes = () => {
     try {
       const data = await fetchRecipes();
       setData(data);
+      cache = data
       setStatus("done");
     } catch {
       setStatus("error");
@@ -52,7 +54,9 @@ export const useRecipes = () => {
   };
 
   useEffect(() => {
-    handleFetchRecipe();
+    if (!cache) {
+      handleFetchRecipe()
+    }
   }, []);
 
   return { status, data, refetch: handleFetchRecipe };

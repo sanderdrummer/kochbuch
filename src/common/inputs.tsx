@@ -1,13 +1,15 @@
-import { ButtonHTMLAttributes, InputHTMLAttributes, useId } from "react";
+import { ButtonHTMLAttributes, InputHTMLAttributes, ReactNode, useId } from "react";
 
 export type TextInputProps = InputHTMLAttributes<HTMLInputElement> & {
   label: string;
+  action?: ReactNode,
 };
-export const TextInput = ({ label, className, ...props }: TextInputProps) => {
+export const TextInput = ({ action, label, className, ...props }: TextInputProps) => {
   return (
     <label
       className={className}
       css={{
+        position: 'relative',
         display: "block",
         color: "var(--textSubtile)",
         transitionDuration: ".4s",
@@ -21,6 +23,7 @@ export const TextInput = ({ label, className, ...props }: TextInputProps) => {
       <input
         css={{
           display: "block",
+          borderRadius:0,
           width: "100%",
           fontSize: "1rem",
           background: "transparent",
@@ -36,6 +39,7 @@ export const TextInput = ({ label, className, ...props }: TextInputProps) => {
         type="text"
         {...props}
       />
+      {action}
     </label>
   );
 };

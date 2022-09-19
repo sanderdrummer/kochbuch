@@ -3,7 +3,6 @@ import reactRefresh from "@vitejs/plugin-react";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "/kochbuch/",
   esbuild: {
     jsxFactory: "jsx",
     // https://github.com/vitejs/vite/pull/8674/files

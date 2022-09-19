@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { TextButton, TextInput } from "../common/inputs";
+import { Pane } from "../common/panes";
 import { Recipe, useRecipes } from "./recipe-resource";
 
 export const getTags = (recipes: Recipe[]): string[] => {
@@ -41,7 +42,6 @@ const filterRecipes = (
   const filteredByQuery = filterByQuery(recipes, query);
   return filterByTags(filteredByQuery, tags);
 };
-
 export const useFilteredRecipes = () => {
   const { data: recipes, status, refetch } = useRecipes();
   const [filtered, setFiltered] = useState<Recipe[]>(recipes ?? []);
@@ -75,55 +75,18 @@ export const RecipeFilter = ({ query, setQuery }: FilterProps) => {
     setQuery("");
   };
   return (
-    <div
-      css={{
-        display: "grid",
-        padding: "1rem",
-        gridGap: "1rem",
-        gridTemplateColumns: "1fr min-content",
-      }}
-    >
       <TextInput
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         label="Was Kochen?"
+        action={
+          <TextButton
+            css={{ position: "absolute", right: 0, top: "1rem" }}
+            onClick={reset}
+          >
+            Neue Suche
+          </TextButton>
+        }
       />
-      <TextButton onClick={reset}>Neue Suche</TextButton>
-    </div>
-  );
-};
-
-export const RecipeTagFilter = ({
-  filterTags,
-  setFilterTags,
-  tags,
-  children,
-}: Pick<FilterProps, "setFilterTags" | "filterTags" | "tags"> & {
-  children?: React.ReactNode;
-}) => {
-  return (
-    <div>
-      {tags.sort().map((tag) => {
-        const isActive = filterTags.includes(tag);
-        return (
-          <div
-            key={tag}
-            color="primary"
-            variant={isActive ? "default" : "outlined"}
-            onClick={() => {
-              if (isActive) {
-                setFilterTags((tags) =>
-                  tags.filter((activeTag) => activeTag !== tag)
-                );
-              } else {
-                setFilterTags((tags) => [tag, ...tags]);
-              }
-            }}
-            label={tag}
-          />
-        );
-      })}
-      {children}
-    </div>
   );
 };

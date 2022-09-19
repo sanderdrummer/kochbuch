@@ -20,7 +20,7 @@ export const BaseStyles = () => {
         a: { cursor: "revert" },
         button: { cursor: "revert", fontSize: "1rem" },
         ol: { listStyle: "none" },
-        ul: { listStyle: "none" },
+        ul: { listStyle: "none", margin:0, padding:0 },
         menu: { listStyle: "none" },
         img: { maxWidth: "100%" },
         table: { borderCollapse: "collapse" },

@@ -1,16 +1,15 @@
-import { Router, Route, Switch, useLocation, Redirect } from "wouter";
+import { HashRouter as Router, Route, Routes } from "react-router-dom";
 
 import { ListPage } from "./list";
 
-import { RECIPES_PATH, LIST_PATH, PLAN_PATH } from "./routes-config";
+import { LIST_PATH, PLAN_PATH, BASE_PATH, RECIPE_PATH } from "./routes-config";
 import { PlanView } from "./plan/plan";
 import { RecipeList } from "./recipe/recipe-list";
-import { TextButton } from "./common/inputs";
+import { Pane } from "./common/panes";
+import {NavLink as Link} from "./common/link";
+import {RecipeDetails} from "./recipe/recipe-details";
 
 const BottomNav = () => {
-  const [location, navigate] = useLocation();
-  console.log(location);
-
   return (
     <div
       css={{
@@ -20,48 +19,34 @@ const BottomNav = () => {
         width: "100%",
       }}
     >
-      <div
+      <Pane
         css={{
-          background: "var(--headerBackground)",
-          padding: "1rem",
           display: "grid",
           gridGap: "1rem",
           gridAutoFlow: "column",
+          justifyItems: 'center'
         }}
       >
-        <TextButton
-          color={location === RECIPES_PATH ? "primary" : undefined}
-          onClick={() => navigate(RECIPES_PATH)}
-        >
-          Rezepte
-        </TextButton>
-        <TextButton
-          color={location === PLAN_PATH ? "primary" : undefined}
-          onClick={() => navigate(PLAN_PATH)}
-        >
-          Plan
-        </TextButton>
-        <TextButton
-          color={location === LIST_PATH ? "primary" : undefined}
-          onClick={() => navigate(LIST_PATH)}
-        >
-          Liste
-        </TextButton>
-      </div>
+        <Link to={"/" + BASE_PATH + "/"}>Rezepte</Link>
+        <Link to="plan">Plan</Link>
+        <Link to="einkaufliste">Liste</Link>
+      </Pane>
     </div>
   );
 };
 
 export const RootRoutes = () => {
   return (
-    <Router base="/kochbuch">
-      <Switch>
-        <Route path={RECIPES_PATH} component={RecipeList} />
-        <Route path={LIST_PATH} component={ListPage} />
-        <Route path={PLAN_PATH} component={PlanView} />
-        <Redirect to={RECIPES_PATH} />
-      </Switch>
-      <BottomNav />
-    </Router>
+      <Router>
+        <Routes>
+          <Route path={BASE_PATH}>
+            <Route index element={<RecipeList />} />
+            <Route path={':title'} element={<RecipeDetails />} />
+            <Route path={LIST_PATH} element={<ListPage />} />
+            <Route path={PLAN_PATH} element={<PlanView />} />
+          </Route>
+        </Routes>
+        <BottomNav />
+      </Router>
   );
 };

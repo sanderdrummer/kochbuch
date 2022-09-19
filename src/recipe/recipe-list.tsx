@@ -1,9 +1,9 @@
 import React from "react";
 
-import { RecipeDetails } from "./recipe-details";
 import { usePlans } from "../plan/plan";
 import { RecipeFilter, useFilteredRecipes } from "./recipe-filter";
 import { TextButton } from "../common/inputs";
+import {Link} from "../common/link";
 
 export const ListLoader: React.FC = () => {
   return <></>;
@@ -30,7 +30,9 @@ export const RecipeListItem = ({
         },
       }}
     >
+      <Link to={title}>
       {title}
+      </Link>
       <TextButton
         css={{ fontSize: "1.5rem", fontWeight: "lighter" }}
         onClick={handleAction}
@@ -48,7 +50,7 @@ export const RecipeList = () => {
   return (
     <>
       <RecipeFilter {...filterProps} />
-      <ul css={{ padding: 0, marginBottom: "4rem" }}>
+      <ul css={{ padding: 0,marginTop:0, marginBottom: "4rem" }}>
         {recipes.map((recipe) => (
           <RecipeListItem
             key={recipe.title}
