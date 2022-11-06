@@ -2,6 +2,7 @@ import { createSignal } from 'solid-js'
 import { SearchBar } from '@kochbuch/components'
 import { RecipeList } from './RecipeList'
 import { recipesResource } from './RecipeResource'
+import {AddRecipeToPlan} from './RecipeActions'
 
 export const RecipesView = () => {
   const [recipes] = recipesResource()
@@ -25,7 +26,12 @@ export const RecipesView = () => {
           setQuery={setQuery}
         />
       </div>
-      <RecipeList recipes={getFilteredRecipes()} />
+      <RecipeList
+        getHref={recipe => recipe.title}
+        action={(recipe) => <AddRecipeToPlan compact recipe={recipe} />}
+        emptyState="Leider kein Rezept gefunden"
+        recipes={getFilteredRecipes()}
+      />
     </div>
   )
 }

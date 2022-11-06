@@ -4,6 +4,7 @@ import { IconLink } from '@kochbuch/components'
 import { RecipeDetailsView } from './RecipeDetailsView'
 import { RecipesView } from './RecipesView'
 import { PlanView } from './plan/PlanView'
+import {PlanDetailsView} from './plan/PlanDetailsView'
 
 export const RecipePlanNavTab = () => {
   return (
@@ -43,7 +44,7 @@ export const RecipeRoutes = () => {
       </Route>
       <Route path="/plan">
         <Route path="/" component={PlanView}></Route>
-        <Route path="/:id" component={RecipeDetailsView}></Route>
+        <Route path="/:id" component={PlanDetailsView}></Route>
       </Route>
       <Route path="/" element={<Navigate href={'/recipes'} />} />
     </>

@@ -17,7 +17,6 @@ export type Ingredient = {
 
 export type Plan = {
   id: number
-  status: string
 } & Recipe
 
 const fetchRecipes = async () => {
@@ -35,9 +34,9 @@ class RecipeDatabase extends Dexie {
 
   constructor() {
     super('RecipeDatabase')
-    this.version(3).stores({
+    this.version(4).stores({
       recipes: '&title',
-      plans: '++id,status',
+      plans: '++id',
     })
   }
 }
@@ -76,22 +75,23 @@ export const clearPlans = async () => {
 }
 
 export const addRecipeToPlan = (recipe: Recipe) => {
-  return recipeDB.plans.add({ ...recipe, status: 'planing' })
+  // @ts-expect-error id is optional on add
+  return recipeDB.plans.add(recipe)
 }
 
-const togglePlanStatus = (plan: Plan) => {
-  switch (plan.status) {
-    case 'done':
-      return 'planing'
-    default:
-      return 'done'
-  }
-}
-
-export const togglePlan = (plan: Plan) => {
-  return recipeDB.plans.update(plan.id, { status: togglePlanStatus(plan) })
+export const planIsDone = (plan: Plan) => {
+  return recipeDB.plans.delete(plan.id)
 }
 
 export const plansResource = () => {
   return createResource(getPlans)
+}
+
+
+const getPlan = async (id: number) => {
+  const plan = await recipeDB.plans.get(id)
+  return plan
+}
+export const planResource = (id: number) => {
+  return createResource(id, getPlan)
 }

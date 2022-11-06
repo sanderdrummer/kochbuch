@@ -1,12 +1,15 @@
 import { A } from '@solidjs/router'
-import { For } from 'solid-js'
+import { For, JSX } from 'solid-js'
 import { Recipe } from './RecipeResource'
 
-type RecipeProps = {
-  recipes?: Recipe[]
+type RecipeProps<Item extends Recipe> = {
+  recipes?: Item[]
+  emptyState: string
+  action: (item: Item) => JSX.Element
+  getHref: (item:Item) => string
 }
 
-export const RecipeList = (props: RecipeProps) => {
+export const RecipeList = <Item extends Recipe>(props: RecipeProps<Item>) => {
   return (
     <div class="mx-auto container">
       <ul role="list" class="divide-y list-none divide-stone-800">
@@ -14,15 +17,16 @@ export const RecipeList = (props: RecipeProps) => {
           each={props.recipes}
           fallback={
             <div class="p-3 font-extralight text-lg">
-              Leider nichts gefunden :/{' '}
+              {props.emptyState}
             </div>
           }
         >
           {(recipe) => (
-            <li class="p-3 font-extralight text-lg">
-              <A class="no-underline " href={recipe.title}>
+            <li class="p-3 font-extralight text-lg grid grid-flow-col justify-between">
+              <A class="no-underline " href={props.getHref(recipe)}>
                 {recipe.title}
               </A>
+              {props.action(recipe)}
             </li>
           )}
         </For>

@@ -1,6 +1,9 @@
 import { useParams } from '@solidjs/router'
 import { For, createSignal, JSX } from 'solid-js'
-import { addRecipeToPlan, Recipe, recipeResource } from './RecipeResource'
+import { HeightWrapper } from '@kochbuch/components'
+
+import {  Recipe, recipeResource } from './RecipeResource'
+import { AddRecipeToPlan } from './RecipeActions'
 
 export const getAmount = (amount: string, modifier = 1) => {
   if (modifier === 1) return amount
@@ -19,7 +22,7 @@ export const RecipeDetails = (props: {
   const scales = [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2]
 
   return (
-    <div class="min-h-screen mx-auto container whitespace-pre-wrap px-5">
+    <HeightWrapper class="mx-auto container whitespace-pre-wrap px-5">
       <h1 class="font-bold text-xl mb-10 mt-2">{props.recipe?.title}</h1>
       <div class="mb-8 grid-flow-col grid grid-auto-cols-auto justify-between">
         <ul>
@@ -46,7 +49,7 @@ export const RecipeDetails = (props: {
       <p>{props.recipe?.description}</p>
 
       <div class="mt-12">{props.children}</div>
-    </div>
+    </HeightWrapper>
   )
 }
 
@@ -55,17 +58,7 @@ export const RecipeDetailsView = () => {
   const [recipe] = recipeResource(params.id)
   return (
     <RecipeDetails recipe={recipe()}>
-      <button
-        disabled={!recipe()}
-        onClick={() => {
-          const resolvedRecipe = recipe()
-          if (resolvedRecipe) {
-            addRecipeToPlan(resolvedRecipe)
-          }
-        }}
-      >
-        Rezept zum Kochplan hinzufügen
-      </button>
+      <AddRecipeToPlan recipe={recipe()} />
     </RecipeDetails>
   )
 }
