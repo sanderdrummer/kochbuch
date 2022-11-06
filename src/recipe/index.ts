@@ -1,2 +1,2 @@
-export * from "./RecipeRoutes";
-export { initRecipes } from "./RecipeResource";
+export * from './RecipeRoutes'
+export { initRecipes } from './RecipeResource'
