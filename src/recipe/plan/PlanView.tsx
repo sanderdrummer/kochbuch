@@ -1,5 +1,7 @@
 import { RecipeList } from '../RecipeList'
+import { plansResource } from '../RecipeResource'
 
 export const PlanView = () => {
-    return <RecipeList recipes={[]} />
+  const [plans, { refetch }] = plansResource()
+  return <RecipeList recipes={plans() ?? []} />
 }

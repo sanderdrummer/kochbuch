@@ -3,21 +3,21 @@ import { RecipeNavTab, RecipePlanNavTab, RecipeRoutes } from '@kochbuch/recipes'
 import { Navbar } from '@kochbuch/components'
 
 const BottomTabs = () => {
-    return (
-        <Navbar>
-            <RecipeNavTab />
-            <RecipePlanNavTab />
-        </Navbar>
-    )
+  return (
+    <Navbar>
+      <RecipeNavTab />
+      <RecipePlanNavTab />
+    </Navbar>
+  )
 }
 
 export const MainRouters = () => {
-    return (
-        <Router source={hashIntegration()}>
-            <Routes>
-                <RecipeRoutes />
-            </Routes>
-            <BottomTabs />
-        </Router>
-    )
+  return (
+    <Router source={hashIntegration()}>
+      <Routes>
+        <RecipeRoutes />
+      </Routes>
+      <BottomTabs />
+    </Router>
+  )
 }
