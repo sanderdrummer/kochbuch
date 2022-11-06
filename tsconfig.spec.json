@@ -1,9 +1,0 @@
-{
-  "include": ["./src"],
-  "compilerOptions": {
-    "outDir": "./dist/out-tsc",
-    "module": "commonjs",
-    "types": ["jest", "node"]
-  },
-  "exclude": ["./src/**/*.spec.tsx"]
-}

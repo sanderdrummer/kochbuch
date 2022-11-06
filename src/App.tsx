@@ -1,15 +1,9 @@
-import { StrictMode } from "react";
-import { BaseStyles } from "./common/reset";
+import { initRecipes } from "@kochbuch/recipes";
+import { MainRouters } from "./Router";
 
-import { RootRoutes } from "./routes";
-
-function App() {
+export const App = () => {
+  initRecipes();
   return (
-    <StrictMode>
-      <BaseStyles />
-      <RootRoutes />
-    </StrictMode>
+      <MainRouters />
   );
-}
-
-export default App;
+};

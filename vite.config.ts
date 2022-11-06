@@ -1,22 +1,45 @@
 import { defineConfig } from "vite";
-import reactRefresh from "@vitejs/plugin-react";
+import { VitePWA } from "vite-plugin-pwa";
+import solidPlugin from "vite-plugin-solid";
+import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  esbuild: {
-    jsxFactory: "jsx",
-    // https://github.com/vitejs/vite/pull/8674/files
-    logOverride: {
-      "this-is-undefined-in-esm": "silent",
-    },
-    jsxInject: `import { jsx } from '@emotion/react'`,
+  resolve: {
+    alias: [
+      {
+        find: "@kochbuch/recipes",
+        replacement: path.resolve(__dirname, "./src/recipe/index.ts"),
+      },
+      {
+        find: "@kochbuch/components",
+        replacement: path.resolve(__dirname, "./src/components/index.ts"),
+      },
+    ],
   },
   plugins: [
-    reactRefresh({
-      jsxImportSource: "@emotion/react",
-      babel: {
-        plugins: ["@emotion/babel-plugin"],
+    solidPlugin(),
+    VitePWA({
+      registerType: "autoUpdate",
+      manifest: {
+        name: "My Awesome App",
+        short_name: "MyApp",
+        description: "My Awesome App description",
+        theme_color: "#ffffff",
+        icons: [
+          {
+            src: "pwa-192x192.png",
+            sizes: "192x192",
+            type: "image/png",
+          },
+          {
+            src: "pwa-512x512.png",
+            sizes: "512x512",
+            type: "image/png",
+          },
+        ],
       },
+      devOptions: { enabled: false },
     }),
   ],
 });
