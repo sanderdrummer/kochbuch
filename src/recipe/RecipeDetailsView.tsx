@@ -1,6 +1,6 @@
 import { useParams } from '@solidjs/router'
 import { For, createSignal, JSX } from 'solid-js'
-import { HeightWrapper } from '@kochbuch/components'
+import { Bubble, HeightWrapper } from '@kochbuch/components'
 
 import { Recipe, recipeResource } from './RecipeResource'
 import { AddRecipeToPlan } from './RecipeActions'

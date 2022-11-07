@@ -1,5 +1,6 @@
 import { createSignal, JSX } from 'solid-js'
-import {  SpinnerIcon } from './Icons'
+import { SpinnerIcon } from './Icons'
+import { Bubble } from './Layout'
 
 export const LoadingButton = (props: {
   disabled?: boolean
@@ -7,26 +8,39 @@ export const LoadingButton = (props: {
   label: JSX.Element
   icon?: JSX.Element
   class?: string
+  message?: string
 }) => {
   const [isLoading, setIsLoading] = createSignal(false)
+  const [bubbleOpen, setIsBubbleOpen] = createSignal(false)
   return (
-    <button
-      type="button"
-      class={`grid text-stone-300 gap-2 grid-flow-col content-center items-center ${props.class ?? ""}`}
-      disabled={props.disabled || isLoading()}
-      onClick={() => {
-        setIsLoading(true)
-        props.onClick().finally(() => setIsLoading(false))
-      }}
-    >
-      <span>
-        {isLoading() ? (
-          <SpinnerIcon />
-        ) : (
-          props.icon
-        )}
-      </span>
-      {props.label}
-    </button>
+    <>
+      {props.message && <Bubble open={bubbleOpen()}>{props.message}</Bubble>}
+      <button
+        type="button"
+        class={`grid text-stone-300 gap-2 grid-flow-col content-center items-center ${
+          props.class ?? ''
+        }`}
+        disabled={props.disabled || isLoading()}
+        onClick={() => {
+          setIsBubbleOpen(false)
+          setIsLoading(true)
+          props
+            .onClick()
+            .then(() => {
+              setIsBubbleOpen(true)
+            })
+            .finally(() => {
+              setIsLoading(false)
+              setTimeout(() => {
+                console.log('done')
+                setIsBubbleOpen(false)
+              }, 2500)
+            })
+        }}
+      >
+        <span>{isLoading() ? <SpinnerIcon /> : props.icon}</span>
+        {props.label}
+      </button>
+    </>
   )
 }

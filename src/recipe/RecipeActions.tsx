@@ -8,6 +8,7 @@ export const AddRecipeToPlan = (props: {
 }) => {
   return (
     <LoadingButton
+      message={`${props.recipe?.title} zum Kochplan hinzugefügt`}
       disabled={props.recipe === undefined}
       icon={<PlusIcon class="fill-stone-300 h-5 w-5" />}
       label={props.compact ? '' : 'Rezept kochen'}
