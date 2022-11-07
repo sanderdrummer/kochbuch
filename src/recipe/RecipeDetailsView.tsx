@@ -2,7 +2,7 @@ import { useParams } from '@solidjs/router'
 import { For, createSignal, JSX } from 'solid-js'
 import { HeightWrapper } from '@kochbuch/components'
 
-import {  Recipe, recipeResource } from './RecipeResource'
+import { Recipe, recipeResource } from './RecipeResource'
 import { AddRecipeToPlan } from './RecipeActions'
 
 export const getAmount = (amount: string, modifier = 1) => {
@@ -11,7 +11,7 @@ export const getAmount = (amount: string, modifier = 1) => {
   const [digit] = amount.match(/[0-9.]+/g) ?? []
   const [scale = ''] = amount.match(/[a-zA-Z]+/g) ?? []
 
-  return digit ? `${Number(digit) * modifier} ${scale}` : scale
+  return digit ? `${Number(digit) * modifier}${scale}` : scale
 }
 
 export const RecipeDetails = (props: {
@@ -29,14 +29,18 @@ export const RecipeDetails = (props: {
           <For each={props.recipe?.ingredients}>
             {(ingredient) => (
               <li>
-                {getAmount(ingredient.amount, modifier())} {ingredient.name}
+                <span class="text-stone-400">
+                  {getAmount(ingredient.amount, modifier())}
+                </span>
+                <span class="font-normal" > {ingredient.name} </span>
               </li>
             )}
           </For>
         </ul>
-        <label class="">
-          <span class="mx-2">Menge:</span>
+        <label>
+          <span class="mx-2 text-stone-400">Menge:</span>
           <select
+            class="bg-stone-800 text-stone-400 border-stone-800 focus:outline-none focus:border-stone-400 focus:ring-stone-400 focus:ring-1"
             value={modifier()}
             onChange={(e) => setModifier(Number(e.currentTarget.value))}
           >
