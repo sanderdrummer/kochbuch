@@ -6,12 +6,13 @@ export const LoadingButton = (props: {
   onClick: () => Promise<void>
   label: JSX.Element
   icon?: JSX.Element
+  class?: string
 }) => {
   const [isLoading, setIsLoading] = createSignal(false)
   return (
     <button
       type="button"
-      class="grid text-stone-300 gap-2 grid-flow-col content-center items-center"
+      class={`grid text-stone-300 gap-2 grid-flow-col content-center items-center ${props.class ?? ""}`}
       disabled={props.disabled || isLoading()}
       onClick={() => {
         setIsLoading(true)

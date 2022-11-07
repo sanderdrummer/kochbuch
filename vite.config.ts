@@ -12,6 +12,10 @@ export default defineConfig({
         replacement: path.resolve(__dirname, './src/recipe/index.ts'),
       },
       {
+        find: '@kochbuch/list',
+        replacement: path.resolve(__dirname, './src/list/index.ts'),
+      },
+      {
         find: '@kochbuch/components',
         replacement: path.resolve(__dirname, './src/components/index.ts'),
       },

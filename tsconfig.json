@@ -18,7 +18,8 @@
     "jsxImportSource": "solid-js",
     "paths": {
       "@kochbuch/components": ["./src/components/index.ts"],
-      "@kochbuch/recipes": ["./src/recipe/index.ts"]
+      "@kochbuch/recipes": ["./src/recipe/index.ts"],
+      "@kochbuch/list": ["./src/list/index.ts"]
     }
   },
   "include": ["src"],
