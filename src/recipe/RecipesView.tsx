@@ -1,11 +1,11 @@
-import { createSignal } from 'solid-js'
+import { createEffect, createSignal } from 'solid-js'
 import { SearchBar } from '@kochbuch/components'
 import { RecipeList } from './RecipeList'
 import { recipesResource } from './RecipeResource'
 import {AddRecipeToPlan} from './RecipeActions'
 
 export const RecipesView = () => {
-  const [recipes] = recipesResource()
+  const [recipes, {refetch}] = recipesResource()
 
   const [query, setQuery] = createSignal('')
   const getFilteredRecipes = () => {
@@ -16,6 +16,11 @@ export const RecipesView = () => {
         })
       : recipes()
   }
+  createEffect(() => {
+    if (recipes.state === "ready" && recipes().length === 0) {
+      refetch()
+    }
+  })
 
   return (
     <div class="min-h-screen">

@@ -1,6 +1,31 @@
 import { CheckIcon, LoadingButton, PlusIcon } from '@kochbuch/components'
+import { addItemsToList } from '@kochbuch/list'
 
 import { addRecipeToPlan, Plan, planIsDone, Recipe } from './RecipeResource'
+
+export const AddRecipeToList = (props: {
+  plan?: Plan
+  onClick: () => Promise<void>
+}) => {
+  return (
+    <LoadingButton
+      message={`${props.plan?.title} zur Einkaufsliste hinzugefügt`}
+      disabled={props.plan === undefined}
+      icon={<PlusIcon />}
+      label={'Rezept einkaufen'}
+      onClick={async () => {
+        if (props.plan) {
+          await addItemsToList(props.plan.ingredients.map(item => {
+            return {
+              amount: item.amount,
+              title: item.name
+            }
+          }))
+        }
+      }}
+    />
+  )
+}
 
 export const AddRecipeToPlan = (props: {
   recipe?: Recipe
@@ -10,7 +35,7 @@ export const AddRecipeToPlan = (props: {
     <LoadingButton
       message={`${props.recipe?.title} zum Kochplan hinzugefügt`}
       disabled={props.recipe === undefined}
-      icon={<PlusIcon class="fill-stone-300 h-5 w-5" />}
+      icon={<PlusIcon />}
       label={props.compact ? '' : 'Rezept kochen'}
       onClick={async () => {
         if (props.recipe) {
@@ -28,7 +53,7 @@ export const RemoveRecipeFromPlan = (props: {
   return (
     <LoadingButton
       disabled={props.plan === undefined}
-      icon={<CheckIcon class="fill-stone-300 h-5 w-5" />}
+      icon={<CheckIcon />}
       label="Fertig"
       onClick={async () => {
         if (props.plan) {

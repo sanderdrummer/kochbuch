@@ -38,7 +38,7 @@ export const RecipeDetails = (props: {
           </For>
         </ul>
         <label>
-          <span class="mx-2 text-stone-400">Menge:</span>
+          <span class="mx-2 text-stone-400 font-normal">Menge:</span>
           <select
             class="bg-stone-800 text-stone-400 border-stone-800 focus:outline-none focus:border-stone-400 focus:ring-stone-400 focus:ring-1"
             value={modifier()}
@@ -52,7 +52,7 @@ export const RecipeDetails = (props: {
       </div>
       <p>{props.recipe?.description}</p>
 
-      <div class="mt-12">{props.children}</div>
+      <div class="mt-12 mb-8">{props.children}</div>
     </HeightWrapper>
   )
 }

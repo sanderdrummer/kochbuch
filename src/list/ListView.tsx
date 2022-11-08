@@ -12,7 +12,7 @@ import {
 export const ListView = () => {
   const [list, { refetch }] = ListResource()
   return (
-    <HeightWrapper>
+    <HeightWrapper class="mx-auto container">
       <A
         class="p-4 text-lg grid grid-flow-col gap-2 text-stone-300 justify-end items-center"
         href="add"
@@ -21,6 +21,7 @@ export const ListView = () => {
         Mehr einkaufen
       </A>
       <ItemList
+        heading="Noch in den Korb"
         action={async (item) => {
           await markItemAsDone(item)
           refetch()
@@ -29,6 +30,7 @@ export const ListView = () => {
         items={list()?.todo ?? []}
       />
       <ItemList
+        heading="Schon dabei"
         action={async (item) => {
           await markItemAsTodo(item)
           refetch()
@@ -37,14 +39,16 @@ export const ListView = () => {
         items={list()?.done ?? []}
       />
 
-      {(list()?.done?.length ?? 0) > 0 && <LoadingButton
-        class="text-red-400 mt-10"
-        label="Neue Liste"
-        onClick={async () => {
-          await clearDone()
-          refetch()
-        }}
-      />}
+      {(list()?.done?.length ?? 0) > 0 && (
+        <LoadingButton
+          class="text-red-400 mt-10 mb-8"
+          label="Neue Liste"
+          onClick={async () => {
+            await clearDone()
+            refetch()
+          }}
+        />
+      )}
     </HeightWrapper>
   )
 }
@@ -52,11 +56,12 @@ export const ListView = () => {
 const ItemList = (props: {
   items: ListItem[]
   emptyState: string
+  heading: string
   action: (item: ListItem) => Promise<void>
 }) => {
   return (
-    <div class="mt-5">
-    <h2>hi</h2>
+    <div class="mt-5 p-3">
+      <h2 class="text-2xl font-normal">{props.heading}</h2>
       <ul role="list" class="divide-y list-none divide-stone-800">
         <For
           each={props.items}
@@ -69,7 +74,7 @@ const ItemList = (props: {
               <LoadingButton
                 label={
                   <span>
-                    {item.amount} {item.title}
+                    {item.amount ? item.amount.toString() : ''} {item.title}
                   </span>
                 }
                 onClick={() => props.action(item)}

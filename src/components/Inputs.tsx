@@ -17,7 +17,7 @@ export const LoadingButton = (props: {
       {props.message && <Bubble open={bubbleOpen()}>{props.message}</Bubble>}
       <button
         type="button"
-        class={`grid text-stone-300 gap-2 grid-flow-col content-center items-center ${
+        class={`grid font-normal text-stone-400 gap-2 grid-flow-col content-center items-center ${
           props.class ?? ''
         }`}
         disabled={props.disabled || isLoading()}
@@ -32,13 +32,12 @@ export const LoadingButton = (props: {
             .finally(() => {
               setIsLoading(false)
               setTimeout(() => {
-                console.log('done')
                 setIsBubbleOpen(false)
               }, 2500)
             })
         }}
       >
-        <span>{isLoading() ? <SpinnerIcon /> : props.icon}</span>
+        <span  class="fill-stone-400 h-5 w-5" >{isLoading() ? <SpinnerIcon /> : props.icon}</span>
         {props.label}
       </button>
     </>
