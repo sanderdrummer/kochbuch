@@ -1,25 +1,50 @@
-import { defineConfig } from "vite";
-import reactRefresh from "@vitejs/plugin-react-refresh";
+import { defineConfig } from 'vite'
+import { VitePWA } from 'vite-plugin-pwa'
+import solidPlugin from 'vite-plugin-solid'
+import path from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "/kochbuch/",
-  plugins: [reactRefresh()],
+  base: '/kochbuch/',
   resolve: {
     alias: [
-      // https://github.com/vitejs/vite/issues/1853#issuecomment-805605644
       {
-        find: /^@material-ui\/icons\/(.*)/,
-        replacement: "@material-ui/icons/esm/$1",
+        find: '@kochbuch/recipes',
+        replacement: path.resolve(__dirname, './src/recipe/index.ts'),
       },
       {
-        find: /^@material-ui\/core\/(.+)/,
-        replacement: "@material-ui/core/es/$1",
+        find: '@kochbuch/list',
+        replacement: path.resolve(__dirname, './src/list/index.ts'),
       },
       {
-        find: /^@material-ui\/core$/,
-        replacement: "@material-ui/core/es",
+        find: '@kochbuch/components',
+        replacement: path.resolve(__dirname, './src/components/index.ts'),
       },
     ],
   },
-});
+  plugins: [
+    solidPlugin(),
+    VitePWA({
+      registerType: 'autoUpdate',
+      manifest: {
+        name: 'My Awesome App',
+        short_name: 'MyApp',
+        description: 'My Awesome App description',
+        theme_color: '#ffffff',
+        icons: [
+          {
+            src: 'pwa-192x192.png',
+            sizes: '192x192',
+            type: 'image/png',
+          },
+          {
+            src: 'pwa-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+          },
+        ],
+      },
+      devOptions: { enabled: false },
+    }),
+  ],
+})
