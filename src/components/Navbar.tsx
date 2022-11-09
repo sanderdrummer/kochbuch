@@ -8,7 +8,7 @@ export const Navbar: Component<{ children: JSX.Element; class?: string }> = (
       class={`w-full bg-stone-50 dark:bg-stone-700 sticky bottom-0 left-0 right-0`}
     >
       <div
-        class={`p-2 grid justify-center gap-8 grid-flow-col ${
+        class={`p-2 pb-4 grid justify-center gap-8 grid-flow-col ${
           props.class ?? ''
         }`}
       >
