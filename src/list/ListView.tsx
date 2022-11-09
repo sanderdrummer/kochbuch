@@ -22,18 +22,16 @@ export const ListView = () => {
       </A>
       <ItemList
         heading="Noch in den Korb"
-        action={async (item) => {
-          await markItemAsDone(item)
-          refetch()
+        action={(item) => {
+          markItemAsDone(item).then(refetch)
         }}
         emptyState="Nichts mehr einzukaufen!"
         items={list()?.todo ?? []}
       />
       <ItemList
         heading="Schon dabei"
-        action={async (item) => {
-          await markItemAsTodo(item)
-          refetch()
+        action={(item) => {
+          markItemAsTodo(item).then(refetch)
         }}
         emptyState="Noch nichts eingekauft!"
         items={list()?.done ?? []}
@@ -57,7 +55,7 @@ const ItemList = (props: {
   items: ListItem[]
   emptyState: string
   heading: string
-  action: (item: ListItem) => Promise<void>
+  action: (item: ListItem) => void
 }) => {
   return (
     <div class="mt-5 p-3">
@@ -77,8 +75,8 @@ const ItemList = (props: {
                     {item.amount ? item.amount.toString() : ''} {item.title}
                   </span>
                 }
-                onClick={() => props.action(item)}
-              ></LoadingButton>
+                onClick={async () => props.action(item)}
+               />
             </li>
           )}
         </For>

@@ -1,5 +1,5 @@
 import { HeightWrapper } from '@kochbuch/components'
-import { AddRecipeToList, RemoveRecipeFromPlan } from '../RecipeActions'
+import { AddRecipeToList } from '../RecipeActions'
 
 import { RecipeList } from '../RecipeList'
 import { plansResource } from '../RecipeResource'

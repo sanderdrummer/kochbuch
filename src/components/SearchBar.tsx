@@ -16,7 +16,7 @@ export const SearchBar = (props: {
         type="text"
         placeholder={props.placeholder}
         value={props.query}
-        oninput={(e) => props.setQuery(e.currentTarget.value)}
+        onInput={(e) => props.setQuery(e.currentTarget.value)}
       />
       {props.query.length > 0 && (
         <span

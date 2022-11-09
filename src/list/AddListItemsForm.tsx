@@ -14,7 +14,7 @@ export const AddListItems = () => {
         style={{ resize: 'none', height: 'calc(100vh - 150px)' }}
         placeholder="Menge Artikel"
         value={items()}
-        oninput={(e) => setItems(e.currentTarget.value)}
+        onInput={(e) => setItems(e.currentTarget.value)}
       />
 
       <LoadingButton
