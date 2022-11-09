@@ -22,8 +22,8 @@ export const RecipeList = <Item extends Recipe>(props: RecipeProps<Item>) => {
           }
         >
           {(recipe) => (
-            <li class="p-3 font-extralight text-lg grid grid-flow-col justify-between">
-              <A class="no-underline " href={props.getHref(recipe)}>
+            <li class="font-extralight text-lg grid grid-flow-col justify-between">
+              <A class="p-3 no-underline " href={props.getHref(recipe)}>
                 {recipe.title}
               </A>
               {props.action(recipe)}

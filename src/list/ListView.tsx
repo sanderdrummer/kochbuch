@@ -70,7 +70,7 @@ const ItemList = (props: {
           }
         >
           {(item) => (
-            <li class="p-3 font-extralight text-lg grid grid-flow-col justify-between">
+            <li class="font-extralight text-lg grid grid-flow-col justify-between">
               <LoadingButton
                 label={
                   <span>

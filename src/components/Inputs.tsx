@@ -17,7 +17,7 @@ export const LoadingButton = (props: {
       {props.message && <Bubble open={bubbleOpen()}>{props.message}</Bubble>}
       <button
         type="button"
-        class={`grid font-normal text-stone-400 gap-2 grid-flow-col content-center items-center ${
+        class={`p-3 pl-0 grid font-normal text-stone-400 gap-2 grid-flow-col content-center items-center ${
           props.class ?? ''
         }`}
         disabled={props.disabled || isLoading()}

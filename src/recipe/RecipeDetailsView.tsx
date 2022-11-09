@@ -1,6 +1,6 @@
 import { useParams } from '@solidjs/router'
 import { For, createSignal, JSX } from 'solid-js'
-import { Bubble, HeightWrapper } from '@kochbuch/components'
+import { HeightWrapper } from '@kochbuch/components'
 
 import { Recipe, recipeResource } from './RecipeResource'
 import { AddRecipeToPlan } from './RecipeActions'
@@ -32,7 +32,7 @@ export const RecipeDetails = (props: {
                 <span class="text-stone-400">
                   {getAmount(ingredient.amount, modifier())}
                 </span>
-                <span class="font-normal" > {ingredient.name} </span>
+                <span class="font-normal"> {ingredient.name} </span>
               </li>
             )}
           </For>
@@ -40,7 +40,7 @@ export const RecipeDetails = (props: {
         <label>
           <span class="mx-2 text-stone-400 font-normal">Menge:</span>
           <select
-            class="bg-stone-800 text-stone-400 border-stone-800 focus:outline-none focus:border-stone-400 focus:ring-stone-400 focus:ring-1"
+            class="rounded bg-stone-800 text-stone-400 border-stone-800 focus:outline-none focus:border-stone-400 focus:ring-stone-400 focus:ring-1"
             value={modifier()}
             onChange={(e) => setModifier(Number(e.currentTarget.value))}
           >
