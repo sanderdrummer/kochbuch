@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "test": "vitest",
     "format": "prettier . --write",
     "lint": "eslint . --fix",
     "deploy": "gh-pages -d dist",
@@ -33,7 +34,8 @@
     "typescript": "^4.6.4",
     "vite": "^3.1.0",
     "vite-plugin-pwa": "^0.13.1",
-    "vite-plugin-solid": "^2.3.10"
+    "vite-plugin-solid": "^2.3.10",
+    "vitest": "^0.25.1"
   },
   "prettier": {
     "trailingComma": "es5",
