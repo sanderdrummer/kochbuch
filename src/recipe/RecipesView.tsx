@@ -2,10 +2,10 @@ import { createEffect, createSignal } from 'solid-js'
 import { SearchBar } from '@kochbuch/components'
 import { RecipeList } from './RecipeList'
 import { recipesResource } from './RecipeResource'
-import {AddRecipeToPlan} from './RecipeActions'
+import { AddRecipeToPlan } from './RecipeActions'
 
 export const RecipesView = () => {
-  const [recipes, {refetch}] = recipesResource()
+  const [recipes, { refetch }] = recipesResource()
 
   const [query, setQuery] = createSignal('')
   const getFilteredRecipes = () => {
@@ -17,7 +17,7 @@ export const RecipesView = () => {
       : recipes()
   }
   createEffect(() => {
-    if (recipes.state === "ready" && recipes().length === 0) {
+    if (recipes.state === 'ready' && recipes().length === 0) {
       refetch()
     }
   })
@@ -32,7 +32,7 @@ export const RecipesView = () => {
         />
       </div>
       <RecipeList
-        getHref={recipe => recipe.title}
+        getHref={(recipe) => recipe.title}
         action={(recipe) => <AddRecipeToPlan compact recipe={recipe} />}
         emptyState="Leider kein Rezept gefunden"
         recipes={getFilteredRecipes()}

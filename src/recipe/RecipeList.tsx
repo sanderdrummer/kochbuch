@@ -6,7 +6,7 @@ type RecipeProps<Item extends Recipe> = {
   recipes?: Item[]
   emptyState: string
   action: (item: Item) => JSX.Element
-  getHref: (item:Item) => string
+  getHref: (item: Item) => string
 }
 
 export const RecipeList = <Item extends Recipe>(props: RecipeProps<Item>) => {
@@ -16,9 +16,7 @@ export const RecipeList = <Item extends Recipe>(props: RecipeProps<Item>) => {
         <For
           each={props.recipes}
           fallback={
-            <div class="p-3 font-extralight text-lg">
-              {props.emptyState}
-            </div>
+            <div class="p-3 font-extralight text-lg">{props.emptyState}</div>
           }
         >
           {(recipe) => (

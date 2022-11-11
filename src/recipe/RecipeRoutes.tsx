@@ -4,7 +4,7 @@ import { IconLink } from '@kochbuch/components'
 import { RecipeDetailsView } from './RecipeDetailsView'
 import { RecipesView } from './RecipesView'
 import { PlanView } from './plan/PlanView'
-import {PlanDetailsView} from './plan/PlanDetailsView'
+import { PlanDetailsView } from './plan/PlanDetailsView'
 
 export const RecipePlanNavTab = () => {
   return (
