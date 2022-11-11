@@ -1,4 +1,4 @@
-import { HeightWrapper } from '@kochbuch/components'
+import { H1, HeightWrapper } from '@kochbuch/components'
 import { AddRecipeToList } from '../RecipeActions'
 
 import { RecipeList } from '../RecipeList'
@@ -9,7 +9,7 @@ export const PlanView = () => {
   return (
     <HeightWrapper>
       <div class="mx-auto container">
-        <h1 class="px-2 py-4 text-3xl	font-normal">Geplante Rezepte</h1>
+        <H1 class="px-2">Geplante Rezepte</H1>
       </div>
       <RecipeList
         getHref={(plan) => plan.id.toString()}

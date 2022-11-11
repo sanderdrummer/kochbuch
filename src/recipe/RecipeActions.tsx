@@ -15,12 +15,15 @@ export const AddRecipeToList = (props: {
       label={'Rezept einkaufen'}
       onClick={async () => {
         if (props.plan) {
-          await addItemsToList(props.plan.ingredients.map(item => {
-            return {
-              amount: item.amount,
-              title: item.name
-            }
-          }))
+          await addItemsToList(
+            props.plan.ingredients.map((item) => {
+              return {
+                amount: item.amount,
+                scale: item.scale,
+                title: item.name,
+              }
+            })
+          )
         }
       }}
     />

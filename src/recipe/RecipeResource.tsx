@@ -12,6 +12,7 @@ export type Recipe = {
 
 export type Ingredient = {
   amount: string
+  scale: string
   name: string
 }
 
@@ -86,7 +87,6 @@ export const planIsDone = (plan: Plan) => {
 export const plansResource = () => {
   return createResource(getPlans)
 }
-
 
 const getPlan = async (id: number) => {
   const plan = await recipeDB.plans.get(id)

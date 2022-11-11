@@ -1,4 +1,9 @@
-import { HeightWrapper, LoadingButton, PlusIcon } from '@kochbuch/components'
+import {
+  H1,
+  HeightWrapper,
+  LoadingButton,
+  PlusIcon,
+} from '@kochbuch/components'
 import { A } from '@solidjs/router'
 import { For } from 'solid-js'
 import {
@@ -13,13 +18,16 @@ export const ListView = () => {
   const [list, { refetch }] = ListResource()
   return (
     <HeightWrapper class="mx-auto container">
-      <A
-        class="p-4 text-lg grid grid-flow-col gap-2 text-stone-300 justify-end items-center"
-        href="add"
-      >
-        <PlusIcon class="fill-stone-300 h-7 w-7" />
-        Mehr einkaufen
-      </A>
+      <div class="grid grid-flow-col items-start mx-2">
+        <H1>Einkaufsliste</H1>
+        <A
+          class="p-4 pt-4 text-lg grid grid-flow-col gap-2 text-stone-300 justify-end items-center"
+          href="add"
+        >
+          <PlusIcon class="fill-stone-300 h-7 w-7" />
+          Mehr einkaufen
+        </A>
+      </div>
       <ItemList
         heading="Noch in den Korb"
         action={(item) => {
@@ -72,11 +80,12 @@ const ItemList = (props: {
               <LoadingButton
                 label={
                   <span>
-                    {item.amount ? item.amount.toString() : ''} {item.title}
+                    {item.amount}
+                    {item.scale} {item.title}
                   </span>
                 }
                 onClick={async () => props.action(item)}
-               />
+              />
             </li>
           )}
         </For>

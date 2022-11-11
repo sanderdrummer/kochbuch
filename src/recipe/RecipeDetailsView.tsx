@@ -1,17 +1,15 @@
 import { useParams } from '@solidjs/router'
 import { For, createSignal, JSX } from 'solid-js'
-import { HeightWrapper } from '@kochbuch/components'
+import { H1, HeightWrapper } from '@kochbuch/components'
 
 import { Recipe, recipeResource } from './RecipeResource'
 import { AddRecipeToPlan } from './RecipeActions'
 
 export const getAmount = (amount: string, modifier = 1) => {
+  if (Number(amount) === 0) return ''
   if (modifier === 1) return amount
 
-  const [digit] = amount.match(/[0-9.]+/g) ?? []
-  const [scale = ''] = amount.match(/[a-zA-Z]+/g) ?? []
-
-  return digit ? `${Number(digit) * modifier}${scale}` : scale
+  return `${Number(amount) * modifier}`
 }
 
 export const RecipeDetails = (props: {
@@ -23,22 +21,10 @@ export const RecipeDetails = (props: {
 
   return (
     <HeightWrapper class="mx-auto container whitespace-pre-wrap px-5">
-      <h1 class="font-bold text-xl mb-10 mt-2">{props.recipe?.title}</h1>
-      <div class="mb-8 grid-flow-col grid grid-auto-cols-auto justify-between">
-        <ul>
-          <For each={props.recipe?.ingredients}>
-            {(ingredient) => (
-              <li>
-                <span class="text-stone-400">
-                  {getAmount(ingredient.amount, modifier())}
-                </span>
-                <span class="font-normal"> {ingredient.name} </span>
-              </li>
-            )}
-          </For>
-        </ul>
-        <label>
-          <span class="mx-2 text-stone-400 font-normal">Menge:</span>
+      <H1>{props.recipe?.title}</H1>
+      <div class="mb-8 sm:grid-flow-col grid justify-between">
+        <label class="mb-8 sm:mtb0 sm:order-2">
+          <span class="mr-4 text-stone-400 font-normal">Menge:</span>
           <select
             class="rounded bg-stone-800 text-stone-400 border-stone-800 focus:outline-none focus:border-stone-400 focus:ring-stone-400 focus:ring-1"
             value={modifier()}
@@ -49,6 +35,19 @@ export const RecipeDetails = (props: {
             </For>
           </select>
         </label>
+        <ul class="sm:order-1">
+          <For each={props.recipe?.ingredients}>
+            {(ingredient) => (
+              <li>
+                <span class="text-stone-400">
+                  {getAmount(ingredient.amount, modifier())}
+                  {ingredient.scale}
+                </span>
+                <span class="font-normal"> {ingredient.name} </span>
+              </li>
+            )}
+          </For>
+        </ul>
       </div>
       <p>{props.recipe?.description}</p>
 

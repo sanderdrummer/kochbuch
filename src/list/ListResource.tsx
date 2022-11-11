@@ -3,6 +3,7 @@ import { createResource } from 'solid-js'
 
 export type ListItem = {
   amount: string
+  scale: string
   title: string
 }
 
@@ -17,7 +18,7 @@ class ListDatabase extends Dexie {
 
   constructor() {
     super('ListDatabase')
-    this.version(1).stores({
+    this.version(2).stores({
       todo: '&title',
       done: '&title',
     })
@@ -40,39 +41,50 @@ export const ListResource = () => {
   return createResource(getShoppingList)
 }
 
-export const parseStringToListItems = (value: string): ListItem[] => {
-  const lines = value.split('\n').map((line) => {
-    const items = line.split(' ')
-    const maybeAmount = Number(items[0])
-    if (isNaN(maybeAmount)) {
-      return {
-        amount: '0',
-        title: line,
-      }
-    } else {
-      const [, ...titleArray] = items
-      return {
-        amount: maybeAmount.toString(),
-        title: titleArray.join(' '),
-      }
+export const parseListItem = (itemString: string): ListItem | null => {
+  if (itemString.match(/^\d+/)) {
+    const START_WITH_FLOAT = /^(([0-9]*[.])?[0-9]+)/
+    const [amount = ''] = itemString.match(START_WITH_FLOAT) ?? []
+    const scaleAndTitle = itemString.replace(amount, '')
+    const [scale = '', title = ''] = scaleAndTitle.split(' ')
+    return {
+      amount,
+      scale,
+      title,
     }
-  })
+  } else if (itemString.trim().length > 0) {
+    return {
+      amount: '',
+      scale: '',
+      title: itemString,
+    }
+  }
+  return null
+}
 
-  return lines
+export const parseStringToListItems = (value: string): ListItem[] => {
+  return value.split('\n').reduce<ListItem[]>((items, item) => {
+    const parsed = parseListItem(item)
+    if (parsed) {
+      items.push(parsed)
+    }
+    return items
+  }, [])
 }
 
 export const addItemsToList = async (items: ListItem[]) => {
-  const promises = items.map(async item => {
+  const promises = items.map(async (item) => {
     const existingItem = await listDB.todo.get(item.title)
     if (existingItem) {
-      listDB.todo.update(item.title, {amount: Number(existingItem.amount) + Number(item.amount)})
+      listDB.todo.update(item.title, {
+        amount: Number(existingItem.amount) + Number(item.amount),
+      })
     } else {
       listDB.todo.put(item)
     }
   })
 
   await Promise.all(promises)
-
 }
 
 export const markItemAsDone = async (item: ListItem) => {
