@@ -37,7 +37,9 @@ export const LoadingButton = (props: {
             })
         }}
       >
-        <span  class="fill-stone-400 h-5 w-5" >{isLoading() ? <SpinnerIcon /> : props.icon}</span>
+        <span class="fill-stone-400 h-5 w-5">
+          {isLoading() ? <SpinnerIcon /> : props.icon}
+        </span>
         {props.label}
       </button>
     </>

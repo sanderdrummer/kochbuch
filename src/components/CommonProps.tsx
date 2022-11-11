@@ -5,7 +5,7 @@ export type WithChildren = {
 }
 
 export type WithClass = {
- class?: string
+  class?: string
 }
 
 export type CommonProps = WithClass & WithChildren

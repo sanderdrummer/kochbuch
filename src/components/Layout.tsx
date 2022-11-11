@@ -16,13 +16,13 @@ export const LinearProgress = (props: WithClass) => {
 
 export const Bubble = (props: CommonProps & { open: boolean }) => {
   return (
-      <div
-        style={{'display': props.open ? "block" : "none"}}
-        class={`${props.class ?? ''} transition transition-opacity ${
-          props.open ? 'opacity-100' : 'opacity-0'
-        } shadow bg-stone-700 text-stone-400 font-normal fixed top-5 right-5 p-5 rounded`}
-      >
-        {props.children}
-      </div>
+    <div
+      style={{ display: props.open ? 'block' : 'none' }}
+      class={`${props.class ?? ''} transition transition-opacity ${
+        props.open ? 'opacity-100' : 'opacity-0'
+      } shadow bg-stone-700 text-stone-400 font-normal fixed top-5 right-5 p-5 rounded`}
+    >
+      {props.children}
+    </div>
   )
 }

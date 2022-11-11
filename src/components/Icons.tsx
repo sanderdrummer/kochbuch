@@ -18,11 +18,7 @@ export const PlusIcon = (props: IconProps) => {
 }
 export const ShareIcon = (props: IconProps) => {
   return (
-    <svg
-      class={props.class}
-      aria-hidden="true"
-      viewBox="0 0 24 24"
-    >
+    <svg class={props.class} aria-hidden="true" viewBox="0 0 24 24">
       <path d="m16 5-1.42 1.42-1.59-1.59V16h-1.98V4.83L9.42 6.42 8 5l4-4 4 4zm4 5v11c0 1.1-.9 2-2 2H6c-1.11 0-2-.9-2-2V10c0-1.11.89-2 2-2h3v2H6v11h12V10h-3V8h3c1.1 0 2 .89 2 2z" />
     </svg>
   )
@@ -56,12 +52,12 @@ export const SpinnerIcon = () => {
         r="10"
         stroke="currentColor"
         stroke-width="4"
-       />
+      />
       <path
         class="opacity-75"
         fill="currentColor"
         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-       />
+      />
     </svg>
   )
 }
