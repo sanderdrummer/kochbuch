@@ -10,7 +10,7 @@ export const RecipesView = () => {
   const [query, setQuery] = createSignal('')
   const getFilteredRecipes = () => {
     const lowerCasedQuery = query().toLocaleLowerCase()
-    return lowerCasedQuery.length > 3
+    return lowerCasedQuery.length > 1
       ? (recipes() ?? []).filter((recipe) => {
           return recipe.title.toLocaleLowerCase().includes(lowerCasedQuery)
         })

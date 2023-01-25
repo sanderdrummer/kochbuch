@@ -14,28 +14,29 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@solidjs/router": "^0.5.0",
+    "@solidjs/router": "^0.5.1",
     "@tailwindcss/forms": "^0.5.3",
-    "@tailwindcss/typography": "^0.5.7",
+    "@tailwindcss/typography": "^0.5.9",
     "dexie": "^3.2.2",
-    "solid-js": "^1.6.0"
+    "solid-js": "^1.6.9",
+    "vite-tsconfig-paths": "^4.0.3"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.42.1",
-    "@typescript-eslint/parser": "^5.42.1",
-    "@vitejs/plugin-react": "^2.1.0",
-    "autoprefixer": "^10.4.12",
-    "eslint": "^8.27.0",
+    "@typescript-eslint/eslint-plugin": "^5.48.2",
+    "@typescript-eslint/parser": "^5.48.2",
+    "@vitejs/plugin-react": "^2.2.0",
+    "autoprefixer": "^10.4.13",
+    "eslint": "^8.32.0",
     "eslint-plugin-solid": "^0.8.0",
     "gh-pages": "^4.0.0",
-    "postcss": "^8.4.18",
-    "prettier": "^2.7.1",
-    "tailwindcss": "^3.2.0",
-    "typescript": "^4.6.4",
-    "vite": "^3.1.0",
-    "vite-plugin-pwa": "^0.13.1",
-    "vite-plugin-solid": "^2.3.10",
-    "vitest": "^0.25.1"
+    "postcss": "^8.4.21",
+    "prettier": "^2.8.3",
+    "tailwindcss": "^3.2.4",
+    "typescript": "^4.9.4",
+    "vite": "^4.0.0",
+    "vite-plugin-pwa": "^0.13.3",
+    "vite-plugin-solid": "^2.5.0",
+    "vitest": "^0.25.8"
   },
   "prettier": {
     "trailingComma": "es5",
