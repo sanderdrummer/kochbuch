@@ -3,7 +3,7 @@ import { CrossIcon, SearchIcon } from "./Icons";
 export const SearchBar = (props: {
   placeholder?: string;
   query: string;
-  setQuery: (query: string) => string;
+  setQuery: (query: string) => void;
 }) => {
   return (
     <label className="w-full block relative">

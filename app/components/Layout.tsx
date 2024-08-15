@@ -3,11 +3,15 @@ import { type ReactNode } from "react";
 export const HeightWrapper = (props: {
   className?: string;
   children: ReactNode;
+  labeledBy: string;
 }) => {
   return (
-    <div className={`min-h-screen ${props?.className ?? ""}`}>
+    <section
+      aria-labelledby={props.labeledBy}
+      className={`min-h-screen ${props?.className ?? ""}`}
+    >
       {props.children}
-    </div>
+    </section>
   );
 };
 
