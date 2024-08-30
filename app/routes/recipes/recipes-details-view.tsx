@@ -8,6 +8,7 @@ import { H1 } from "~/components/Header";
 import { HeightWrapper } from "~/components/Layout";
 import { getRecipe, type Recipe, getFavorite } from "~/resources/recipes";
 import { FavoriteToggleButton } from "./favorite-button";
+import { AddRecipeToList } from "./add-recipe-to-list";
 
 export async function clientLoader({ params }: ClientLoaderFunctionArgs) {
   const title = params.title;
@@ -24,7 +25,10 @@ export default function RecipeDetailsView() {
   return (
     <RecipeDetails recipe={recipe}>
       {recipe?.title && (
-        <FavoriteToggleButton title={recipe.title} isFavorite={isFavorite} />
+        <div className="flex gap-8">
+          <FavoriteToggleButton title={recipe.title} isFavorite={isFavorite} />
+          <AddRecipeToList recipe={recipe} />
+        </div>
       )}
     </RecipeDetails>
   );
