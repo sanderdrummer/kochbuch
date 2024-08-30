@@ -1,4 +1,5 @@
-import { RecipeNavTab, RecipePlanNavTab } from "./Tabs";
+import { ListNavTab } from "~/routes/list/ListTab";
+import { RecipeNavTab } from "./Tabs";
 
 export const Navbar = (props: { className?: string }) => {
   return (
@@ -10,7 +11,7 @@ export const Navbar = (props: { className?: string }) => {
           }`}
       >
         <RecipeNavTab />
-        <RecipePlanNavTab />
+        <ListNavTab />
       </div>
     </nav>
   );
