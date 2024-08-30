@@ -1,0 +1,10 @@
+import{e as m,j as t,r as l}from"./index-CDizqAoW.js";import{H as c}from"./Header-DhBUw307.js";import{H as d}from"./Inputs-Sqnr60m_.js";import{F as u,b as x,c as f,A as j}from"./add-recipe-to-list-B89zn1Oo.js";import{l as h}from"./components-MY6lQjL2.js";import"./list-BqECdWvH.js";/**
+ * @remix-run/server-runtime v2.11.1
+ *
+ * Copyright (c) Remix Software Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE.md file in the root directory of this source tree.
+ *
+ * @license MIT
+ */const b=(e,s=302)=>m(e,s);async function y({params:e}){const s=e.title;if(!s)return b("/");const n=await x(s),r=await f(s);return{recipe:n,isFavorite:r}}function A(){const{recipe:e,isFavorite:s}=h();return t.jsx(p,{recipe:e,children:(e==null?void 0:e.title)&&t.jsx(u,{title:e.title,isFavorite:s})})}const g=(e,s=1)=>Number(e)===0?"":s===1?e:`${Number(e)*s}`,p=({children:e,recipe:s})=>{const[n,r]=l.useState(1),i=[.25,.5,.75,1,1.25,1.5,1.75,2],o=l.useId();return t.jsxs(d,{labeledBy:o,className:"mx-auto container whitespace-pre-wrap px-5",children:[t.jsx(c,{id:o,children:s==null?void 0:s.title}),t.jsxs("div",{className:"mb-8 sm:grid-flow-col grid justify-between",children:[t.jsxs("label",{className:"mb-8 sm:mtb0 sm:order-2",children:[t.jsx("span",{className:"mr-4 text-stone-400 font-normal",children:"Menge:"}),t.jsx("select",{className:"rounded bg-stone-800 text-stone-400 border-stone-800 focus:outline-none focus:border-stone-400 focus:ring-stone-400 focus:ring-1",value:n,onChange:a=>r(Number(a.currentTarget.value)),children:i.map(a=>t.jsx("option",{value:a,children:a},a))})]}),t.jsx("ul",{className:"sm:order-1",children:s==null?void 0:s.ingredients.map(a=>t.jsxs("li",{children:[t.jsxs("span",{className:"text-stone-400",children:[g(a.amount,n),a.scale]}),t.jsxs("span",{className:"font-normal",children:[" ",a.name," "]})]},a.name))})]}),t.jsx("p",{children:s==null?void 0:s.description}),t.jsxs("div",{className:"mt-12 mb-8 flex gap-8",children:[e,s&&t.jsx(j,{recipe:s,modifier:n})]})]})};export{y as clientLoader,A as default};
