@@ -1,6 +1,10 @@
 import { ComponentProps, useState } from "react";
+import { useSWRConfig } from "swr";
 import { Heart, HeartOutline } from "~/components/Icons";
-import { setIsFavorite as dbSetIsFavorite } from "~/resources/recipes";
+import {
+  setIsFavorite as dbSetIsFavorite,
+  getRecipes,
+} from "~/resources/recipes";
 
 const FavoriteButton = ({
   isFavorite,
@@ -44,6 +48,7 @@ export const FavoriteToggleButton = ({
   isFavorite: boolean;
 }) => {
   const [isFavorite, setIsFavorite] = useState(initialIsFavorite);
+  const { mutate } = useSWRConfig();
   return (
     <FavoriteButton
       isFavorite={isFavorite}
@@ -52,8 +57,10 @@ export const FavoriteToggleButton = ({
         isFavorite ? "von Favoriten löschen" : "zu Favoriten hinzufügen"
       }
       onClick={async () => {
-        setIsFavorite(!isFavorite);
         await dbSetIsFavorite(title, !isFavorite);
+        const recipes = await getRecipes();
+        await mutate("getRecipes", recipes);
+        setIsFavorite(!isFavorite);
       }}
     />
   );

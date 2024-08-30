@@ -1,10 +1,10 @@
 import type { MetaFunction } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
 import { useMemo, useState } from "react";
 import { SearchBar } from "~/components/SearchBar";
-import { getRecipes } from "~/resources/recipes";
+import { getRecipes, initRecipes } from "~/resources/recipes";
 import { RecipeList } from "./recipe-list";
 import { FavoriteFilterButton } from "./favorite-button";
+import useSWR from "swr";
 
 export const meta: MetaFunction = () => {
   return [
@@ -13,15 +13,10 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-export const clientLoader = async () => {
-  const recipeList = await getRecipes();
-  return recipeList;
-};
-
 export const useRecipes = () => { };
 
 export default function Index() {
-  const recipes = useLoaderData<typeof clientLoader>();
+  const { data: recipes = [], mutate } = useSWR("getRecipes", getRecipes);
   const [query, setQuery] = useState("");
   const [isFavorite, setIsFavorite] = useState(false);
 
@@ -50,6 +45,16 @@ export default function Index() {
         />
       </div>
       <RecipeList recipes={filteredRecipes} emptyState="nichts gefunden :/" />
+      <div className="mx-auto container my-6">
+        <button
+          onClick={async () => {
+            await initRecipes();
+            mutate();
+          }}
+        >
+          neu laden
+        </button>
+      </div>
     </main>
   );
 }
