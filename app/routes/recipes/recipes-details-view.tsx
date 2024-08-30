@@ -3,23 +3,31 @@ import {
   redirect,
   useLoaderData,
 } from "@remix-run/react";
-import { type ReactNode, useState } from "react";
+import { type ReactNode, useId, useState } from "react";
 import { H1 } from "~/components/Header";
 import { HeightWrapper } from "~/components/Layout";
-import { getRecipe, Recipe } from "~/resources/recipes";
+import { getRecipe, type Recipe, getFavorite } from "~/resources/recipes";
+import { FavoriteToggleButton } from "./favorite-button";
 
 export async function clientLoader({ params }: ClientLoaderFunctionArgs) {
   const title = params.title;
   if (!title) {
     return redirect("/");
   }
-  const recipe = getRecipe(title);
-  return recipe;
+  const recipe = await getRecipe(title);
+  const isFavorite = await getFavorite(title);
+  return { recipe, isFavorite };
 }
 
 export default function RecipeDetailsView() {
-  const recipe = useLoaderData<typeof clientLoader>();
-  return <RecipeDetails recipe={recipe}>hui</RecipeDetails>;
+  const { recipe, isFavorite } = useLoaderData<typeof clientLoader>();
+  return (
+    <RecipeDetails recipe={recipe}>
+      {recipe?.title && (
+        <FavoriteToggleButton title={recipe.title} isFavorite={isFavorite} />
+      )}
+    </RecipeDetails>
+  );
 }
 
 export const getAmount = (amount: string, modifier = 1) => {
@@ -35,10 +43,14 @@ export const RecipeDetails = (props: {
 }) => {
   const [modifier, setModifier] = useState(1);
   const scales = [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2];
+  const id = useId();
 
   return (
-    <HeightWrapper className="mx-auto container whitespace-pre-wrap px-5">
-      <H1>{props.recipe?.title}</H1>
+    <HeightWrapper
+      labeledBy={id}
+      className="mx-auto container whitespace-pre-wrap px-5"
+    >
+      <H1 id={id}>{props.recipe?.title}</H1>
       <div className="mb-8 sm:grid-flow-col grid justify-between">
         <label className="mb-8 sm:mtb0 sm:order-2">
           <span className="mr-4 text-stone-400 font-normal">Menge:</span>

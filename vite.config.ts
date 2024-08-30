@@ -6,6 +6,12 @@ export default defineConfig({
   plugins: [
     remix({
       ssr: false,
+      routes(defineRoutes) {
+        return defineRoutes((route) => {
+          route("/", "routes/recipes/recipes-view.tsx", { index: true });
+          route("/recipes/:title", "routes/recipes/recipes-details-view.tsx");
+        });
+      },
       future: {
         v3_fetcherPersist: true,
         v3_relativeSplatPath: true,

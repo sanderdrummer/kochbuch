@@ -59,6 +59,7 @@ export type RecipeListItem = Recipe & {
 export const getRecipes = async (): Promise<RecipeListItem[]> => {
   const recipes = await recipeDB.recipes.toArray();
   const favorites = await getFlatFavorites();
+  console.log({ favorites });
   return recipes.map((recipe) => {
     return {
       ...recipe,
@@ -70,4 +71,18 @@ export const getRecipes = async (): Promise<RecipeListItem[]> => {
 export const getRecipe = async (title: string) => {
   const recipe = await recipeDB.recipes.get(title);
   return recipe;
+};
+
+export const getFavorite = async (title: string) => {
+  const isFavorite = await recipeDB.favorites.get(title);
+  console.log({ isFavorite });
+  return Boolean(isFavorite?.title);
+};
+
+export const setIsFavorite = async (title: string, isFavorite: boolean) => {
+  if (isFavorite) {
+    recipeDB.favorites.add({ title });
+  } else {
+    recipeDB.favorites.delete(title);
+  }
 };
