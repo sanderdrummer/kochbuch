@@ -25,10 +25,7 @@ export default function RecipeDetailsView() {
   return (
     <RecipeDetails recipe={recipe}>
       {recipe?.title && (
-        <div className="flex gap-8">
-          <FavoriteToggleButton title={recipe.title} isFavorite={isFavorite} />
-          <AddRecipeToList recipe={recipe} />
-        </div>
+        <FavoriteToggleButton title={recipe.title} isFavorite={isFavorite} />
       )}
     </RecipeDetails>
   );
@@ -41,7 +38,10 @@ export const getAmount = (amount: string, modifier = 1) => {
   return `${Number(amount) * modifier}`;
 };
 
-export const RecipeDetails = (props: {
+export const RecipeDetails = ({
+  children,
+  recipe,
+}: {
   children: ReactNode;
   recipe?: Recipe;
 }) => {
@@ -54,7 +54,7 @@ export const RecipeDetails = (props: {
       labeledBy={id}
       className="mx-auto container whitespace-pre-wrap px-5"
     >
-      <H1 id={id}>{props.recipe?.title}</H1>
+      <H1 id={id}>{recipe?.title}</H1>
       <div className="mb-8 sm:grid-flow-col grid justify-between">
         <label className="mb-8 sm:mtb0 sm:order-2">
           <span className="mr-4 text-stone-400 font-normal">Menge:</span>
@@ -71,7 +71,7 @@ export const RecipeDetails = (props: {
           </select>
         </label>
         <ul className="sm:order-1">
-          {props.recipe?.ingredients.map((ingredient) => (
+          {recipe?.ingredients.map((ingredient) => (
             <li key={ingredient.name}>
               <span className="text-stone-400">
                 {getAmount(ingredient.amount, modifier)}
@@ -82,9 +82,12 @@ export const RecipeDetails = (props: {
           ))}
         </ul>
       </div>
-      <p>{props.recipe?.description}</p>
+      <p>{recipe?.description}</p>
 
-      <div className="mt-12 mb-8">{props.children}</div>
+      <div className="mt-12 mb-8 flex gap-8">
+        {children}
+        {recipe && <AddRecipeToList recipe={recipe} modifier={modifier} />}
+      </div>
     </HeightWrapper>
   );
 };
