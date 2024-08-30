@@ -1,4 +1,4 @@
-import { IconLink } from "./IconLink";
+import { IconLink } from './IconLink'
 export const RecipePlanNavTab = () => {
   return (
     <IconLink
@@ -8,10 +8,10 @@ export const RecipePlanNavTab = () => {
           <path d="M14 10H2v2h12v-2zm0-4H2v2h12V6zM2 16h8v-2H2v2zm19.5-4.5L23 13l-6.99 7-4.51-4.5L13 14l3.01 3 5.49-5.5z" />
         </svg>
       }
-      label={"Kochplan"}
+      label={'Kochplan'}
     />
-  );
-};
+  )
+}
 
 export const RecipeNavTab = () => {
   return (
@@ -23,7 +23,7 @@ export const RecipeNavTab = () => {
           <path d="M17.5 10.5c.88 0 1.73.09 2.5.26V9.24c-.79-.15-1.64-.24-2.5-.24-1.7 0-3.24.29-4.5.83v1.66c1.13-.64 2.7-.99 4.5-.99zM13 12.49v1.66c1.13-.64 2.7-.99 4.5-.99.88 0 1.73.09 2.5.26V11.9c-.79-.15-1.64-.24-2.5-.24-1.7 0-3.24.3-4.5.83zM17.5 14.33c-1.7 0-3.24.29-4.5.83v1.66c1.13-.64 2.7-.99 4.5-.99.88 0 1.73.09 2.5.26v-1.52c-.79-.16-1.64-.24-2.5-.24z" />
         </svg>
       }
-      label={"Rezepte"}
+      label={'Rezepte'}
     />
-  );
-};
+  )
+}

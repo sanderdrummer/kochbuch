@@ -1,10 +1,10 @@
-import { Link } from "@remix-run/react";
-import { type ReactNode } from "react";
+import { Link } from '@remix-run/react'
+import { type ReactNode } from 'react'
 
 export const IconLink = (props: {
-  icon: ReactNode;
-  label: ReactNode;
-  to: string;
+  icon: ReactNode
+  label: ReactNode
+  to: string
 }) => {
   return (
     <Link
@@ -14,5 +14,5 @@ export const IconLink = (props: {
       <span className="size-8">{props.icon}</span>
       {props.label}
     </Link>
-  );
-};
+  )
+}

@@ -2,52 +2,52 @@ import {
   type ClientLoaderFunctionArgs,
   redirect,
   useLoaderData,
-} from "@remix-run/react";
-import { type ReactNode, useId, useState } from "react";
-import { H1 } from "~/components/Header";
-import { HeightWrapper } from "~/components/Layout";
-import { getRecipe, type Recipe, getFavorite } from "~/resources/recipes";
-import { FavoriteToggleButton } from "./favorite-button";
-import { AddRecipeToList } from "./add-recipe-to-list";
+} from '@remix-run/react'
+import { type ReactNode, useId, useState } from 'react'
+import { H1 } from '~/components/Header'
+import { HeightWrapper } from '~/components/Layout'
+import { getRecipe, type Recipe, getFavorite } from '~/resources/recipes'
+import { FavoriteToggleButton } from './favorite-button'
+import { AddRecipeToList } from './add-recipe-to-list'
 
 export async function clientLoader({ params }: ClientLoaderFunctionArgs) {
-  const title = params.title;
+  const title = params.title
   if (!title) {
-    return redirect("/");
+    return redirect('/')
   }
-  const recipe = await getRecipe(title);
-  const isFavorite = await getFavorite(title);
-  return { recipe, isFavorite };
+  const recipe = await getRecipe(title)
+  const isFavorite = await getFavorite(title)
+  return { recipe, isFavorite }
 }
 
 export default function RecipeDetailsView() {
-  const { recipe, isFavorite } = useLoaderData<typeof clientLoader>();
+  const { recipe, isFavorite } = useLoaderData<typeof clientLoader>()
   return (
     <RecipeDetails recipe={recipe}>
       {recipe?.title && (
         <FavoriteToggleButton title={recipe.title} isFavorite={isFavorite} />
       )}
     </RecipeDetails>
-  );
+  )
 }
 
 export const getAmount = (amount: string, modifier = 1) => {
-  if (Number(amount) === 0) return "";
-  if (modifier === 1) return amount;
+  if (Number(amount) === 0) return ''
+  if (modifier === 1) return amount
 
-  return `${Number(amount) * modifier}`;
-};
+  return `${Number(amount) * modifier}`
+}
 
 export const RecipeDetails = ({
   children,
   recipe,
 }: {
-  children: ReactNode;
-  recipe?: Recipe;
+  children: ReactNode
+  recipe?: Recipe
 }) => {
-  const [modifier, setModifier] = useState(1);
-  const scales = [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2];
-  const id = useId();
+  const [modifier, setModifier] = useState(1)
+  const scales = [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2]
+  const id = useId()
 
   return (
     <HeightWrapper
@@ -89,5 +89,5 @@ export const RecipeDetails = ({
         {recipe && <AddRecipeToList recipe={recipe} modifier={modifier} />}
       </div>
     </HeightWrapper>
-  );
-};
+  )
+}

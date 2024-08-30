@@ -1,39 +1,39 @@
-import { useReducer } from "react";
-import { RecipeListItem } from "~/resources/recipes";
+import { useReducer } from 'react'
+import { RecipeListItem } from '~/resources/recipes'
 
 type RecipeDetails = {
-  recipe: Recipe;
-  isFavorite: boolean;
-};
+  recipe: Recipe
+  isFavorite: boolean
+}
 type RecipeState = {
-  recipes: RecipeListItem[] | "pending";
-  selectedRecipe: RecipeDetails | "pending";
-};
+  recipes: RecipeListItem[] | 'pending'
+  selectedRecipe: RecipeDetails | 'pending'
+}
 type Action =
   | {
-      type: "setRecipes";
-      recipes: RecipeListItem;
+      type: 'setRecipes'
+      recipes: RecipeListItem
     }
   | {
-      type: "setRecipeDetails";
-      selectedRecipe: RecipeDetails;
+      type: 'setRecipeDetails'
+      selectedRecipe: RecipeDetails
     }
   | {
-      type: "recipesPending";
+      type: 'recipesPending'
     }
-  | { type: "selectedRecipesPending" }
-  | { type: "refresh" };
+  | { type: 'selectedRecipesPending' }
+  | { type: 'refresh' }
 const initialState: RecipeState = {
-  recipes: "pending",
-  selectedRecipe: "pending",
-};
+  recipes: 'pending',
+  selectedRecipe: 'pending',
+}
 const recipeReducer = (state: RecipeState, action: Action): RecipeState => {
   switch (action.type) {
     default:
-      return state;
+      return state
   }
-};
+}
 
 export const useRecipes = () => {
-  const [state, dispatch] = useReducer(recipeReducer, initialState);
-};
+  const [state, dispatch] = useReducer(recipeReducer, initialState)
+}

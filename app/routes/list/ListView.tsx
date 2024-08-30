@@ -1,21 +1,21 @@
-import { H1 } from "~/components/Header";
-import { PlusIcon } from "~/components/Icons";
-import { LoadingButton } from "~/components/Inputs";
-import { HeightWrapper } from "~/components/Layout";
+import { H1 } from '~/components/Header'
+import { PlusIcon } from '~/components/Icons'
+import { LoadingButton } from '~/components/Inputs'
+import { HeightWrapper } from '~/components/Layout'
 import {
   markItemAsDone,
   markItemAsTodo,
   clearDone,
   ListItem,
-} from "./ListResource";
-import { useId } from "react";
-import { Link } from "@remix-run/react";
-import useSWR from "swr";
-import { getShoppingList } from "~/resources/list";
+} from './ListResource'
+import { useId } from 'react'
+import { Link } from '@remix-run/react'
+import useSWR from 'swr'
+import { getShoppingList } from '~/resources/list'
 
 export default function ListView() {
-  const { data: list, mutate: refetch } = useSWR("list", getShoppingList);
-  const id = useId();
+  const { data: list, mutate: refetch } = useSWR('list', getShoppingList)
+  const id = useId()
   return (
     <HeightWrapper labeledBy={id} className="mx-auto container">
       <div className="grid grid-flow-col items-start mx-2">
@@ -31,8 +31,8 @@ export default function ListView() {
       <ItemList
         heading="Noch in den Korb"
         action={async (item) => {
-          await markItemAsDone(item);
-          await refetch();
+          await markItemAsDone(item)
+          await refetch()
         }}
         emptyState="Nichts mehr einzukaufen!"
         items={list?.todo ?? []}
@@ -40,8 +40,8 @@ export default function ListView() {
       <ItemList
         heading="Schon dabei"
         action={async (item) => {
-          await markItemAsTodo(item);
-          await refetch();
+          await markItemAsTodo(item)
+          await refetch()
         }}
         emptyState="Noch nichts eingekauft!"
         items={list?.done ?? []}
@@ -52,20 +52,20 @@ export default function ListView() {
           className="text-red-400 mt-10 mb-8"
           label="Neue Liste"
           onClick={async () => {
-            await clearDone();
-            await refetch();
+            await clearDone()
+            await refetch()
           }}
         />
       )}
     </HeightWrapper>
-  );
+  )
 }
 
 const ItemList = (props: {
-  items: ListItem[];
-  emptyState: string;
-  heading: string;
-  action: (item: ListItem) => void;
+  items: ListItem[]
+  emptyState: string
+  heading: string
+  action: (item: ListItem) => void
 }) => {
   return (
     <div className="mt-5 p-3">
@@ -92,5 +92,5 @@ const ItemList = (props: {
         ))}
       </ul>
     </div>
-  );
-};
+  )
+}
