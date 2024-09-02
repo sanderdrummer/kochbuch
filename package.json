@@ -9,7 +9,7 @@
     "dev": "remix vite:dev",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
     "preview": "vite preview",
-    "deploy": "gh-pages -d dist",
+    "deploy": "gh-pages -d build/client",
     "format": "prettier . --write",
     "cy:open": "cypress open",
     "typecheck": "tsc"

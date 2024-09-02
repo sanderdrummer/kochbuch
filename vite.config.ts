@@ -4,8 +4,10 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig({
+  base: '/kochbuch/',
   plugins: [
     remix({
+      basename: '/kochbuch/',
       ssr: false,
       routes(defineRoutes) {
         return defineRoutes((route) => {
