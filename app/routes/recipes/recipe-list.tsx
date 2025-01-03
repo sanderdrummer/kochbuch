@@ -1,11 +1,11 @@
 import { Link } from '@remix-run/react'
 import { type ReactNode } from 'react'
-import { type RecipeListItem } from '~/resources/recipes'
+import { type Recipe } from '~/resources/recipes'
 import { FavoriteToggleButton } from './favorite-button'
 import { AddRecipeToList } from './add-recipe-to-list'
 
 type RecipeListProps = {
-  recipes: RecipeListItem[]
+  recipes: Recipe[]
   emptyState: ReactNode
 }
 export const RecipeList = ({ recipes, emptyState }: RecipeListProps) => {
@@ -24,10 +24,7 @@ export const RecipeList = ({ recipes, emptyState }: RecipeListProps) => {
               {recipe.title}
             </Link>
             <div className="flex gap-8">
-              <FavoriteToggleButton
-                title={recipe.title}
-                isFavorite={recipe.isFavorite}
-              />
+              <FavoriteToggleButton title={recipe.title} />
               <AddRecipeToList recipe={recipe} />
             </div>
           </li>

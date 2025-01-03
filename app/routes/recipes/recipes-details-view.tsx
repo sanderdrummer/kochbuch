@@ -1,32 +1,19 @@
-import {
-  type ClientLoaderFunctionArgs,
-  redirect,
-  useLoaderData,
-} from '@remix-run/react'
 import { type ReactNode, useId, useState } from 'react'
 import { H1 } from '~/components/Header'
 import { HeightWrapper } from '~/components/Layout'
-import { getRecipe, type Recipe, getFavorite } from '~/resources/recipes'
+import { type Recipe } from '~/resources/recipes'
 import { FavoriteToggleButton } from './favorite-button'
 import { AddRecipeToList } from './add-recipe-to-list'
-
-export async function clientLoader({ params }: ClientLoaderFunctionArgs) {
-  const title = params.title
-  if (!title) {
-    return redirect('/')
-  }
-  const recipe = await getRecipe(title)
-  const isFavorite = await getFavorite(title)
-  return { recipe, isFavorite }
-}
+import { useRecipeStore } from '~/resources/recipes-store'
+import { useParams } from '@remix-run/react'
 
 export default function RecipeDetailsView() {
-  const { recipe, isFavorite } = useLoaderData<typeof clientLoader>()
+  const { title } = useParams<{ title: string }>()
+  const { getRecipeByTitle } = useRecipeStore()
+  const recipe = getRecipeByTitle(title ?? '')
   return (
     <RecipeDetails recipe={recipe}>
-      {recipe?.title && (
-        <FavoriteToggleButton title={recipe.title} isFavorite={isFavorite} />
-      )}
+      {recipe?.title && <FavoriteToggleButton title={recipe.title} />}
     </RecipeDetails>
   )
 }

@@ -19,7 +19,7 @@ export type Favorite = {
   title: string
 }
 
-const fetchRecipes = async () => {
+export const fetchRecipes = async () => {
   const res = await fetch(
     'https://raw.githubusercontent.com/sanderdrummer/recipes-md/master/parsed-recipes.json'
   )
