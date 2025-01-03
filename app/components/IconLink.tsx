@@ -1,18 +1,20 @@
-import { Link } from '@remix-run/react'
+import { NavLink, type NavLinkProps } from '@remix-run/react'
 import { type ReactNode } from 'react'
 
-export const IconLink = (props: {
+export type IconLinkProps = NavLinkProps & {
   icon: ReactNode
   label: ReactNode
-  to: string
-}) => {
+}
+export const IconLink = ({ icon, to, ...props }: IconLinkProps) => {
   return (
-    <Link
-      className="font-extralight gap-1 grid align-items-center justify-items-center fill-stone-500 hover:fill-stone-300 text-stone-500 hover:text-stone-300"
-      to={props.to}
+    <NavLink
+      className={({ isActive }) =>
+        `font-extralight gap-1 grid align-items-center justify-items-center ${isActive ? 'text-stone-300 fill-stone-300' : 'text-stone-500 fill-stone-500 hover:text-stone-300 hover:fill-stone-300'}`
+      }
+      to={to}
     >
-      <span className="size-8">{props.icon}</span>
+      <span className="size-8">{icon}</span>
       {props.label}
-    </Link>
+    </NavLink>
   )
 }
