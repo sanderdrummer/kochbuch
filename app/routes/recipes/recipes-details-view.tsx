@@ -59,7 +59,7 @@ export const RecipeDetails = ({
         </label>
         <ul className="sm:order-1">
           {recipe?.ingredients.map((ingredient) => (
-            <li key={ingredient.name}>
+            <li key={`${ingredient.name}-${ingredient.amount}`}>
               <span className="text-stone-400">
                 {getAmount(ingredient.amount, modifier)}
                 {ingredient.scale}

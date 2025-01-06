@@ -71,7 +71,7 @@ const ItemList = (props: {
     <div className="mt-5 p-3">
       <h2 className="text-2xl font-normal">{props.heading}</h2>
       <ul className="divide-y list-none divide-stone-800">
-        {!props.items && (
+        {props.items.length === 0 && (
           <li className="p-3 font-extralight text-lg">{props.emptyState}</li>
         )}
         {props.items.map((item) => (
