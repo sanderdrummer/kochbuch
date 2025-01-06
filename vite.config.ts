@@ -14,7 +14,7 @@ export default defineConfig({
           route('/', 'routes/recipes/recipes-view.tsx', { index: true })
           route('/recipes/:title', 'routes/recipes/recipes-details-view.tsx')
           route('/list', 'routes/list/ListView.tsx')
-          route('/list/add', 'routes/list/AddListItemsForm.tsx')
+          route('/list/add', 'routes/list/add-list-items-form.tsx')
         })
       },
       future: {

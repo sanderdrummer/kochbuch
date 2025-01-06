@@ -1,7 +1,8 @@
 import { PlusIcon } from '~/components/Icons'
 import { LoadingButton } from '~/components/Inputs'
-import { addItemsToList } from '~/resources/list'
+import { useListStore } from '~/resources/list'
 import { type Recipe } from '~/resources/recipes'
+import { v7 as uuid } from 'uuid'
 
 export const AddRecipeToList = ({
   recipe,
@@ -10,6 +11,7 @@ export const AddRecipeToList = ({
   recipe: Recipe
   modifier?: number
 }) => {
+  const addItemsToList = useListStore((store) => store.addTodo)
   return (
     <LoadingButton
       message={`${recipe.title} zur Einkaufsliste hinzugefügt`}
@@ -18,9 +20,10 @@ export const AddRecipeToList = ({
       label={''}
       onClick={async () => {
         if (recipe) {
-          await addItemsToList(
+          addItemsToList(
             recipe.ingredients.map((item) => {
               return {
+                id: uuid(),
                 amount: item.amount ? `${Number(item.amount) * modifier}` : '',
                 scale: item.scale,
                 title: item.name,

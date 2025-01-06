@@ -1,40 +1,5 @@
-import Dexie, { Table } from 'dexie'
-
-export type ListItem = {
-  amount: string
-  scale: string
-  title: string
-}
-
-export type ShoppingList = {
-  todo: ListItem[]
-  done: ListItem[]
-}
-
-class ListDatabase extends Dexie {
-  todo!: Table<ListItem, string>
-  done!: Table<ListItem, string>
-
-  constructor() {
-    super('ListDatabase')
-    this.version(2).stores({
-      todo: '&title',
-      done: '&title',
-    })
-  }
-}
-
-const listDB = new ListDatabase()
-
-export const getShoppingList = async (): Promise<ShoppingList> => {
-  const todo = await listDB.todo.toArray()
-  const done = await listDB.done.toArray()
-
-  return {
-    todo,
-    done,
-  }
-}
+import { v7 as uuid } from 'uuid'
+import { type ListItem } from '~/resources/list'
 
 export const parseListItem = (itemString: string): ListItem | null => {
   if (itemString.match(/^\d+/)) {
@@ -43,12 +8,14 @@ export const parseListItem = (itemString: string): ListItem | null => {
     const scaleAndTitle = itemString.replace(amount, '')
     const [scale = '', title = ''] = scaleAndTitle.split(' ')
     return {
+      id: uuid(),
       amount,
       scale,
       title,
     }
   } else if (itemString.trim().length > 0) {
     return {
+      id: uuid(),
       amount: '',
       scale: '',
       title: itemString,
@@ -65,33 +32,4 @@ export const parseStringToListItems = (value: string): ListItem[] => {
     }
     return items
   }, [])
-}
-
-export const addItemsToList = async (items: ListItem[]) => {
-  const promises = items.map(async (item) => {
-    const existingItem = await listDB.todo.get(item.title)
-    if (existingItem) {
-      listDB.todo.update(item.title, {
-        amount: Number(existingItem.amount) + Number(item.amount),
-      })
-    } else {
-      listDB.todo.put(item)
-    }
-  })
-
-  await Promise.all(promises)
-}
-
-export const markItemAsDone = async (item: ListItem) => {
-  await listDB.todo.delete(item.title)
-  await listDB.done.add(item)
-}
-
-export const markItemAsTodo = async (item: ListItem) => {
-  await listDB.done.delete(item.title)
-  await listDB.todo.add(item)
-}
-
-export const clearDone = async () => {
-  await listDB.done.clear()
 }

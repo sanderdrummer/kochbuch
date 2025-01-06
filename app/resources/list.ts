@@ -1,6 +1,8 @@
-import Dexie, { Table } from 'dexie'
+import { create } from 'zustand'
+import { persist, createJSONStorage } from 'zustand/middleware'
 
 export type ListItem = {
+  id: string
   amount: string
   scale: string
   title: string
@@ -11,87 +13,70 @@ export type ShoppingList = {
   done: ListItem[]
 }
 
-class ListDatabase extends Dexie {
-  todo!: Table<ListItem, string>
-  done!: Table<ListItem, string>
-
-  constructor() {
-    super('ListDatabase')
-    this.version(3).stores({
-      todo: '&title',
-      done: '&title',
-    })
-  }
-}
-
-const listDB = new ListDatabase()
-
-export const getShoppingList = async (): Promise<ShoppingList> => {
-  const todo = await listDB.todo.toArray()
-  const done = await listDB.done.toArray()
-
-  return {
-    todo,
-    done,
-  }
-}
-
-export const parseListItem = (itemString: string): ListItem | null => {
-  if (itemString.match(/^\d+/)) {
-    const START_WITH_FLOAT = /^(([0-9]*[.])?[0-9]+)/
-    const [amount = ''] = itemString.match(START_WITH_FLOAT) ?? []
-    const scaleAndTitle = itemString.replace(amount, '')
-    const [scale = '', title = ''] = scaleAndTitle.split(' ')
-    return {
-      amount,
-      scale,
-      title,
+const mergeItems = (items: ListItem[]) => {
+  return items.reduce<ListItem[]>((mergedItems, item) => {
+    const index = mergedItems.findIndex(
+      (maybeItem) =>
+        maybeItem.title === item.title && maybeItem.scale === item.scale
+    )
+    const maybeItem = mergedItems[index]
+    if (maybeItem) {
+      const amount = Number(maybeItem.amount) ?? 1
+      const itemAmount = Number(item.amount) ?? 1
+      maybeItem.amount = (amount + itemAmount).toString()
+      mergedItems[index] = maybeItem
+      return mergedItems
     }
-  } else if (itemString.trim().length > 0) {
-    return {
-      amount: '',
-      scale: '',
-      title: itemString,
-    }
-  }
-  return null
-}
 
-export const parseStringToListItems = (value: string): ListItem[] => {
-  return value.split('\n').reduce<ListItem[]>((items, item) => {
-    const parsed = parseListItem(item)
-    if (parsed) {
-      items.push(parsed)
-    }
-    return items
+    return [...mergedItems, item]
   }, [])
 }
 
-export const addItemsToList = async (items: ListItem[]) => {
-  const promises = items.map(async (item) => {
-    const existingItem = await listDB.todo.get(item.title)
-    if (existingItem) {
-      listDB.todo.update(item.title, {
-        amount: Number(existingItem.amount) + Number(item.amount),
-      })
-    } else {
-      listDB.todo.put(item)
+export type ListStore = {
+  todo: ListItem[]
+  done: ListItem[]
+  itemsToAdd: string
+  setItemsToAdd: (items: string) => void
+  clear: VoidFunction
+  markAsTodo: (item: ListItem) => void
+  markAsDone: (item: ListItem) => void
+  addTodo: (items: ListItem[]) => void
+}
+
+export const useListStore = create(
+  persist<ListStore>(
+    (set, get) => ({
+      todo: [],
+      done: [],
+      itemsToAdd: '',
+      setItemsToAdd: (items: string) => {
+        set({ itemsToAdd: items })
+      },
+      clear: () => {
+        set({ done: [] })
+      },
+      markAsTodo: (item: ListItem) => {
+        const { todo, done } = get()
+        set({
+          todo: [...todo, item],
+          done: done.filter((doneItem) => doneItem !== item),
+        })
+      },
+      markAsDone: (item: ListItem) => {
+        const { todo, done } = get()
+        set({
+          done: [...done, item],
+          todo: todo.filter((todoItem) => todoItem !== item),
+        })
+      },
+      addTodo: (items: ListItem[]) => {
+        const { todo } = get()
+        set({ todo: mergeItems([...todo, ...items]) })
+      },
+    }),
+    {
+      name: 'list-storage',
+      storage: createJSONStorage(() => sessionStorage),
     }
-  })
-
-  await Promise.all(promises)
-}
-
-export const markItemAsDone = async (item: ListItem) => {
-  await listDB.todo.delete(item.title)
-  await listDB.done.add(item)
-}
-
-export const markItemAsTodo = async (item: ListItem) => {
-  await listDB.done.delete(item.title)
-  await listDB.todo.add(item)
-}
-
-export const clearDone = async () => {
-  await listDB.done.clear()
-}
+  )
+)

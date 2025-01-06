@@ -1,20 +1,13 @@
 import { H1 } from '~/components/Header'
 import { PlusIcon } from '~/components/Icons'
-import { LoadingButton } from '~/components/Inputs'
+import { Button } from '~/components/Inputs'
 import { HeightWrapper } from '~/components/Layout'
-import {
-  markItemAsDone,
-  markItemAsTodo,
-  clearDone,
-  ListItem,
-} from './ListResource'
 import { useId } from 'react'
-import { Link } from '@remix-run/react'
-import useSWR from 'swr'
-import { getShoppingList } from '~/resources/list'
+import { Link } from '@remix-run/react';
+import { ListItem, useListStore } from '~/resources/list'
 
 export default function ListView() {
-  const { data: list, mutate: refetch } = useSWR('list', getShoppingList)
+  const { todo, done, clear, markAsDone, markAsTodo } = useListStore()
   const id = useId()
   return (
     <HeightWrapper labeledBy={id} className="mx-auto container">
@@ -30,30 +23,27 @@ export default function ListView() {
       </div>
       <ItemList
         heading="Noch in den Korb"
-        action={async (item) => {
-          await markItemAsDone(item)
-          await refetch()
+        action={(item) => {
+          markAsDone(item)
         }}
         emptyState="Nichts mehr einzukaufen!"
-        items={list?.todo ?? []}
+        items={todo}
       />
       <ItemList
         heading="Schon dabei"
-        action={async (item) => {
-          await markItemAsTodo(item)
-          await refetch()
+        action={(item) => {
+          markAsTodo(item)
         }}
         emptyState="Noch nichts eingekauft!"
-        items={list?.done ?? []}
+        items={done}
       />
 
-      {(list?.done?.length ?? 0) > 0 && (
-        <LoadingButton
+      {(done.length ?? 0) > 0 && (
+        <Button
           className="text-red-400 mt-10 mb-8"
           label="Neue Liste"
-          onClick={async () => {
-            await clearDone()
-            await refetch()
+          onClick={() => {
+            clear()
           }}
         />
       )}
@@ -76,17 +66,17 @@ const ItemList = (props: {
         )}
         {props.items.map((item) => (
           <li
-            key={item.amount + item.title}
+            key={item.id}
             className="font-extralight text-lg grid grid-flow-col justify-between"
           >
-            <LoadingButton
+            <Button
               label={
                 <span>
                   {item.amount}
                   {item.scale} {item.title}
                 </span>
               }
-              onClick={async () => props.action(item)}
+              onClick={() => props.action(item)}
             />
           </li>
         ))}
