@@ -1,5 +1,5 @@
-import { ListNavTab } from '~/routes/list/ListTab'
-import { RecipeNavTab } from './Tabs'
+import { ListNavTab } from "~/routes/list/ListTab";
+import { RecipeNavTab } from "./Tabs";
 
 export const Navbar = (props: { className?: string }) => {
   return (
@@ -8,12 +8,12 @@ export const Navbar = (props: { className?: string }) => {
     >
       <div
         className={`p-2 pb-4 grid justify-center gap-8 grid-flow-col ${
-          props.className ?? ''
+          props.className ?? ""
         }`}
       >
         <RecipeNavTab />
         <ListNavTab />
       </div>
     </nav>
-  )
-}
+  );
+};

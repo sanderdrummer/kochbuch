@@ -1,4 +1,4 @@
-import { IconLink } from '~/components/IconLink'
+import { IconLink } from "~/components/IconLink";
 
 export const ListNavTab = () => {
   return (
@@ -11,5 +11,5 @@ export const ListNavTab = () => {
         </svg>
       }
     />
-  )
-}
+  );
+};

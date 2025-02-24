@@ -1,7 +1,7 @@
-import { vitePlugin as remix } from '@remix-run/dev'
-import { defineConfig } from 'vite'
-import tsconfigPaths from 'vite-tsconfig-paths'
-import { VitePWA } from 'vite-plugin-pwa'
+import { vitePlugin as remix } from "@remix-run/dev";
+import { defineConfig } from "vite";
+import tsconfigPaths from "vite-tsconfig-paths";
+import { VitePWA } from "vite-plugin-pwa";
 
 export default defineConfig({
   plugins: [
@@ -9,11 +9,11 @@ export default defineConfig({
       ssr: false,
       routes(defineRoutes) {
         return defineRoutes((route) => {
-          route('/', 'routes/recipes/recipes-view.tsx', { index: true })
-          route('/recipes/:title', 'routes/recipes/recipes-details-view.tsx')
-          route('/list', 'routes/list/ListView.tsx')
-          route('/list/add', 'routes/list/AddListItemsForm.tsx')
-        })
+          route("/", "routes/recipes/recipes-view.tsx", { index: true });
+          route("/recipes/:title", "routes/recipes/recipes-details-view.tsx");
+          route("/list", "routes/list/ListView.tsx");
+          route("/list/add", "routes/list/AddListItemsForm.tsx");
+        });
       },
       future: {
         v3_fetcherPersist: true,
@@ -23,26 +23,26 @@ export default defineConfig({
     }),
     tsconfigPaths(),
     VitePWA({
-      registerType: 'autoUpdate',
+      registerType: "autoUpdate",
       manifest: {
-        name: 'Kochbuch',
-        short_name: 'Kochbuch',
-        description: 'Kochbuch und Einkaufsliste',
-        theme_color: '#1c1917',
+        name: "Kochbuch",
+        short_name: "Kochbuch",
+        description: "Kochbuch und Einkaufsliste",
+        theme_color: "#1c1917",
         icons: [
           {
-            src: 'android-chrome-192x192.png',
-            sizes: '192x192',
-            type: 'image/png',
+            src: "android-chrome-192x192.png",
+            sizes: "192x192",
+            type: "image/png",
           },
           {
-            src: 'android-chrome-512x512.png',
-            sizes: '512x512',
-            type: 'image/png',
+            src: "android-chrome-512x512.png",
+            sizes: "512x512",
+            type: "image/png",
           },
         ],
       },
       devOptions: { enabled: false },
     }),
   ],
-})
+});

@@ -1,13 +1,13 @@
-import { CrossIcon, SearchIcon } from './Icons'
+import { CrossIcon, SearchIcon } from "./Icons";
 
 export const SearchBar = (props: {
-  placeholder?: string
-  query: string
-  setQuery: (query: string) => void
+  placeholder?: string;
+  query: string;
+  setQuery: (query: string) => void;
 }) => {
   return (
     <label className="w-full block relative">
-      <span className="sr-only">{props.placeholder ?? 'Suche'}</span>
+      <span className="sr-only">{props.placeholder ?? "Suche"}</span>
       <span className="absolute inset-y-0 left-0 flex items-center pl-2">
         <SearchIcon className="h-5 w-5 fill-stone-300" />
       </span>
@@ -20,12 +20,12 @@ export const SearchBar = (props: {
       />
       {props.query.length > 0 && (
         <button
-          onClick={() => props.setQuery('')}
+          onClick={() => props.setQuery("")}
           className="absolute inset-y-0 right-0 flex items-center pr-2"
         >
           <CrossIcon className="h-5 w-5 fill-stone-300" />
         </button>
       )}
     </label>
-  )
-}
+  );
+};

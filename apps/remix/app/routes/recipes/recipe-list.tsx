@@ -1,13 +1,13 @@
-import { Link } from '@remix-run/react'
-import { type ReactNode } from 'react'
-import { type RecipeListItem } from '~/resources/recipes'
-import { FavoriteToggleButton } from './favorite-button'
-import { AddRecipeToList } from './add-recipe-to-list'
+import { Link } from "@remix-run/react";
+import { type ReactNode } from "react";
+import { type RecipeListItem } from "~/resources/recipes";
+import { FavoriteToggleButton } from "./favorite-button";
+import { AddRecipeToList } from "./add-recipe-to-list";
 
 type RecipeListProps = {
-  recipes: RecipeListItem[]
-  emptyState: ReactNode
-}
+  recipes: RecipeListItem[];
+  emptyState: ReactNode;
+};
 export const RecipeList = ({ recipes, emptyState }: RecipeListProps) => {
   return (
     <div className="mx-auto container">
@@ -34,5 +34,5 @@ export const RecipeList = ({ recipes, emptyState }: RecipeListProps) => {
         ))}
       </ul>
     </div>
-  )
-}
+  );
+};

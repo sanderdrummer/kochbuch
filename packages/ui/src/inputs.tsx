@@ -24,8 +24,9 @@ export const LoadingButton = ({
       {message && <Bubble open={bubbleOpen}>{message}</Bubble>}
       <button
         type="button"
-        className={`p-3 pl-0 grid font-normal text-stone-400 gap-2 grid-flow-col content-center items-center ${className ?? ""
-          }`}
+        className={`p-3 pl-0 grid font-normal text-stone-400 gap-2 grid-flow-col content-center items-center ${
+          className ?? ""
+        }`}
         disabled={disabled || isLoading}
         onClick={() => {
           setIsBubbleOpen(false);

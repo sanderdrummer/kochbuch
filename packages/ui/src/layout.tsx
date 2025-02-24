@@ -49,8 +49,9 @@ export const Bubble = ({
   return (
     <div
       style={{ display: open ? "block" : "none" }}
-      className={`${className ?? ""} z-10 transition transition-opacity ${open ? "opacity-100" : "opacity-0"
-        } shadow bg-stone-700 text-stone-400 font-normal fixed bottom-35 right-5 p-5 rounded`}
+      className={`${className ?? ""} z-10 transition transition-opacity ${
+        open ? "opacity-100" : "opacity-0"
+      } shadow bg-stone-700 text-stone-400 font-normal fixed bottom-35 right-5 p-5 rounded`}
     >
       {children}
     </div>
