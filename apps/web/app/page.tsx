@@ -1,7 +1,7 @@
-import { RecipeList } from "./recipes/recipe-list";
+import { RecipeSearchList } from "./recipes/recipe-search-list";
 import { fetchRecipes } from "./recipes/recipes";
 
 export default async function RecipeListPage() {
   const recipes = await fetchRecipes();
-  return <RecipeList recipes={recipes} emptyState="Noch keine Rezpete" />;
+  return <RecipeSearchList recipes={recipes} />;
 }

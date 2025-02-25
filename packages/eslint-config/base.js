@@ -23,6 +23,8 @@ export const config = [
     rules: {
       "turbo/no-undeclared-env-vars": "warn",
       "unicorn/no-keyword-prefix": "off",
+      "unicorn/prevent-abbreviations": "off",
+      "unicorn/no-array-reduce": "off",
     },
   },
   {

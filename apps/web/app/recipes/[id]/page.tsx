@@ -1,4 +1,5 @@
 import { fetchRecipes } from "../recipes";
+import { RecipeDetails } from "./recipe-details";
 
 export async function generateStaticParams() {
   const recipes = await fetchRecipes();
@@ -18,5 +19,5 @@ export default async function RecipeDetailsPage({
   const recipes = await fetchRecipes();
   const recipe = recipes.find((recipe) => encodeURI(recipe.title) === id);
 
-  return <div>{recipe?.title}</div>;
+  return <RecipeDetails recipe={recipe} children="" />;
 }

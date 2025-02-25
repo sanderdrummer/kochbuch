@@ -20,8 +20,9 @@ const database = new MyDatabase();
 const dexieStorage = {
   getItem: async (name: string) => {
     const record = await database.recipeStorage.get(name);
-    return record ? JSON.parse(record.value) : null;
+    return record ? JSON.parse(record.value) : undefined;
   },
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   setItem: async (name: string, value: any) => {
     await database.recipeStorage.put({
       key: name,
@@ -41,12 +42,11 @@ type RecipeStore = {
   recipes: Recipe[];
   filter: RecipeFilter;
   filteredRecipes: () => Recipe[];
-  refreshRecipes: () => Promise<void>;
+  setRecipes: (recipes: Recipe[]) => void;
   favorites: Record<string, boolean>;
   toggleFavorite: (title: string) => void;
   setQuery: (query: string) => void;
   toggleOnlyFavorites: VoidFunction;
-  getRecipeByTitle: (title: string) => Recipe | undefined;
 };
 
 export const useRecipeStore = create(
@@ -54,8 +54,7 @@ export const useRecipeStore = create(
     (set, get) => ({
       recipes: [],
       filter: { query: "", onlyFavorites: false },
-      refreshRecipes: async () => {
-        const recipes = await fetchRecipes();
+      setRecipes: (recipes: Recipe[]) => {
         set({ recipes });
       },
       filteredRecipes: () => {
@@ -85,9 +84,6 @@ export const useRecipeStore = create(
       setQuery: (query: string) => {
         const { filter } = get();
         set({ filter: { ...filter, query } });
-      },
-      getRecipeByTitle: (title: string) => {
-        return get().recipes.find((recipe) => recipe.title === title);
       },
     }),
     {
