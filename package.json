@@ -7,6 +7,7 @@
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "preview": "npx http-server apps/web/out",
+    "updates": "npx npm-check-updates --workspaces",
     "check-types": "turbo run check-types"
   },
   "devDependencies": {
