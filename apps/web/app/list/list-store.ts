@@ -113,7 +113,7 @@ export const useListStore = create(
   ),
 );
 
-export const parseListItem = (itemString: string): ListItem | null => {
+export const parseListItem = (itemString: string): ListItem | undefined => {
   if (/^\d+/.test(itemString)) {
     const START_WITH_FLOAT = /^((\d*\.)?\d+)/;
     const [amount = ""] = itemString.match(START_WITH_FLOAT) ?? [];
@@ -133,7 +133,7 @@ export const parseListItem = (itemString: string): ListItem | null => {
       title: itemString,
     };
   }
-  return null;
+  return undefined;
 };
 
 export const parseStringToListItems = (value: string): ListItem[] => {

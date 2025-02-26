@@ -1,3 +1,5 @@
+"use client";
+
 import { Heart, HeartOutline } from "@kochbuch/ui/icons";
 import { ComponentProps } from "react";
 import { useRecipeStore } from "./recipe-store";
