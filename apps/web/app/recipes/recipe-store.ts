@@ -2,13 +2,13 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import Dexie from "dexie";
-import { fetchRecipes, Recipe } from "./recipes";
+import { Recipe } from "./recipes";
 
-class MyDatabase extends Dexie {
+class RecipeDataBase extends Dexie {
   recipeStorage: Dexie.Table<{ key: string; value: string }, string>;
 
   constructor() {
-    super("MyDatabase");
+    super("RecipeDataBase");
     this.version(1).stores({
       recipeStorage: "key",
     });
@@ -16,7 +16,7 @@ class MyDatabase extends Dexie {
   }
 }
 
-const database = new MyDatabase();
+const database = new RecipeDataBase();
 const dexieStorage = {
   getItem: async (name: string) => {
     const record = await database.recipeStorage.get(name);
@@ -65,10 +65,10 @@ export const useRecipeStore = create(
 
         return filter.query
           ? favoritRecipes.filter((recipe) =>
-              recipe.title
-                .toLocaleLowerCase()
-                .includes(filter.query.toLocaleLowerCase()),
-            )
+            recipe.title
+              .toLocaleLowerCase()
+              .includes(filter.query.toLocaleLowerCase()),
+          )
           : favoritRecipes;
       },
       favorites: {},

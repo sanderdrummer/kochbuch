@@ -1,8 +1,10 @@
 "use client";
 import { H1 } from "@kochbuch/ui/header";
 import { HeightWrapper } from "@kochbuch/ui/layout";
-import { ReactNode, useState, useId } from "react";
+import { useState, useId } from "react";
 import { Recipe } from "../recipes";
+import { AddRecipeToList } from "../add-recipe-to-list";
+import { FavoriteToggleButton } from "../favorite-button";
 
 export const getAmount = (amount: string, modifier = 1) => {
   if (Number(amount) === 0) return "";
@@ -11,13 +13,7 @@ export const getAmount = (amount: string, modifier = 1) => {
   return `${Number(amount) * modifier}`;
 };
 
-export const RecipeDetails = ({
-  children,
-  recipe,
-}: {
-  children: ReactNode;
-  recipe?: Recipe;
-}) => {
+export const RecipeDetails = ({ recipe }: { recipe?: Recipe }) => {
   const [modifier, setModifier] = useState(1);
   const scales = [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2];
   const id = useId();
@@ -58,8 +54,8 @@ export const RecipeDetails = ({
       <p>{recipe?.description}</p>
 
       <div className="mt-12 mb-8 flex gap-8">
-        {children}
-        {/* {recipe && <AddRecipeToList recipe={recipe} modifier={modifier} />} */}
+        {recipe && <AddRecipeToList recipe={recipe} modifier={modifier} />}
+        {recipe?.title && <FavoriteToggleButton title={recipe.title} />}
       </div>
     </HeightWrapper>
   );

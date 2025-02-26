@@ -1,8 +1,10 @@
 "use client";
 
 import { type ReactNode } from "react";
-import { Recipe } from "./recipes";
+import { getSafeTitle, Recipe } from "./recipes";
 import Link from "next/link";
+import { AddRecipeToList } from "./add-recipe-to-list";
+import { FavoriteToggleButton } from "./favorite-button";
 
 type RecipeListProperties = {
   recipes: Recipe[];
@@ -22,13 +24,13 @@ export const RecipeList = ({ recipes, emptyState }: RecipeListProperties) => {
           >
             <Link
               className="p-3 no-underline "
-              href={`/recipes/${recipe.title}`}
+              href={`/recipes/${getSafeTitle(recipe.title)}`}
             >
               {recipe.title}
             </Link>
             <div className="flex gap-8">
-              {/* <FavoriteToggleButton title={recipe.title} /> */}
-              {/* <AddRecipeToList recipe={recipe} /> */}
+              <FavoriteToggleButton title={recipe.title} />
+              <AddRecipeToList recipe={recipe} />
             </div>
           </li>
         ))}

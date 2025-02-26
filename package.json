@@ -6,6 +6,7 @@
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "preview": "npx http-server apps/web/out",
     "check-types": "turbo run check-types"
   },
   "devDependencies": {

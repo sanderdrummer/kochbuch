@@ -21,3 +21,7 @@ export const fetchRecipes = async () => {
 
   return recipes as RecipeResponse;
 };
+
+export const getSafeTitle = (title: string) => {
+  return title.replaceAll(" ", "_");
+};

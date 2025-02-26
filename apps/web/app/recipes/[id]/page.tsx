@@ -1,11 +1,11 @@
-import { fetchRecipes } from "../recipes";
+import { fetchRecipes, getSafeTitle } from "../recipes";
 import { RecipeDetails } from "./recipe-details";
 
 export async function generateStaticParams() {
   const recipes = await fetchRecipes();
 
   return recipes.map((recipe) => ({
-    id: encodeURI(recipe.title),
+    id: getSafeTitle(recipe.title),
   }));
 }
 
@@ -17,7 +17,7 @@ export default async function RecipeDetailsPage({
   const resolvedParameters = await params;
   const id = resolvedParameters.id;
   const recipes = await fetchRecipes();
-  const recipe = recipes.find((recipe) => encodeURI(recipe.title) === id);
+  const recipe = recipes.find((recipe) => getSafeTitle(recipe.title) === id);
 
-  return <RecipeDetails recipe={recipe} children="" />;
+  return <RecipeDetails recipe={recipe} />;
 }

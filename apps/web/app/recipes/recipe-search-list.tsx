@@ -1,9 +1,11 @@
 "use client";
+
 import { SearchBar } from "@kochbuch/ui/search-bar";
 import { RecipeList } from "./recipe-list";
 import { Recipe } from "./recipes";
 import { useRecipeStore } from "./recipe-store";
 import { useEffect } from "react";
+import { FavoriteFilterButton } from "./favorite-button";
 
 export const RecipeSearchList = ({ recipes }: { recipes: Recipe[] }) => {
   const { setRecipes, filter, filteredRecipes, setQuery, toggleOnlyFavorites } =
@@ -20,16 +22,16 @@ export const RecipeSearchList = ({ recipes }: { recipes: Recipe[] }) => {
           query={filter.query}
           setQuery={setQuery}
         />
-        {/* <FavoriteFilterButton */}
-        {/*   isFavorite={filter.onlyFavorites} */}
-        {/*   setIsFavorite={toggleOnlyFavorites} */}
-        {/* /> */}
+        <FavoriteFilterButton
+          isFavorite={filter.onlyFavorites}
+          setIsFavorite={toggleOnlyFavorites}
+        />
       </div>
       <RecipeList
         recipes={
           filter.query.length === 0 &&
-          filter.onlyFavorites === false &&
-          filteredRecipes().length === 0
+            filter.onlyFavorites === false &&
+            filteredRecipes().length === 0
             ? recipes
             : filteredRecipes()
         }
