@@ -3,6 +3,7 @@ export type Recipe = {
   ingredients: Ingredient[];
   description: string;
   tags: string[];
+  id: string;
 };
 
 export type Ingredient = {
@@ -19,9 +20,8 @@ export const fetchRecipes = async () => {
   );
   const recipes = await res.json();
 
-  return recipes as RecipeResponse;
-};
-
-export const getSafeTitle = (title: string) => {
-  return title.replaceAll(" ", "_");
+  return (recipes as RecipeResponse).map((recipe, id) => ({
+    ...recipe,
+    id: id.toString(),
+  }));
 };

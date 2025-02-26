@@ -1,7 +1,7 @@
 "use client";
 
 import { type ReactNode } from "react";
-import { getSafeTitle, Recipe } from "./recipes";
+import { Recipe } from "./recipes";
 import Link from "next/link";
 import { AddRecipeToList } from "./add-recipe-to-list";
 import { FavoriteToggleButton } from "./favorite-button";
@@ -22,10 +22,7 @@ export const RecipeList = ({ recipes, emptyState }: RecipeListProperties) => {
             key={recipe.title}
             className="font-extralight text-lg grid grid-flow-col justify-between"
           >
-            <Link
-              className="p-3 no-underline "
-              href={`/recipes/${getSafeTitle(recipe.title)}`}
-            >
+            <Link className="p-3 no-underline " href={`/recipes/${recipe.id}`}>
               {recipe.title}
             </Link>
             <div className="flex gap-8">
