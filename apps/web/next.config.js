@@ -1,12 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: "export",
-  trailingSlash: true,
-  // eslint-disable-next-line no-undef
-  basePath: process.env.PAGES_BASE_PATH,
+  // trailingSlash: true,
+  basePath: "/kochbuch",
   experimental: {
     // typedRoutes: true,
     reactCompiler: true,
+  },
+  images: {
+    unoptimized: true,
   },
 };
 

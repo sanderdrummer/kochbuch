@@ -8,6 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint --max-warnings 0",
+    "deploy-gh": "gh-pages -d out",
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
@@ -30,6 +31,7 @@
     "@types/react-dom": "19.0.3",
     "babel-plugin-react-compiler": "19.0.0-beta-e1e972c-20250221",
     "eslint": "^9.20.0",
+    "gh-pages": "^6.3.0",
     "typescript": "5.7.3"
   }
 }
