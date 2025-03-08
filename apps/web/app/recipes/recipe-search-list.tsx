@@ -32,8 +32,8 @@ export const RecipeSearchList = ({ recipes }: { recipes: Recipe[] }) => {
         path="/recipes/"
         items={
           filter.query.length === 0 &&
-            filter.onlyFavorites === false &&
-            filteredRecipes().length === 0
+          filter.onlyFavorites === false &&
+          filteredRecipes().length === 0
             ? recipes
             : filteredRecipes()
         }

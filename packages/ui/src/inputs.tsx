@@ -1,4 +1,4 @@
-import { ComponentProps, useState, type ReactNode } from "react";
+import { ComponentProps, useId, useState, type ReactNode } from "react";
 import { SpinnerIcon } from "./icons";
 import { Bubble } from "./layout";
 
@@ -60,5 +60,104 @@ export const LoadingButton = (props: {
         }}
       />
     </>
+  );
+};
+
+const useFallbackId = (id?: string) => {
+  const fallBackId = useId();
+  return id ?? fallBackId;
+};
+
+export type InputContextProps = {
+  label: ReactNode;
+  children: ReactNode;
+  helperText?: ReactNode;
+  required?: boolean;
+  invalid?: boolean;
+  helperTextId: string;
+} & ComponentProps<"label">;
+type InputContextConsumerProps = Omit<
+  InputContextProps,
+  "children" | "helperTextId"
+>;
+export const InputContext = ({
+  children,
+  label,
+  helperText,
+  helperTextId,
+  required,
+  invalid,
+  ...props
+}: InputContextProps) => {
+  return (
+    <div>
+      <label {...props}>
+        {label}
+        {required ? "*" : ""}:
+      </label>
+      {children}
+      {helperText && (
+        <p
+          className={`mt-2 ${invalid ? "text-red-200" : ""}`}
+          id={helperTextId}
+        >
+          {helperText}
+        </p>
+      )}
+    </div>
+  );
+};
+
+export const TextArea = ({
+  id: initialId,
+  label,
+  helperText,
+  ...props
+}: ComponentProps<"textarea"> & InputContextConsumerProps) => {
+  const id = useFallbackId(initialId);
+  const helperTextId = useId();
+  return (
+    <InputContext
+      htmlFor={id}
+      label={label}
+      helperTextId={helperTextId}
+      helperText={helperText}
+      required={props.required}
+      invalid={Boolean(props["aria-invalid"])}
+    >
+      <textarea
+        id={id}
+        aria-describedby={helperText ? helperTextId : undefined}
+        className="font-extralight w-full rounded block, p-4 placeholder-stone-500 border-stone-800 text-stone-400 bg-stone-800 focus:outline-none focus:border-stone-400 focus:ring-stone-400 focus:ring-1"
+        {...props}
+      />
+    </InputContext>
+  );
+};
+
+export const Input = ({
+  id: initialId,
+  label,
+  helperText,
+  ...props
+}: ComponentProps<"input"> & InputContextConsumerProps) => {
+  const id = useFallbackId(initialId);
+  const helperTextId = useId();
+  return (
+    <InputContext
+      htmlFor={id}
+      label={label}
+      helperTextId={helperTextId}
+      helperText={helperText}
+      required={props.required}
+      invalid={Boolean(props["aria-invalid"])}
+    >
+      <input
+        id={id}
+        aria-describedby={helperText ? helperTextId : undefined}
+        className="font-extralight w-full rounded block, p-4 placeholder-stone-500 border-stone-800 text-stone-400 bg-stone-800 focus:outline-none focus:border-stone-400 focus:ring-stone-400 focus:ring-1"
+        {...props}
+      />
+    </InputContext>
   );
 };

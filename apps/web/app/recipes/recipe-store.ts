@@ -65,10 +65,10 @@ export const useRecipeStore = create(
 
         return filter.query
           ? favoritRecipes.filter((recipe) =>
-            recipe.title
-              .toLocaleLowerCase()
-              .includes(filter.query.toLocaleLowerCase()),
-          )
+              recipe.title
+                .toLocaleLowerCase()
+                .includes(filter.query.toLocaleLowerCase()),
+            )
           : favoritRecipes;
       },
       favorites: {},
