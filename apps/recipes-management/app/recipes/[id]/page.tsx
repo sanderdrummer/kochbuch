@@ -1,8 +1,8 @@
 import { H1 } from "@kochbuch/ui/header";
-import { getRecipe, updateRecipe } from "../../../db/recipe-service";
+import { getFullRecipe, updateFullRecipe } from "../../../db/recipe-service";
 import { RecipeForm } from "../recipe-form";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 export default async function RecipeUpdateForm({
   params,
@@ -10,26 +10,18 @@ export default async function RecipeUpdateForm({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const recipe = await getRecipe(Number(id));
+  const recipe = await getFullRecipe(Number(id));
   if (!recipe) {
-    return "not found";
+    return notFound();
   }
   return (
     <>
       <H1>{recipe.title} editieren</H1>
       <RecipeForm
-        initialValues={{
-          id: recipe.id,
-          title: recipe.title,
-          description: recipe.description,
-        }}
+        initialValues={recipe}
         action={async (data) => {
           "use server";
-          await updateRecipe({
-            id: Number(data.get("id")),
-            title: data.get("title")?.toString() ?? "",
-            description: data.get("description")?.toString() ?? "",
-          });
+          await updateFullRecipe(data);
           revalidatePath("/");
           redirect("/");
         }}

@@ -43,21 +43,24 @@ export const getRecipeWithIngredients = async (id: number) => {
   return { ...recipe, ingredients };
 };
 
-const addIngredients = (ingredients: IngredientInsert[]) => {
-  const batchInputs = ingredients.map((ingredient) =>
-    db.insert(ingredientsTable).values(ingredient),
-  );
-  const test = db.insert(ingredientsTable).values(ingredients);
-
-  db.batch([test]);
+const cleanIngredients = (recipeId: number) => {
+  return db
+    .delete(ingredientsTable)
+    .where(eq(ingredientsTable.recipeId, recipeId));
 };
 
-export const addRecipe = async (recipe: RecipeInsert) => {
-  return await db.insert(recipesTable).values(recipe);
+const addIngredients = (ingredients: IngredientInsert[]) => {
+  if (ingredients.length) {
+    return db.insert(ingredientsTable).values(ingredients);
+  }
+};
+
+export const addRecipe = (recipe: RecipeInsert) => {
+  return db.insert(recipesTable).values(recipe);
 };
 
 export const updateRecipe = async (recipe: RecipeInsert) => {
-  if (recipe.id) {
+  if (recipe.id !== undefined) {
     await db
       .update(recipesTable)
       .set(recipe)
@@ -67,10 +70,42 @@ export const updateRecipe = async (recipe: RecipeInsert) => {
   }
 };
 
-export const removeRecipe = async (id: number) => {
-  await db.delete(recipesTable).where(eq(recipesTable.id, id));
+export type FullRecipe = {
+  id: number;
+  ingredients: IngredientInsert[];
+} & RecipeInsert;
+export const updateFullRecipe = async ({
+  ingredients,
+  ...recipe
+}: FullRecipe) => {
+  await updateRecipe(recipe);
+  await cleanIngredients(recipe.id);
+  await addIngredients(ingredients);
+};
+export const addFullRecipe = async ({ ingredients, ...recipe }: FullRecipe) => {
+  await addRecipe(recipe);
+  await addIngredients(ingredients);
 };
 
-export const dropRecipes = async () => {
-  await db.delete(recipesTable);
+export const getFullRecipe = async (
+  id: number,
+): Promise<FullRecipe | undefined> => {
+  const recipe = await getRecipe(id);
+  const ingredients = await getIngredients(id);
+  if (recipe) {
+    return {
+      ...recipe,
+      ingredients,
+    };
+  } else {
+    return undefined;
+  }
+};
+
+export const removeRecipe = (id: number) => {
+  return db.delete(recipesTable).where(eq(recipesTable.id, id));
+};
+
+export const dropRecipes = () => {
+  return db.delete(recipesTable);
 };
