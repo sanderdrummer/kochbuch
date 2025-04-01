@@ -34,12 +34,10 @@ export const RecipeForm = ({
   const { register, control, handleSubmit, formState } = useForm({
     values: initialValues,
   });
-  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
-    {
-      control, // control props comes from useForm (optional: if you are using FormProvider)
-      name: "ingredients", // unique name for your Field Array
-    },
-  );
+  const { fields, append, remove } = useFieldArray({
+    control, // control props comes from useForm (optional: if you are using FormProvider)
+    name: "ingredients", // unique name for your Field Array
+  });
   console.log(initialValues);
   return (
     <form
