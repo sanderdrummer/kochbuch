@@ -11,6 +11,7 @@ export default async function AddRecipe() {
       <RecipeForm
         action={async (data) => {
           "use server";
+          throw new Error("oh noe");
           await addFullRecipe(data);
           revalidatePath("/");
           redirect("/");

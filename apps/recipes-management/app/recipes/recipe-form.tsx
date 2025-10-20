@@ -4,6 +4,7 @@ import { useFieldArray, useForm } from "react-hook-form";
 import type { FullRecipe } from "../../db/recipe-service";
 import { Button, Input, TextArea } from "@kochbuch/ui/inputs";
 import type { FieldErrors, FieldValues } from "react-hook-form";
+import { BulkAddDialog } from "./bulk-add-dialog";
 
 export type Response = {
   success?: FullRecipe;
@@ -60,16 +61,27 @@ export const RecipeForm = ({
         placeholder="Carbonara"
         helperText={renderErrorMessage("title", formState.errors)}
       />
+      <BulkAddDialog onAdd={() => { }} />
       {fields.map((field, index) => (
-        <div
-          key={field.id}
-          className="grid grid-cols-[min-content min-content 1fr] gap-2"
-        >
+        <div key={field.id} className="grid items-center md:flex gap-2">
           <input hidden {...register(`ingredients.${index}.id`)} />
-          <Input label="Anzahl" {...register(`ingredients.${index}.amount`)} />
-          <Input label="Einheit" {...register(`ingredients.${index}.scale`)} />
-          <Input label="Zutat" {...register(`ingredients.${index}.name`)} />
+          <Input
+            className="flex-initial w-20"
+            label="Anzahl"
+            {...register(`ingredients.${index}.amount`)}
+          />
+          <Input
+            className="flex-initial w-16"
+            label="Einheit"
+            {...register(`ingredients.${index}.scale`)}
+          />
+          <Input
+            className="flex-1"
+            label="Zutat"
+            {...register(`ingredients.${index}.name`)}
+          />
           <Button
+            className="flex-initial w-15"
             onClick={() => remove(index)}
             label="-"
             aria-label={`${field.name} aus der List nehmen`}
@@ -81,6 +93,7 @@ export const RecipeForm = ({
         label="Neue Zutat hinzufügen"
       />
       <TextArea
+        rows={20}
         label="Beschreibung"
         {...register("description")}
         placeholder="..."

@@ -13,7 +13,9 @@ export const getRecipes = async (query: string) => {
   const items = await db
     .select()
     .from(recipesTable)
-    .where(query.length ? like(recipesTable.title, `%${query}%`) : undefined);
+    .where(
+      query.length > 0 ? like(recipesTable.title, `%${query}%`) : undefined,
+    );
   return items;
 };
 
@@ -50,7 +52,7 @@ const cleanIngredients = (recipeId: number) => {
 };
 
 const addIngredients = (ingredients: IngredientInsert[]) => {
-  if (ingredients.length) {
+  if (ingredients.length > 0) {
     return db.insert(ingredientsTable).values(ingredients);
   }
 };
@@ -60,13 +62,13 @@ export const addRecipe = (recipe: RecipeInsert) => {
 };
 
 export const updateRecipe = async (recipe: RecipeInsert) => {
-  if (recipe.id !== undefined) {
+  if (recipe.id === undefined) {
+    throw new Error("cannot identify recipe to update");
+  } else {
     await db
       .update(recipesTable)
       .set(recipe)
       .where(eq(recipesTable.id, recipe.id));
-  } else {
-    throw new Error("cannot identify recipe to update");
   }
 };
 
@@ -92,20 +94,19 @@ export const getFullRecipe = async (
 ): Promise<FullRecipe | undefined> => {
   const recipe = await getRecipe(id);
   const ingredients = await getIngredients(id);
-  if (recipe) {
-    return {
+  return recipe
+    ? {
       ...recipe,
       ingredients,
-    };
-  } else {
-    return undefined;
-  }
+    }
+    : undefined;
 };
 
 export const removeRecipe = (id: number) => {
   return db.delete(recipesTable).where(eq(recipesTable.id, id));
 };
 
-export const dropRecipes = () => {
-  return db.delete(recipesTable);
+export const dropRecipes = async () => {
+  await db.delete(recipesTable);
+  await db.delete(ingredientsTable);
 };

@@ -78,7 +78,7 @@ export type InputContextProps = {
 } & ComponentProps<"label">;
 type InputContextConsumerProps = Omit<
   InputContextProps,
-  "children" | "helperTextId"
+  "children" | "helperTextId" | "onChange"
 >;
 export const InputContext = ({
   children,
@@ -87,10 +87,11 @@ export const InputContext = ({
   helperTextId,
   required,
   invalid,
+  className,
   ...props
 }: InputContextProps) => {
   return (
-    <div>
+    <div className={className}>
       <label {...props}>
         {label}
         {required ? "*" : ""}:
@@ -139,12 +140,14 @@ export const Input = ({
   id: initialId,
   label,
   helperText,
+  className = "",
   ...props
 }: ComponentProps<"input"> & InputContextConsumerProps) => {
   const id = useFallbackId(initialId);
   const helperTextId = useId();
   return (
     <InputContext
+      className={className}
       htmlFor={id}
       label={label}
       helperTextId={helperTextId}
@@ -155,7 +158,7 @@ export const Input = ({
       <input
         id={id}
         aria-describedby={helperText ? helperTextId : undefined}
-        className="font-extralight w-full rounded block, p-4 placeholder-stone-500 border-stone-800 text-stone-400 bg-stone-800 focus:outline-none focus:border-stone-400 focus:ring-stone-400 focus:ring-1"
+        className={`font-extralight w-full rounded block, p-4 placeholder-stone-500 border-stone-800 text-stone-400 bg-stone-800 focus:outline-none focus:border-stone-400 focus:ring-stone-400 focus:ring-1`}
         {...props}
       />
     </InputContext>
