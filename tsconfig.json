@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "composite": true
+  },
+  "files": [],
+  "references": [
+    { "path": "./apps/@sander/kochbuch/tsconfig.json" },
+    { "path": "./packages/ui/tsconfig.json" },
+  ]
+}

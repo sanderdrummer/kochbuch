@@ -1,0 +1,21 @@
+{
+  "name": "@sander/ui",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "exports": {
+   "./button": {
+     "types": "./src/button.tsx",
+     "import": "./src/button.tsx"
+   }
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "peerDependencies": {
+    "react": "*"
+  }
+}
