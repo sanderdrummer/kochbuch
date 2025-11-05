@@ -1,42 +1,75 @@
-#root {
-	max-width: 1280px;
-	margin: 0 auto;
-	padding: 2rem;
-	text-align: center;
+/*biome-ignore-all: tailwind */
+@import "tailwindcss";
+@source "../../../packages/ui/src";
+
+/* 2. Define your theme using CSS variables */
+@theme {
+	/* == Dark Turquoise Gray (Neutral / Gray) == */
+	/* This palette overrides Tailwind's default 'gray' */
+	--color-gray-50: #f7f9fa;
+	--color-gray-100: #f0f2f3;
+	--color-gray-200: #e3e7e8; /* Good for text on dark backgrounds */
+	--color-gray-300: #c7ced1;
+	--color-gray-400: #9fa6a9;
+	--color-gray-500: #747a7d;
+	--color-gray-600: #53585b;
+	--color-gray-700: #3c4042; /* Good for secondary elements */
+	--color-gray-800: #2c2e30; /* Good for borders */
+	--color-gray-900: #1d1f21; /* Good for card/surface backgrounds */
+	--color-gray-950: #121415; /* Good for main app background (almost black) */
+
+	/* == Neon Turquoise (Primary / Highlight) == */
+	/* This adds a new 'primary' color */
+	--color-primary-50: #f0ffff;
+	--color-primary-100: #d1ffff;
+	--color-primary-200: #a8ffff;
+	--color-primary-300: #74ffff;
+	--color-primary-400: #40fffc;
+	--color-primary-500: #1bfff3; /* The main neon highlight */
+	--color-primary-600: #00e8db;
+	--color-primary-700: #00c2b8;
+	--color-primary-800: #009e96;
+	--color-primary-900: #00807a;
+	--color-primary-950: #005a56;
+
+	/* Set the default 'primary' (for bg-primary, etc.) */
+	--color-primary-default: var(--color-primary-500);
+	/* Set the text color for on-primary (text-primary-foreground) */
+	--color-primary-foreground: var(--color-gray-950);
+
+	/* == Semantic Aliases == */
+	/* These create simple aliases like 'bg-background' */
+	--color-background: var(--color-gray-950);
+	--color-foreground: var(--color-gray-200);
+	--color-border: var(--color-gray-800);
+	--color-ring: var(--color-primary-400);
+
+	/* 'surface' is for cards, modals, etc. */
+	--color-surface-default: var(--color-gray-900);
+	--color-surface-foreground: var(--color-gray-200);
+
+	/* 'secondary' is for muted buttons, tags, etc. */
+	--color-secondary-default: var(--color-gray-700);
+	--color-secondary-foreground: var(--color-gray-100);
+
+	/* == Custom Shadows & Transitions == */
+	/* Creates 'shadow-neon-sm', 'shadow-neon-md', etc. */
+	--shadow-neon-sm:
+		0 0 5px var(--color-primary-500), 0 0 10px var(--color-primary-700);
+	--shadow-neon-md:
+		0 0 10px var(--color-primary-500), 0 0 20px var(--color-primary-700);
+	--shadow-neon-lg:
+		0 0 20px var(--color-primary-500), 0 0 40px var(--color-primary-700);
+
+	/* Creates 'transition-colors-shadow' */
+	--transition-colors-shadow:
+		color, background-color, border-color, text-decoration-color, fill, stroke,
+		box-shadow;
 }
 
-.logo {
-	height: 6em;
-	padding: 1.5em;
-	will-change: filter;
-	transition: filter 300ms;
-}
-.logo:hover {
-	filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-	filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-	from {
-		transform: rotate(0deg);
+/* 3. Apply your base styles (dark-by-default) */
+@layer base {
+	body {
+		@apply bg-background text-primary-50 antialiased leading-none text-base;
 	}
-	to {
-		transform: rotate(360deg);
-	}
-}
-
-@media (prefers-reduced-motion: no-preference) {
-	a:nth-of-type(2) .logo {
-		animation: logo-spin infinite 20s linear;
-	}
-}
-
-.card {
-	padding: 2em;
-}
-
-.read-the-docs {
-	color: #888;
 }

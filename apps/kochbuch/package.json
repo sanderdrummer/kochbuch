@@ -4,7 +4,7 @@
 	"version": "0.0.0",
 	"type": "module",
 	"scripts": {
-		"dev": "npx vite",
+		"dev": "npx vite --host",
 		"build": "npx tsc -b && npx vite build",
 		"lint": "eslint .",
 		"preview": "npx vite preview"
@@ -14,7 +14,8 @@
 		"react-dom": "^19.1.1",
 		"@tailwindcss/vite": "^4.1.16",
 		"tailwindcss": "^4.1.16",
-		"@sander/ui": "*"
+		"@sander/ui": "*",
+		"@sander/storage": "*"
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.36.0",

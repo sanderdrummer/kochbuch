@@ -10,12 +10,33 @@
 		"./button": {
 			"types": "./src/button.tsx",
 			"import": "./src/button.tsx"
+		},
+		"./data-list": {
+			"types": "./src/data-list.tsx",
+			"import": "./src/data-list.tsx"
+		},
+		"./typography": {
+			"types": "./src/typography.tsx",
+			"import": "./src/typography.tsx"
+		},
+		"./layout": {
+			"types": "./src/layout.tsx",
+			"import": "./src/layout.tsx"
+		},
+		"./input": {
+			"types": "./src/input.tsx",
+			"import": "./src/input.tsx"
+		},
+		"./list": {
+			"types": "./src/list.tsx",
+			"import": "./src/list.tsx"
 		}
 	},
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"peerDependencies": {
+		"clsx": "2.1.1",
 		"react": "*"
 	}
 }

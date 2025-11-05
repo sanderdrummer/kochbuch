@@ -5,6 +5,7 @@
 	"files": [],
 	"references": [
 		{ "path": "./apps/@sander/kochbuch/tsconfig.json" },
-		{ "path": "./packages/ui/tsconfig.json" }
+		{ "path": "./packages/ui/tsconfig.json" },
+		{ "path": "./packages/storage/tsconfig.json" }
 	]
 }
