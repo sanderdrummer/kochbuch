@@ -17,9 +17,6 @@ export const RecipeSearch = () => {
 			className="flex gap-4 items-center"
 		>
 			<DataList
-				onChange={(e) => {
-					navigate(`/recipes/${e.target.value}`);
-				}}
 				label="Suche:"
 				disabled={isFetching}
 				name="recipe"

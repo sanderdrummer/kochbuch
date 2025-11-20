@@ -1,5 +1,6 @@
 import clsx from "clsx/lite";
 import { type ComponentProps, useId } from "react";
+import {CrossIcon} from "./icons.tsx";
 
 export type DataListProps = { items: string[]; label: string } & Omit<
 	ComponentProps<"input">,
@@ -24,6 +25,9 @@ export const DataList = ({
 				id={inputId}
 				{...props}
 			/>
+            <button type="button" aria-label="Suche zurücksetzen" >
+               <CrossIcon />
+            </button>
 
 			<datalist id={datalistId}>
 				{items.map((item) => (
