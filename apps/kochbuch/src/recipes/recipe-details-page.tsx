@@ -3,7 +3,6 @@ import { Option, Select } from "@sander/ui/input";
 import {
 	Content,
 	FlexContainer,
-	FooterNav,
 	HeaderNav,
 } from "@sander/ui/layout";
 import { List } from "@sander/ui/list";
@@ -11,6 +10,7 @@ import { H1, P } from "@sander/ui/typography";
 import { useState } from "react";
 import { useParams } from "../router.tsx";
 import { RecipeSearch } from "./recipe-search.tsx";
+import { AppFooter } from "../footer.tsx";
 
 const getAmount = (amount: string, modifier = 1) => {
 	if (Number(amount) === 0) return "";
@@ -58,7 +58,7 @@ export const RecipeDetails = () => {
 				</List>
 				<P>{recipe?.description}</P>
 			</Content>
-			<FooterNav>test</FooterNav>
+			<AppFooter />
 		</FlexContainer>
 	);
 };

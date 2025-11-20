@@ -12,7 +12,7 @@ export const SearchIcon = ({ className }: IconProps) => {
 
 export const PlusIcon = ({ className }: IconProps) => {
     return (
-        <svg className={className} aria-hidden="true" viewBox="0 0 24 24">
+        <svg className={className} fill="currentColor" aria-hidden="true" viewBox="0 0 24 24">
             <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
         </svg>
     );
@@ -23,7 +23,7 @@ export const ShareIcon = ({ className }: IconProps) => {
         <svg
             className={className}
             aria-hidden="true"
-            viewBox="0 0 24 24"
+            viewBox="0 0 24 24" fill="currentColor"
         >
             <path d="m16 5-1.42 1.42-1.59-1.59V16h-1.98V4.83L9.42 6.42 8 5l4-4 4 4zm4 5v11c0 1.1-.9 2-2 2H6c-1.11 0-2-.9-2-2V10c0-1.11.89-2 2-2h3v2H6v11h12V10h-3V8h3c1.1 0 2 .89 2 2z" />
         </svg>
@@ -32,7 +32,7 @@ export const ShareIcon = ({ className }: IconProps) => {
 
 export const CheckIcon = ({ className }: IconProps) => {
     return (
-        <svg className={className} aria-hidden="true" viewBox="0 0 24 24">
+        <svg className={className} aria-hidden="true" fill="currentColor" viewBox="0 0 24 24">
             <path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
         </svg>
     );
@@ -40,7 +40,7 @@ export const CheckIcon = ({ className }: IconProps) => {
 
 export const CrossIcon = ({ className }: IconProps) => {
     return (
-        <svg className={className} aria-hidden="true" viewBox="0 0 24 24">
+        <svg className={className} aria-hidden="true" fill="currentColor" viewBox="0 0 24 24">
             <path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
         </svg>
     );

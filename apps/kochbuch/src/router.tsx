@@ -5,19 +5,14 @@ import {
 	isValidElement,
 	useContext,
 	useEffect,
+	useLayoutEffect,
+	useRef,
 	useState,
 } from "react";
 
-// --- No changes to getNormalizedPath or useHashNavigation ---
-
-/**
- * Normalizes the window.location.hash.
- * It handles `#!`, `#`, and empty hashes, always returning a path
- * that starts with a `/`.
- */
 const getNormalizedPath = (): string => {
 	const hash = window.location.hash;
-	let path = "/"; // Default to root
+	let path = "/";
 
 	if (hash.startsWith("#!/")) {
 		path = hash.substring(2);
@@ -35,18 +30,43 @@ const getNormalizedPath = (): string => {
 
 const useHashNavigation = () => {
 	const [currentPath, setCurrentPath] = useState(getNormalizedPath());
+	const prevPathRef = useRef<string>(getNormalizedPath());
 
 	useEffect(() => {
+		if ("scrollRestoration" in window.history) {
+			window.history.scrollRestoration = "manual";
+		}
+
 		const handleHashChange = () => {
-			setCurrentPath(getNormalizedPath());
+			const newPath = getNormalizedPath();
+			const oldPath = prevPathRef.current;
+
+			const scrollPos = { x: window.scrollX, y: window.scrollY };
+			sessionStorage.setItem(
+				`scroll_pos:${oldPath}`,
+				JSON.stringify(scrollPos)
+			);
+
+			prevPathRef.current = newPath;
+			setCurrentPath(newPath);
 		};
 
 		window.addEventListener("hashchange", handleHashChange);
-
 		return () => {
 			window.removeEventListener("hashchange", handleHashChange);
 		};
 	}, []);
+
+	useLayoutEffect(() => {
+		const savedPos = sessionStorage.getItem(`scroll_pos:${currentPath}`);
+
+		if (savedPos) {
+			const { x, y } = JSON.parse(savedPos);
+			window.scrollTo(x, y);
+		} else {
+			window.scrollTo(0, 0);
+		}
+	}, [currentPath]);
 
 	return { currentPath };
 };
@@ -70,9 +90,6 @@ type MatchResult = {
 	params: RouteParams;
 };
 
-/**
- * Matches a route path (e.g., /test/:id) against the current path (e.g., /test/123).
- */
 const matchRoute = (routePath: string, currentPath: string): MatchResult => {
 	const routeSegments = routePath.split("/").filter(Boolean);
 	const currentSegments = currentPath.split("/").filter(Boolean);

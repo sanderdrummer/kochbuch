@@ -12,7 +12,7 @@ export type ListItemProps = ComponentProps<"li">;
 export const ListItem = ({ className, ...props }: ListItemProps) => {
 	return (
 		<li
-			className={clsx(className, "p-4 border-b border-primary-950 text-lg")}
+			className={clsx(className, "p-4 border-t border-primary-950 text-lg")}
 			{...props}
 		/>
 	);

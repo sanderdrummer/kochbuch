@@ -1,7 +1,6 @@
-import {createContext, type ReactNode, useContext, useEffect, useReducer} from "react";
+import { createContext, type ReactNode, useContext, useEffect, useReducer } from "react";
 
 export type ListItem = {
-    amount: string;
     title: string;
 };
 
@@ -12,20 +11,20 @@ export type ShoppingList = {
 
 export type ShoppingListAction =
     | {
-    type: 'ADD_BULK_TODO';
-    payload: ListItem[];
-}
+        type: 'ADD_BULK_TODO';
+        payload: ListItem[];
+    }
     | {
-    type: 'MOVE_TODO_TO_DONE';
-    payload: ListItem;
-}
+        type: 'MOVE_TODO_TO_DONE';
+        payload: ListItem;
+    }
     | {
-    type: 'MOVE_DONE_TO_TODO';
-    payload: ListItem;
-}
+        type: 'MOVE_DONE_TO_TODO';
+        payload: ListItem;
+    }
     | {
-    type: 'CLEAR_DONE';
-};
+        type: 'CLEAR_DONE';
+    };
 
 
 const filterItem = (list: ListItem[], item: ListItem) =>
@@ -126,8 +125,8 @@ const initialShoppingList: ShoppingList = {
 };
 
 export const ShoppingListProvider = ({
-                                         children,
-                                     }: ShoppingListProviderProps) => {
+    children,
+}: ShoppingListProviderProps) => {
     const [state, dispatch] = usePersistentShoppingList(initialShoppingList);
 
 
