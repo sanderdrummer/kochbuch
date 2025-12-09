@@ -46,7 +46,6 @@ const recipeDB = new RecipeDatabase();
 
 export const initRecipes = async () => {
 	const recipes = await fetchRecipes();
-	console.log("fetched");
 	await recipeDB.recipes.bulkPut(recipes);
 };
 

@@ -1,3 +1,4 @@
+import clsx from "clsx/lite";
 import type { AnchorHTMLAttributes, FC, ReactElement, ReactNode } from "react";
 import {
 	Children,
@@ -44,7 +45,7 @@ const useHashNavigation = () => {
 			const scrollPos = { x: window.scrollX, y: window.scrollY };
 			sessionStorage.setItem(
 				`scroll_pos:${oldPath}`,
-				JSON.stringify(scrollPos)
+				JSON.stringify(scrollPos),
 			);
 
 			prevPathRef.current = newPath;
@@ -120,10 +121,30 @@ type LinkProps = {
 	children: ReactNode;
 } & Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "href">;
 
-export const Link: FC<LinkProps> = ({ to, children, ...rest }) => {
+export const Link: FC<LinkProps> = ({ to, className, children, ...rest }) => {
 	const href = `#!${to.startsWith("/") ? to : `/${to}`}`;
 	return (
-		<a href={href} {...rest}>
+		<a
+			href={href}
+			className={clsx(
+				// Layout
+				"inline-flex items-center gap-2",
+
+				// Typography & Color
+				"text-primary-400 font-medium",
+				"decoration-primary-400/50 underline-offset-4",
+
+				// Interaction
+				"cursor-pointer transition-colors duration-200",
+				"hover:text-primary-300 hover:underline hover:decoration-primary-300",
+
+				// Accessibility (Consistent Focus Ring)
+				"outline-none rounded-sm focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+
+				className,
+			)}
+			{...rest}
+		>
 			{children}
 		</a>
 	);

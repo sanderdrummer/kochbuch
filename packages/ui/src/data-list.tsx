@@ -1,11 +1,10 @@
-import clsx from "clsx/lite";
 import { type ComponentProps, useId } from "react";
-import {CrossIcon} from "./icons.tsx";
+import { CrossIcon } from "./icons.tsx";
+import { Input, InputAction } from "./input.tsx";
 
-export type DataListProps = { items: string[]; label: string } & Omit<
-	ComponentProps<"input">,
-	"id"
->;
+export type DataListProps = {
+	items: string[];
+} & Omit<SearchInputProps, "id">;
 export const DataList = ({
 	items,
 	label,
@@ -15,20 +14,14 @@ export const DataList = ({
 	const inputId = useId();
 	const datalistId = useId();
 	return (
-		<div className={clsx(className, "w-full")}>
-			<input
+		<>
+			<SearchInput
 				required
-				aria-label={label}
-				placeholder={label}
-				className="border-primary-default border rounded-4xl p-4 w-full outline-0 focus-visible:border-primary-950 h-16"
+				label={label}
 				list={datalistId}
 				id={inputId}
 				{...props}
 			/>
-            <button type="button" aria-label="Suche zurücksetzen" >
-               <CrossIcon />
-            </button>
-
 			<datalist id={datalistId}>
 				{items.map((item) => (
 					<option key={item} value={item}>
@@ -36,6 +29,40 @@ export const DataList = ({
 					</option>
 				))}
 			</datalist>
-		</div>
+		</>
+	);
+};
+
+export type SearchInputProps = {
+	label: string;
+	value: string;
+	onChange: (value: string) => void;
+} & Omit<ComponentProps<"input">, "value" | "onChange">;
+export const SearchInput = ({
+	label,
+	value,
+	onChange,
+	...props
+}: SearchInputProps) => {
+	return (
+		<Input
+			aria-label={label}
+			placeholder={label}
+			value={value}
+			action={
+				value ? (
+					<InputAction
+						onClick={() => {
+							onChange("");
+						}}
+						aria-label="Suche zurücksetzen"
+					>
+						<CrossIcon />
+					</InputAction>
+				) : undefined
+			}
+			onChange={(e) => onChange(e.target.value)}
+			{...props}
+		/>
 	);
 };

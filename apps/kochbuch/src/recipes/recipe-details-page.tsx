@@ -1,16 +1,13 @@
 import { useRecipe } from "@sander/storage/recipes";
 import { Option, Select } from "@sander/ui/input";
-import {
-	Content,
-	FlexContainer,
-	HeaderNav,
-} from "@sander/ui/layout";
-import { List } from "@sander/ui/list";
-import { H1, P } from "@sander/ui/typography";
+import { Content, Divider, FlexContainer, HeaderNav } from "@sander/ui/layout";
+import { List, ListItem } from "@sander/ui/list";
+import { H1, H2, P } from "@sander/ui/typography";
 import { useState } from "react";
-import { useParams } from "../router.tsx";
-import { RecipeSearch } from "./recipe-search.tsx";
 import { AppFooter } from "../footer.tsx";
+import { useParams } from "../router.tsx";
+import { AddRecipeToListButton } from "./add-recipe-to-list-button.tsx";
+import { RecipeSearch } from "./recipe-search.tsx";
 
 const getAmount = (amount: string, modifier = 1) => {
 	if (Number(amount) === 0) return "";
@@ -32,6 +29,8 @@ export const RecipeDetails = () => {
 			</HeaderNav>
 			<Content>
 				<H1>{recipe?.title}</H1>
+				<Divider />
+				<H2>Zutaten</H2>
 				<div>
 					<Select
 						value={modifier}
@@ -47,16 +46,29 @@ export const RecipeDetails = () => {
 				</div>
 				<List className="sm:order-1 w-full mb-4 mt-4 lg:mt-8 lg:mb-8">
 					{recipe?.ingredients.map((ingredient) => (
-						<li className="text-lg" key={ingredient.name + ingredient.amount}>
+						<ListItem
+							className="text-lg"
+							key={ingredient.name + ingredient.amount}
+						>
 							<span className="text-primary-600">
 								{getAmount(ingredient.amount, modifier)}
 								{ingredient.scale}
 							</span>
 							<span> {ingredient.name} </span>
-						</li>
+						</ListItem>
 					))}
 				</List>
+				<Divider />
+				<H2>Zubereitung</H2>
+
 				<P>{recipe?.description}</P>
+				<Divider />
+				{recipe && (
+					<AddRecipeToListButton
+						title={recipe.title}
+						ingredients={recipe.ingredients}
+					/>
+				)}
 			</Content>
 			<AppFooter />
 		</FlexContainer>
