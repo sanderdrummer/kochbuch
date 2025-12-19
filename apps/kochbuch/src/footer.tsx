@@ -48,11 +48,9 @@ export const AppFooter = () => {
 	return (
 		<FooterNav
 			className={clsx(
-				// Container: Fixed at bottom or naturally flowing, depending on @sander/ui
-				// We add a top border to separate it from the content
 				"w-full border-t border-gray-800 bg-background/95 backdrop-blur-sm",
-				// Grid: 2 columns, equal width
 				"grid grid-cols-2 m-4 gap-2",
+				"sticky bottom-0",
 			)}
 		>
 			<NavTab isActive={pathname.includes("/recipes")} to="recipes">

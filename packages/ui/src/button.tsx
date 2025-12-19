@@ -5,14 +5,16 @@ export const Button = ({
 	type = "button",
 	className,
 	children,
+	size,
 	...props
-}: ComponentProps<"button">) => {
+}: ComponentProps<"button"> & { size?: "compact" }) => {
 	return (
 		<button
 			type={type}
 			className={clsx(
 				// Layout & Sizing
-				"h-16 px-8 w-full sm:w-auto",
+				!size && "h-16 px-8 w-full sm:w-auto",
+				size === "compact" && "h-12 px-4 w-full sm:w-auto",
 				"flex items-center justify-center shrink-0",
 
 				// Appearance

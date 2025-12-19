@@ -41,6 +41,7 @@ export const RecipeList = ({ recipes }: { recipes: Recipe[] }) => {
 		<List>
 			{recipes?.map((recipe) => (
 				<ListItem
+					size="compact"
 					className="grid grid-cols-[1fr_min-content] gap-2"
 					key={recipe.title}
 				>

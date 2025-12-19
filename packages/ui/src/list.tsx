@@ -15,13 +15,14 @@ export const List = ({ className, ...props }: ListProps) => {
 	);
 };
 
-export type ListItemProps = ComponentProps<"li">;
+export type ListItemProps = ComponentProps<"li"> & { size?: "compact" };
 
-export const ListItem = ({ className, ...props }: ListItemProps) => {
+export const ListItem = ({ className, size, ...props }: ListItemProps) => {
 	return (
 		<li
 			className={clsx(
-				"p-6",
+				size === "compact" && "p-2",
+				!size && "p-6",
 				"text-lg text-gray-200",
 				"hover:bg-gray-800 transition-colors duration-200",
 				className,

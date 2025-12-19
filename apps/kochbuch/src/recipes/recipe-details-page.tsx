@@ -3,7 +3,7 @@ import { Option, Select } from "@sander/ui/input";
 import { Content, Divider, FlexContainer, HeaderNav } from "@sander/ui/layout";
 import { List, ListItem } from "@sander/ui/list";
 import { H1, H2, P } from "@sander/ui/typography";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AppFooter } from "../footer.tsx";
 import { useParams } from "../router.tsx";
 import { AddRecipeToListButton } from "./add-recipe-to-list-button.tsx";
@@ -21,6 +21,10 @@ export const RecipeDetails = () => {
 	const { data: recipe } = useRecipe(context.id);
 	const [modifier, setModifier] = useState(1);
 	const scales = [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2];
+
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
 
 	return (
 		<FlexContainer>

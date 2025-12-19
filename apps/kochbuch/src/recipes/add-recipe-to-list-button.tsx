@@ -14,6 +14,7 @@ export const AddRecipeToListButton = ({
 	const { bulkAdd } = useShoppingList();
 	return (
 		<Button
+			size="compact"
 			aria-label={`Zutaten von ${title} zur Einkaufsliste hinzufügen`}
 			onClick={() => {
 				bulkAdd(
